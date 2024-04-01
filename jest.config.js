@@ -10,11 +10,11 @@ const createJestConfig = nextJest({
 // Add any custom config to be passed to Jest
 const config = {
   coverageProvider: 'v8',
-  testEnvironment: 'node',
+  testEnvironment: 'jest-environment-jsdom',
   preset: 'ts-jest',
   // Add more setup options before each test is run
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-  // reporters: ['default', 'jest-junit'],
+  reporters: ['default', 'jest-junit'],
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
