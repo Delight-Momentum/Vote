@@ -28,3 +28,6 @@ jobs:
       - uses: ArtiomTr/jest-coverage-report-action@v2.3.0
         with:
           test-script: npm test
+      - run: $GITHUB_ACTION_PATH/run.sh
+        env:
+          NODE_VERSION: 18.19.1
