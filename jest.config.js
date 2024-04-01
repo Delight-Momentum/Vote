@@ -1,4 +1,4 @@
-import nextJest from 'next/jest'
+import nextJest from 'next/jest.js'
 
 /** @type {import('jest').Config} */
 const createJestConfig = nextJest({
@@ -9,11 +9,10 @@ const createJestConfig = nextJest({
 // Add any custom config to be passed to Jest
 const config = {
   coverageProvider: 'v8',
-  testEnvironment: 'node',
+  testEnvironment: 'jest-environment-jsdom',
   preset: 'ts-jest',
   // Add more setup options before each test is run
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-  reporters: ['default', 'jest-junit'],
   coverageThreshold: {
     global: {
       lines: 80,
@@ -21,5 +20,5 @@ const config = {
   },
 }
 
-// createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
+// createJestConfig is exported this way to ensure that next/jest.js can load the Next.js config which is async
 export default createJestConfig(config)
