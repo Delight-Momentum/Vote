@@ -1,8 +1,11 @@
 name: 'coverage'
+
+# Trigger the workflow on pull requests to the develop branch
 on:
   pull_request:
     branches:
       - develop
+
 jobs:
   build-test:
     runs-on: ubuntu-latest
@@ -23,3 +26,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ArtiomTr/jest-coverage-report-action@v2.3.0
+        with:
+          test-script: npm test
