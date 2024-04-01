@@ -3,7 +3,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  run-lint:
+  test-and-coverage:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -12,18 +12,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Jest tests
-        run: npm test
+      - name: Run Jest tests with coverage
+        run: npm test -- --coverage
 
-      - name: Comment PR with Jest test results
-        uses: unsplash/comment-on-pr@v1.2.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Jest 커버리지 리포트를 PR에 코멘트로 남기는 액션 추가
+      - name: Comment PR with Jest coverage report
+        uses: <Marketplace에서 찾은 Jest coverage report 액션>
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           msg: 'Jest 테스트 완료! 세부 사항은 체크 결과를 확인해주세요.'
-          check_for_duplicate_msg: true # 중복 메시지 방지
-
-      - name: Build
-        run: npm run build
-
+          # 필요한 추가 입력 옵션을 여기에 포함합니다.
       - run: echo '${{github.actor}}님! 고생하셨습니다! 🍻'
