@@ -1,39 +1,12 @@
-name: CI
+name: 'coverage'
 on:
   pull_request:
     branches:
       - develop
       - chore/testCI
-  workflow_dispatch:
-
 jobs:
-  ci:
-    name: Building, linting, testing on node ${{ matrix.node }} and ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        node: ['10.x', '14.x', '17.x']
-        os: [ubuntu-latest, macos-latest]
+  coverage:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
-      - name: Use Node ${{ matrix.node }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node }}
-
-      - name: Setup npm@6.12.0
-        run: npm i -g npm@6.12.0
-
-      - name: Install deps and build (with cache)
-        uses: bahmutov/npm-install@v1
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Test
-        run: npm test -- --ci --coverage --maxWorkers=2
-
-      - name: Build
-        run: npm run build
+      - uses: actions/checkout@v3
+      - uses: ArtiomTr/jest-coverage-report-action@v2
