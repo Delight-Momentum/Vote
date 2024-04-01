@@ -4,8 +4,22 @@ on:
     branches:
       - develop
 jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 # checkout the repo
+      - run: npm ci # install packages
+      - run: npm test # run tests (configured to use jest-junit reporter)
+      # Note: You might want to remove the following step, as it seems to be incorrectly configured.
+      # - uses: ArtiomTr/jest-coverage-report-action@v2 # upload test results
+      #   if: success() || failure() # run this step even if previous step failed
+      #   with:
+      #     name: test-results
+      #     path: jest-junit.xml
+
   coverage:
+    needs: build-test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ArtiomTr/jest-coverage-report-action@v2
+      - uses: ArtiomTr/jest-coverage-report-action@v2.3.0

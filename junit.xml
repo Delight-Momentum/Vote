@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="3" failures="0" errors="0" time="0.482">
+  <testsuite name="__tests__/sum.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-04-01T08:04:10" time="0.19" tests="3">
+    <testcase classname="-adds 2 + 2 to equal 4" name="-adds 2 + 2 to equal 4" time="0.001">
+    </testcase>
+    <testcase classname="-adds 2 + 3 to equal 5" name="-adds 2 + 3 to equal 5" time="0.001">
+    </testcase>
+    <testcase classname="-adds 2 + 4 to equal 6" name="-adds 2 + 4 to equal 6" time="0">
+    </testcase>
+  </testsuite>
+</testsuites>
