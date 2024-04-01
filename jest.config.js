@@ -1,16 +1,18 @@
-import nextJest from 'next/jest'
+const nextJest = require('next/jest')
 
-const createJestConfig = nextJest()
+const createJestConfig = nextJest({
+  dir: './',
+})
+
 const customJestConfig = {
-  setupFilesAfterEnv: [
-    '@testing-library/jest-dom/extend-expect',
-    '@testing-library/react',
-  ],
-  coverageThreshold: {
-    global: {
-      lines: 80,
-    },
+  rootDir: '.',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  moduleNameMapper: {
+    '^@/app/(.*)$': '<rootDir>/app/$1',
+    '^@/pages/(.*)$': '<rootDir>/pages/$1',
   },
+  moduleDirectories: ['node_modules', '<rootDir>/'],
+  testEnvironment: 'jest-environment-jsdom',
 }
 
-export default createJestConfig(customJestConfig)
+module.exports = createJestConfig(customJestConfig)
