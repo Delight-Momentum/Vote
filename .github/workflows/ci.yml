@@ -1,15 +1,23 @@
-name: 'CI'
+name: Coverage
+
+# Skip job run if PR updated
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
-  pull_request:
+  pull_request_target:
+  workflow_dispatch:
+
 jobs:
-  build-test:
+  coverage:
     runs-on: ubuntu-latest
+    name: Coverage report
     steps:
-      - uses: actions/checkout@v3 # checkout the repo
-      - run: npm ci # install packages
-      - run: npm test # run tests (configured to use jest-junit reporter)
-      - uses: actions/upload-artifact@v3 # upload test results
-        if: success() || failure() # run this step even if previous step failed
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test coverage
+        uses: ./ # Uses an action in the root directory
         with:
-          name: test-results
-          path: jest-junit.xml
+          annotations: failed-tests
+          test-script: npm run test:coverage
