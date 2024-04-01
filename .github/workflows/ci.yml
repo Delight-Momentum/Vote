@@ -7,6 +7,8 @@ concurrency:
 
 on:
   pull_request_target:
+    paths-ignore:
+      - 'docs/**'
   workflow_dispatch:
 
 jobs:
