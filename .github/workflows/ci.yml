@@ -24,7 +24,7 @@ jobs:
         if: failure() # 이 스텝은 이전 스텝의 실패 시에만 실행됩니다.
         uses: actions/github-script@v5
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secret.TOKEN }}
           script: |
             const issue_number = context.issue.number;
             const message = '테스트에 실패했습니다. 상세 정보를 확인해주세요.';
