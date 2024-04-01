@@ -3,6 +3,7 @@ on:
   pull_request:
     branches:
       - develop
+      - feature/*
 jobs:
   coverage:
     runs-on: ubuntu-latest
