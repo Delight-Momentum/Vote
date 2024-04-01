@@ -1,25 +1,37 @@
-name: Coverage
-
-# Skip job run if PR updated
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
+name: CI
 on:
-  pull_request_target:
-    paths-ignore:
-      - 'docs/**'
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
-  coverage:
-    runs-on: ubuntu-latest
-    name: Coverage report
+  ci:
+    name: Building, linting, testing on node ${{ matrix.node }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node: ['10.x', '14.x', '17.x']
+        os: [ubuntu-latest, macos-latest]
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Test coverage
-        uses: ./ # Uses an action in the root directory
+
+      - name: Use Node ${{ matrix.node }}
+        uses: actions/setup-node@v2
         with:
-          annotations: failed-tests
-          test-script: npm run test:coverage
+          node-version: ${{ matrix.node }}
+
+      - name: Setup npm@6.12.0
+        run: npm i -g npm@6.12.0
+
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test -- --ci --coverage --maxWorkers=2
+
+      - name: Build
+        run: npm run build
