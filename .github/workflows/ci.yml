@@ -11,4 +11,4 @@ jobs:
       - uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           test-script: npm test
-          github-token: ${{ secrets.SECRET_TOKEN }}
+          github-token: ${{ secrets.TOKENS }}
