@@ -16,8 +16,8 @@ jobs:
         run: npm test -- --coverage
 
       # Jest 커버리지 리포트를 PR에 코멘트로 남기는 액션 추가
-      - name: Comment PR with Jest coverage report
-        uses: <Marketplace에서 찾은 Jest coverage report 액션>
+      - name: Jest Coverage Report
+        uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           msg: 'Jest 테스트 완료! 세부 사항은 체크 결과를 확인해주세요.'
