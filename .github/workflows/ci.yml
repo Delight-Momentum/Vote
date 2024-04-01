@@ -16,4 +16,4 @@ jobs:
         with:
           threshold: 100
           github-token: ${{ secrets.TOKENS }}
-          annotations: none
+          annotations: coverage
