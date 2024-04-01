@@ -69,7 +69,7 @@
     "*.{ts,tsx}": [
       "prettier --write",
       "eslint --fix",
-      "jest --ci",
+      "jest --ci --reporters=default --reporters=jest-junit",
       "git add"
     ],
     "*.+{json|css|md}": [
