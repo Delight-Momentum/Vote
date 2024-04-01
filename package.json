@@ -66,7 +66,7 @@
     "*.{ts,tsx}": [
       "prettier --write",
       "eslint --fix",
-      "jest --ci --passWithNoTests --coverage",
+      "jest --ci --passWithNoTests",
       "git add"
     ],
     "*.+{json|css|md}": [
