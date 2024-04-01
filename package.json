@@ -14,11 +14,13 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "jest-junit": "^16.0.0",
     "next": "14.1.4",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.24.3",
     "@chromatic-com/storybook": "^1.2.25",
     "@storybook/addon-essentials": "^8.0.5",
     "@storybook/addon-interactions": "^8.0.5",
@@ -31,11 +33,13 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.2.2",
     "@testing-library/user-event": "^14.5.2",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@typescript-eslint/parser": "^7.4.0",
     "autoprefixer": "^10.0.1",
+    "babel-jest": "^29.7.0",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
@@ -55,17 +59,17 @@
     "lint-staged": "^15.2.2",
     "postcss": "^8",
     "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.13",
     "storybook": "^8.0.5",
     "tailwindcss": "^3.3.0",
     "ts-jest": "^29.1.2",
-    "typescript": "^5",
-    "prettier-plugin-tailwindcss": "^0.5.13"
+    "typescript": "^5"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write",
       "eslint --fix",
-      "jest --ci --passWithNoTests",
+      "jest --ci",
       "git add"
     ],
     "*.+{json|css|md}": [
@@ -73,5 +77,15 @@
       "eslint --fix",
       "git add"
     ]
+  },
+  "jest-junit": {
+    "suiteName": "jest tests",
+    "outputDirectory": "./__tests__/__results__",
+    "outputName": "junit.xml",
+    "uniqueOutputName": "false",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}",
+    "ancestorSeparator": " › ",
+    "usePathForSuiteName": "true"
   }
 }
