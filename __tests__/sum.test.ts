@@ -27,3 +27,7 @@ test('adds 1 + 4 to equal 10', () => {
 test('adds 6 + 4 to equal 10', () => {
   expect(sum(6, 4)).toBe(10)
 })
+
+test('adds 1 + 4 to equal 5', () => {
+  expect(sum(1, 4)).toBe(5)
+})

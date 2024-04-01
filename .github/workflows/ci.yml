@@ -15,19 +15,25 @@ jobs:
       - name: Run Jest tests with coverage
         run: npm test -- --coverage
 
-      # Jest 커버리지 리포트를 PR에 코멘트로 남기는 액션 추가
       - name: Jest Coverage Report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Leave comment on PR if tests fail
+        if: failure() # 이 스텝은 이전 스텝의 실패 시에만 실행됩니다.
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const pull_number = ${{ github.event.pull_request.number }}
-            const updated_title = `[TEST FAIL] ${{ github.event.pull_request.title }}`
-            await github.rest.pulls.createReview({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pull_number,
-              body: '테스트에 실패했습니다.',
-              event: 'REQUEST_CHANGES'
-            })
+            const issue_number = context.issue.number;
+            const message = '테스트에 실패했습니다. 상세 정보를 확인해주세요.';
+            if (issue_number) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue_number,
+                body: message
+              });
+            }
       - run: echo '${{github.actor}}님! 고생하셨습니다! 🍻'
