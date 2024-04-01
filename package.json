@@ -12,6 +12,7 @@
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "test:log-coverage": "jest --coverage",
     "test:coverage": "jest --silent --testLocationInResults --ci --all --coverage --json --outputFile=\"report.json\""
   },
   "dependencies": {
