@@ -6,6 +6,11 @@ const customJestConfig = {
     '@testing-library/jest-dom/extend-expect',
     '@testing-library/react',
   ],
+  coverageThreshold: {
+    global: {
+      lines: 80,
+    },
+  },
 }
 
 export default createJestConfig(customJestConfig)
