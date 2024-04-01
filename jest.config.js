@@ -1,4 +1,5 @@
-import nextJest from 'next/jest'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const nextJest = require('next/jest')
 
 /** @type {import('jest').Config} */
 const createJestConfig = nextJest({
@@ -16,4 +17,4 @@ const config = {
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-export default createJestConfig(config)
+module.exports = createJestConfig(config)
