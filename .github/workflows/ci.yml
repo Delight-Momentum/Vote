@@ -5,11 +5,95 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3 # checkout the repo
-      - run: npm ci # install packages
-      - run: npm test # run tests (configured to use jest-junit reporter)
-      - uses: actions/upload-artifact@v3 # upload test results
-        if: success() || failure() # run this step even if previous step failed
+      - name: Checkout code # 플젝코드 소스코드 내려받기
+        uses: actions/checkout@v3
+
+      - name: Install dependencies # 종속성 설치
+        run: yarn install
+
+      - name: Build # 빌드
+        run: yarn build
+
+      - name: Close PR, if build fails # 빌드 실패시 pr 닫기
+        if: ${{ failure() }} # 이전 step이 실패한 경우에만 이 step을 실행시키는 syntax
+        uses: actions/github-script@v6
+        with: # actions(uses)의 파라미터 역할
+          github-token: ${{ github.TOKEN }}
+          # octokit 문법 참고
+          script: |
+            const pull_number = ${{ github.event.pull_request.number }}
+            const updated_title = `[BUILD FAIL] ${{ github.event.pull_request.title }}`
+            await github.rest.pulls.createReview({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pull_number,
+              body: '빌드에 실패했습니다.',
+              event: 'REQUEST_CHANGES'
+            })
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pull_number,
+              title: updated_title,
+              state: 'closed'
+            })
+
+  # 2. 테스트
+  test:
+    runs-on: ubuntu-latest
+    needs: build # build 테스트 이후에 test job 이 이뤄지도록 순서 제어
+    env:
+      REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+      REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run test
+        run: yarn test
+
+      - name: Close PR, If test fail
+        if: ${{ failure() }}
+        uses: actions/github-script@v6
         with:
-          name: test-results
-          path: __tests__/__results__/*.xml
+          github-token: ${{ github.TOKEN }}
+          script: |
+            const pull_number = ${{ github.event.pull_request.number }}
+            const updated_title = `[TEST FAIL] ${{ github.event.pull_request.title }}`
+            await github.rest.pulls.createReview({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pull_number,
+              body: '테스트에 실패했습니다.',
+              event: 'REQUEST_CHANGES'
+            })
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pull_number,
+              title: updated_title,
+              state: 'closed'
+            })
+
+      - name: Approve PR, If test passes # 테스트 통과시, PR 머지
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ github.TOKEN }}
+          script: |
+            const pull_number = ${{ github.event.pull_request.number }}
+            await github.rest.pulls.createReview({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pull_number,
+              body: '테스트에 통과해 main 브랜치로 자동 머지합니다.',
+              event: 'REQUEST_CHANGES'
+            })
+            await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pull_number,
+            })
