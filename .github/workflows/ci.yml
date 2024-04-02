@@ -11,12 +11,15 @@ jobs:
       pull-requests: write
       checks: write
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
           node-version: 20.10.0
-      - uses: actions/checkout@v3
+
       - uses: ArtiomTr/jest-coverage-report-action@v2.3.0
         with:
-          threshold: 100
           github-token: ${{ secrets.TOKENS }}
+          skip-step: install
+          threshold: 100
           annotations: none
