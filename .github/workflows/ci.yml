@@ -44,12 +44,12 @@ jobs:
           echo "EOF" >> $GITHUB_ENV
 
       - name: Leave a comment on PR with test results
-        uses: thollander/actions-comment-pull-request@v1
-        if: always()
+        uses: peter-evans/create-or-update-comment@v1
         with:
-          message: |
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
             **Test Results:**
             ```
-            ${{ env.TEST_RESULTS }}
+            $(cat report.md)
             ```
-          GITHUB_TOKEN: ${{ secrets.TOKENS }}
+          token: ${{ secrets.GITHUB_TOKEN }}

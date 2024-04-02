@@ -5,3 +5,7 @@ test('null은 null이다.', () => {
 test('undefined은 undefined이다.', () => {
   expect(undefined).toBeUndefined()
 })
+
+test('undefined은 undefined이다.', () => {
+  expect(undefined).toBeUndefined()
+})
