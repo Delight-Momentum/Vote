@@ -1,39 +1,30 @@
-name: CI
+name: CI/CD Pipeline with PR Comment
 
-on: [push, pull_request]
+on:
+  pull_request:
+    branches: [develop]
 
 jobs:
-  test-and-coverage:
+  test:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
+      # Node.js 설정, 의존성 설치, 테스트 실행 등 필요한 단계 추가
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
       - name: Install dependencies
-        run: npm ci
+        run: npm install
+      - name: Run tests
+        run: npm test
 
-      - name: Run Jest tests with coverage
-        run: npm test -- --coverage
-
-      - name: Jest Coverage Report
-        uses: ArtiomTr/jest-coverage-report-action@v2
+      # 테스트 성공 후 PR에 메시지 남기기
+      - name: Leave a comment on PR
+        if: success()
+        uses: thollander/actions-comment-pull-request@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Leave comment on PR if tests fail
-        if: failure() # 이 스텝은 이전 스텝의 실패 시에만 실행됩니다.
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{ secret.TOKENS }}
-          script: |
-            const issue_number = context.issue.number;
-            const message = '테스트에 실패했습니다. 상세 정보를 확인해주세요.';
-            if (issue_number) {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issue_number,
-                body: message
-              });
-            }
-      - run: echo '${{github.actor}}님! 고생하셨습니다! 🍻'
+          message: '테스트가 성공적으로 완료되었습니다! 🎉'
+          GITHUB_TOKEN: ${{ secrets.TOKENS }}
