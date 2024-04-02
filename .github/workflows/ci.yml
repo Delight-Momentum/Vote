@@ -11,8 +11,10 @@ jobs:
       pull-requests: write
       checks: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: ArtiomTr/jest-coverage-report-action@v2.3.0
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: report
+        uses: ArtiomTr/jest-coverage-report-action@v2.3.0
         with:
           threshold: 100
           github-token: ${{ secrets.TOKENS }}
