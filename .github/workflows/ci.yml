@@ -5,13 +5,14 @@ on:
     branches: [develop]
 
 jobs:
-  build_and_test:
+  test:
     runs-on: ubuntu-latest
+    outputs:
+      test-result: ${{ steps.test_outcome.outputs.test-result }}
 
     steps:
       - uses: actions/checkout@v2
 
-      # Node.js 설정, 의존성 설치, 테스트 실행 등 필요한 단계 추가
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -20,33 +21,22 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests and save results
-        run: npm test > test-results.txt
-
-      - name: Read test results
-        id: test_results
+      - name: Run tests and capture the output
+        id: test_outcome
         run: |
-          echo "::set-output name=test_results::$(cat test-results.txt)"
-      - name: Comment PR with test results
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v3
+          TEST_RESULT="$(npm test)"
+          echo "TEST_RESULT<<EOF" >> $GITHUB_ENV
+          echo "$TEST_RESULT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "::set-output name=test-result::$TEST_RESULT"
+
+      - name: Leave a comment on PR with test results
+        uses: thollander/actions-comment-pull-request@v1
+        if: always()
         with:
-          github-token: ${{ secrets.TOKENS }}
-          script: |
-            const issue_number = context.issue.number;
-            const body = `### Test Results\n\`\`\`\n${{ steps.test_results.outputs.test_results }}\n\`\`\``;
-            github.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: issue_number,
-              body: body
-            });
-
-        # 테스트 성공 후 PR에 메시지 남기기
-        - name: Leave a comment on PR1
-          if: always()
-          uses: thollander/actions-comment-pull-request@v1
-          with:
-            message: '메세지 무조건 남김 🎉'
-            GITHUB_TOKEN: ${{ secrets.TOKENS }}
-
+          message: |
+            **Test Results:** 
+            ```
+            ${{ env.TEST_RESULT }}
+            ```
+          GITHUB_TOKEN: ${{ secrets.TOKENS }}
