@@ -18,29 +18,34 @@ jobs:
           node-version: '20'
       - name: Install dependencies
         run: npm install
-      - name: Run tests
-        run: npm test
+      - name: Run tests and save results
+        run: npm test > test-results.txt
 
-      # 테스트 성공 후 PR에 메시지 남기기
-      - name: Leave a comment on PR1
-        if: always()
-        uses: thollander/actions-comment-pull-request@v1
-        with:
-          message: '메세지 무조건 남김 🎉'
-          GITHUB_TOKEN: ${{ secrets.TOKENS }}
+      - name: Read test results
+        id: test_results
+        run: |
+          echo "::set-output name=test_results::$(cat test-results.txt)"
 
-      # 테스트 실패했을 때
-      - name: Leave a comment on PR2
-        if: failure()
-        uses: thollander/actions-comment-pull-request@v1
+      - name: Comment PR with test results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v3
         with:
-          message: '테스트가 실패했습니다'
-          GITHUB_TOKEN: ${{ secrets.TOKENS }}
+          github-token: ${{secrets.TOKENS}}
+          script: |
+            const issue_number = context.issue.number;
+            const body = `### Test Results\n\`\`\`\n${{steps.test_results.outputs.test_results}}\n\`\`\``;
+            github.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              body: body
+            });
 
-      # 테스트 성공했을 때
-      - name: Leave a comment on PR3
-        if: success()
-        uses: thollander/actions-comment-pull-request@v1
-        with:
-          message: '테스트가 성공했습니다 🎉'
-          GITHUB_TOKEN: ${{ secrets.TOKENS }}
+        # 테스트 성공 후 PR에 메시지 남기기
+        - name: Leave a comment on PR1
+          if: always()
+          uses: thollander/actions-comment-pull-request@v1
+          with:
+            message: '메세지 무조건 남김 🎉'
+            GITHUB_TOKEN: ${{ secrets.TOKENS }}
+

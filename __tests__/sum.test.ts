@@ -45,5 +45,5 @@ test('adds 2 + 4 to equal 6', () => {
 })
 
 test('adds 3 + 4 to equal 7', () => {
-  expect(sum(31, 4)).toBe(35)
+  expect(sum(35, 4)).toBe(39)
 })
