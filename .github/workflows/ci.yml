@@ -45,7 +45,7 @@ jobs:
         with:
           message: |
             **Test Results:**
-            ```
+
             ${{ env.TEST_RESULTS }}
-            ```
+
           GITHUB_TOKEN: ${{ secrets.TOKENS }}
