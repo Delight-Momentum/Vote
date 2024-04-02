@@ -13,7 +13,7 @@ jobs:
 
       # Node.js 설정, 의존성 설치, 테스트 실행 등 필요한 단계 추가
       - name: Set up Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: '20'
       - name: Install dependencies
@@ -22,9 +22,25 @@ jobs:
         run: npm test
 
       # 테스트 성공 후 PR에 메시지 남기기
-      - name: Leave a comment on PR
+      - name: Leave a comment on PR1
         if: always()
         uses: thollander/actions-comment-pull-request@v1
         with:
-          message: '테스트가 성공적으로 완료되었습니다! 🎉'
+          message: '메세지 무조건 남김 🎉'
+          GITHUB_TOKEN: ${{ secrets.TOKENS }}
+
+      # 테스트 실패했을 때
+      - name: Leave a comment on PR2
+        if: failure()
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: '테스트가 실패했습니다'
+          GITHUB_TOKEN: ${{ secrets.TOKENS }}
+
+      # 테스트 성공했을 때
+      - name: Leave a comment on PR3
+        if: success()
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: '테스트가 성공했습니다 🎉'
           GITHUB_TOKEN: ${{ secrets.TOKENS }}
