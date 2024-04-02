@@ -27,10 +27,11 @@ jobs:
         run: |
           echo "| Test File       | Passed | Total | Pass Rate (%) |" > report.md
           echo "|-----------------|--------|-------|---------------|" >> report.md
-          for FILE in $(grep -oP 'PASS __tests__/\K[^ ]+' test-results.txt | sort -u); do
+          TEST_FILES=$(grep -oP 'PASS __tests__/\K[^ ]+' test-results.txt | sort -u)
+          for FILE in $TEST_FILES; do
             FILE_PATH="__tests__/$FILE"
-            PASSED=$(grep -oP "$FILE_PATH.+?✓" test-results.txt | wc -l)
-            TOTAL=$(grep -cP "$FILE_PATH" test-results.txt)
+            PASSED=$(grep -oP "__tests__/$FILE.+?✓" test-results.txt | wc -l)
+            TOTAL=$(grep -cP "__tests__/$FILE" test-results.txt)
             RATE=$(echo "scale=2; $PASSED/$TOTAL*100" | bc)
             printf "| %-15s | %6d | %5d | %13.2f |\n" "$FILE" "$PASSED" "$TOTAL" "$RATE" >> report.md
           done
@@ -48,4 +49,4 @@ jobs:
             ```
             ${{ env.TEST_RESULTS }}
             ```
-          GITHUB_TOKEN: ${{ secrets.TOKENS }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
