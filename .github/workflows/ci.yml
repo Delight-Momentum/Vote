@@ -30,8 +30,8 @@ jobs:
           TEST_FILES=$(grep -oP 'PASS __tests__/\K[^ ]+' test-results.txt | sort -u)
           for FILE in $TEST_FILES; do
             FILE_PATH="__tests__/$FILE"
-            PASSED=$(grep -cP "✓" test-results.txt | grep -cP "$FILE")
-            TOTAL=$(grep -cP "$FILE" test-results.txt)
+            PASSED=$(grep -P "__tests__/$FILE" test-results.txt | grep -o "✓" | wc -l)
+            TOTAL=$(grep -cP "__tests__/$FILE" test-results.txt)
             if [ "$TOTAL" -ne 0 ]; then
               RATE=$(echo "scale=2; $PASSED/$TOTAL*100" | bc)
             else
