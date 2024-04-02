@@ -7,8 +7,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    outputs:
-      test-result: ${{ steps.test_outcome.outputs.test-result }}
 
     steps:
       - uses: actions/checkout@v2
@@ -24,11 +22,12 @@ jobs:
       - name: Run tests and capture the output
         id: test_outcome
         run: |
-          TEST_RESULT="$(npm test)"
+          npm test | tee test-results.txt
+          TEST_RESULT=$(cat test-results.txt)
           echo "TEST_RESULT<<EOF" >> $GITHUB_ENV
           echo "$TEST_RESULT" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-          echo "::set-output name=test-result::$TEST_RESULT"
+          echo "::set-output name=test-result::$(echo $TEST_RESULT)"
 
       - name: Leave a comment on PR with test results
         uses: thollander/actions-comment-pull-request@v1
