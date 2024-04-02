@@ -25,12 +25,19 @@ jobs:
       - name: Generate test results report
         id: generate_report
         run: |
-          echo "| Test File | Passed | Total | Pass Rate (%) |" > report.md
-          echo "|-----------|--------|-------|---------------|" >> report.md
+          echo "| Test File          | Passed | Total | Pass Rate (%) |" > report.md
+          echo "|--------------------|--------|-------|---------------|" >> report.md
+          TEST_FILES=$(grep -oP 'PASS __tests__/\K[^ ]+' test-results.txt | sort -u)
+          for FILE in $TEST_FILES; do
+            FILE_PASSED_TESTS=$(grep -oP "__tests__/$FILE.+?✓" test-results.txt | wc -l)
+            FILE_TOTAL_TESTS=$(grep -cP "__tests__/$FILE" test-results.txt)
+            FILE_PASS_RATE=$(echo "scale=2; $FILE_PASSED_TESTS*100/$FILE_TOTAL_TESTS" | bc)
+            echo "| $FILE | $FILE_PASSED_TESTS | $FILE_TOTAL_TESTS | $FILE_PASS_RATE |" >> report.md
+          done
           PASSED_TESTS=$(grep -oP '✓' test-results.txt | wc -l)
           TOTAL_TESTS=$(grep -c -E '✓|○' test-results.txt)
-          PASS_RATE=$(echo "scale=2; $PASSED_TESTS/$TOTAL_TESTS*100" | bc)
-          echo "| Combined | $PASSED_TESTS | $TOTAL_TESTS | $PASS_RATE |" >> report.md
+          OVERALL_PASS_RATE=$(echo "scale=2; $PASSED_TESTS*100/$TOTAL_TESTS" | bc)
+          echo "| Overall | $PASSED_TESTS | $TOTAL_TESTS | $OVERALL_PASS_RATE |" >> report.md
           TEST_RESULTS="$(cat report.md)"
           echo "TEST_RESULTS<<EOF" >> $GITHUB_ENV
           echo "$TEST_RESULTS" >> $GITHUB_ENV
@@ -42,5 +49,7 @@ jobs:
         with:
           message: |
             **Test Results:**
+            ```
             ${{ env.TEST_RESULTS }}
+            ```
           GITHUB_TOKEN: ${{ secrets.TOKENS }}
