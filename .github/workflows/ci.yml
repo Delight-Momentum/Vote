@@ -19,7 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        
+
       - name: Run tests and save results
         run: npm test > test-results.txt
 
@@ -30,7 +30,7 @@ jobs:
 
       - name: Comment PR with test results
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v3
+        uses: actions/github-script@v2
         with:
           github-token: ${{secrets.TOKENS}}
           script: |
