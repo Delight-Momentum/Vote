@@ -25,31 +25,27 @@ jobs:
       - name: Generate test results report
         id: generate_report
         run: |
-          echo "| Test File          | Passed | Total | Pass Rate (%) |" > report.md
-          echo "|--------------------|--------|-------|---------------|" >> report.md
-          TEST_FILES=$(grep -oP 'PASS __tests__/\K[^ ]+' test-results.txt | sort -u)
-          for FILE in $TEST_FILES; do
-            FILE_PASSED_TESTS=$(grep -oP "__tests__/$FILE.+?✓" test-results.txt | wc -l)
-            FILE_TOTAL_TESTS=$(grep -cP "__tests__/$FILE" test-results.txt)
-            FILE_PASS_RATE=$(echo "scale=2; $FILE_PASSED_TESTS*100/$FILE_TOTAL_TESTS" | bc)
-            echo "| $FILE | $FILE_PASSED_TESTS | $FILE_TOTAL_TESTS | $FILE_PASS_RATE |" >> report.md
+          echo "| Test File       | Passed | Total | Pass Rate (%) |" > report.md
+          echo "|-----------------|--------|-------|---------------|" >> report.md
+          for FILE in $(grep -oP 'PASS __tests__/\K[^ ]+' test-results.txt | sort -u); do
+            FILE_PATH="__tests__/$FILE"
+            PASSED=$(grep -oP "$FILE_PATH.+?✓" test-results.txt | wc -l)
+            TOTAL=$(grep -cP "$FILE_PATH" test-results.txt)
+            RATE=$(echo "scale=2; $PASSED/$TOTAL*100" | bc)
+            printf "| %-15s | %6d | %5d | %13.2f |\n" "$FILE" "$PASSED" "$TOTAL" "$RATE" >> report.md
           done
-          PASSED_TESTS=$(grep -oP '✓' test-results.txt | wc -l)
-          TOTAL_TESTS=$(grep -c -E '✓|○' test-results.txt)
-          OVERALL_PASS_RATE=$(echo "scale=2; $PASSED_TESTS*100/$TOTAL_TESTS" | bc)
-          echo "| Overall | $PASSED_TESTS | $TOTAL_TESTS | $OVERALL_PASS_RATE |" >> report.md
           TEST_RESULTS="$(cat report.md)"
           echo "TEST_RESULTS<<EOF" >> $GITHUB_ENV
           echo "$TEST_RESULTS" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Leave a comment on PR with test results
-        uses: peter-evans/create-or-update-comment@v1
+        uses: thollander/actions-comment-pull-request@v1
+        if: always()
         with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
+          message: |
             **Test Results:**
             ```
-            $(cat report.md)
+            ${{ env.TEST_RESULTS }}
             ```
-          token: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKENS }}
