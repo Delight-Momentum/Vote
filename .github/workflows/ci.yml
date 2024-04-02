@@ -23,7 +23,7 @@ jobs:
 
       # 테스트 성공 후 PR에 메시지 남기기
       - name: Leave a comment on PR
-        if: success()
+        if: always()
         uses: thollander/actions-comment-pull-request@v1
         with:
           message: '테스트가 성공적으로 완료되었습니다! 🎉'
