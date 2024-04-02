@@ -10,9 +10,10 @@ jobs:
       contents: write
       pull-requests: write
       checks: write
-            
+
     steps:
       - uses: actions/checkout@v3
+      - run: npm i ts-node
       - uses: ArtiomTr/jest-coverage-report-action@v2.3.0
         with:
           threshold: 100
