@@ -2,10 +2,21 @@ name: 'coverage'
 on:
   pull_request:
     branches:
-      - '**'
+      - develop
 jobs:
   coverage:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
     steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20.10.0
       - uses: actions/checkout@v3
-      - uses: ArtiomTr/jest-coverage-report-action@v2.1.3
+      - uses: ArtiomTr/jest-coverage-report-action@v2.3.0
+        with:
+          threshold: 100
+          github-token: ${{ secrets.TOKENS }}
+          annotations: none
