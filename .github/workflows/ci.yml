@@ -22,17 +22,16 @@ jobs:
       - name: Run tests and capture the output
         run: npm test -- --verbose > test-results.txt 2>&1
 
-      - name: Upload test results as an artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-results
-          path: test-results.txt
-
-      - name: Read test results and set as output
-        id: test_results
+      - name: Generate test results report
+        id: generate_report
         run: |
-          TEST_RESULTS="$(cat test-results.txt)"
-          echo "::set-output name=test_results::$TEST_RESULTS"
+          echo "| Test File | Passed | Total | Pass Rate (%) |" > report.md
+          echo "|-----------|--------|-------|---------------|" >> report.md
+          PASSED_TESTS=$(grep -oP '✓' test-results.txt | wc -l)
+          TOTAL_TESTS=$(grep -c -E '✓|○' test-results.txt)
+          PASS_RATE=$(echo "scale=2; $PASSED_TESTS/$TOTAL_TESTS*100" | bc)
+          echo "| Combined | $PASSED_TESTS | $TOTAL_TESTS | $PASS_RATE |" >> report.md
+          TEST_RESULTS="$(cat report.md)"
           echo "TEST_RESULTS<<EOF" >> $GITHUB_ENV
           echo "$TEST_RESULTS" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
@@ -43,7 +42,5 @@ jobs:
         with:
           message: |
             **Test Results:**
-            ```
             ${{ env.TEST_RESULTS }}
-            ```
           GITHUB_TOKEN: ${{ secrets.TOKENS }}
