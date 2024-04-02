@@ -19,25 +19,20 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests and capture the output
-        run: npm test -- --verbose > test-results.txt 2>&1
+      - name: Run tests and capture the output in JSON format
+        run: npm test -- --json --outputFile=test-results.json
 
-      - name: Generate test results report
-        id: generate_report
+      - name: Generate test results report from JSON
         run: |
           echo "| Test File       | Passed | Total | Pass Rate (%) |" > report.md
           echo "|-----------------|--------|-------|---------------|" >> report.md
-          TEST_FILES=$(grep -oP 'PASS __tests__/\K[^ ]+' test-results.txt | sort -u)
-          for FILE in $TEST_FILES; do
-            FILE_PATH="__tests__/$FILE"
-            PASSED=$(grep -P "__tests__/$FILE" test-results.txt | grep -o "✓" | wc -l)
-            TOTAL=$(grep -cP "__tests__/$FILE" test-results.txt)
-            if [ "$TOTAL" -ne 0 ]; then
-              RATE=$(echo "scale=2; $PASSED/$TOTAL*100" | bc)
-            else
-              RATE=0
-            fi
-            printf "| %-15s | %6d | %5d | %13.2f |\n" "$FILE" "$PASSED" "$TOTAL" "$RATE" >> report.md
+          jq -r '.testResults[] | "\(.name) \(.assertionResults | length) \(.assertionResults | map(select(.status == "passed")) | length)"' test-results.json | while read -r line; do
+            FILE=$(echo $line | cut -d' ' -f1)
+            TOTAL=$(echo $line | cut -d' ' -f2)
+            PASSED=$(echo $line | cut -d' ' -f3)
+            RATE=$(echo "scale=2; $PASSED/$TOTAL*100" | bc)
+            FILE_NAME=$(basename $FILE)
+            printf "| %-15s | %6d | %5d | %13.2f |\n" "$FILE_NAME" "$PASSED" "$TOTAL" "$RATE" >> report.md
           done
           TEST_RESULTS="$(cat report.md)"
           echo "TEST_RESULTS<<EOF" >> $GITHUB_ENV
