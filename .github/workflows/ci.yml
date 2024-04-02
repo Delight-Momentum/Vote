@@ -20,7 +20,7 @@ jobs:
         run: npm install
 
       - name: Run tests and capture the output
-        run: npm test > test-results.txt 2>&1
+        run: npm test -- --verbose > test-results.txt 2>&1
 
       - name: Upload test results as an artifact
         uses: actions/upload-artifact@v2
