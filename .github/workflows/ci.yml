@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: 20.10.0
       - run: |
-          cd vote
+          cd Vote
           npm installnpm install
       - uses: actions/checkout@v3
       - uses: ArtiomTr/jest-coverage-report-action@v2.3.0
