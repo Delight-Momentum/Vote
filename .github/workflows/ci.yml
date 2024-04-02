@@ -20,22 +20,30 @@ jobs:
         run: npm install
 
       - name: Run tests and capture the output
-        id: test_outcome
+        run: npm test > test-results.txt 2>&1
+
+      - name: Upload test results as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: test-results.txt
+
+      - name: Read test results and set as output
+        id: test_results
         run: |
-          npm test | tee test-results.txt
-          TEST_RESULT=$(cat test-results.txt)
-          echo "TEST_RESULT<<EOF" >> $GITHUB_ENV
-          echo "$TEST_RESULT" >> $GITHUB_ENV
+          TEST_RESULTS="$(cat test-results.txt)"
+          echo "::set-output name=test_results::$TEST_RESULTS"
+          echo "TEST_RESULTS<<EOF" >> $GITHUB_ENV
+          echo "$TEST_RESULTS" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-          echo "::set-output name=test-result::$(echo $TEST_RESULT)"
 
       - name: Leave a comment on PR with test results
         uses: thollander/actions-comment-pull-request@v1
         if: always()
         with:
           message: |
-            **Test Results:** 
+            **Test Results:**
             ```
-            ${{ env.TEST_RESULT }}
+            ${{ env.TEST_RESULTS }}
             ```
           GITHUB_TOKEN: ${{ secrets.TOKENS }}
