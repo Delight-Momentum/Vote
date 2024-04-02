@@ -16,7 +16,9 @@
     "node_modules/",
     "next.config.mjs",
     "postcss.config.js",
-    "babel.config.js"
+    "babel.config.js",
+    "jest.config.js",
+    "jest.setup.js"
   ], // eslint 미적용될 폴더나 파일 명시
   "extends": [
     "airbnb",
