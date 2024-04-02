@@ -24,15 +24,20 @@ jobs:
 
       - name: Generate test results report from JSON
         run: |
-          echo "| Test File       | Passed | Total | Pass Rate (%) |" > report.md
-          echo "|-----------------|--------|-------|---------------|" >> report.md
+          echo "| Test File       | Passed | Total | Pass Rate (%) | Result |" > report.md
+          echo "|-----------------|--------|-------|---------------|--------|" >> report.md
           jq -r '.testResults[] | "\(.name) \(.assertionResults | length) \(.assertionResults | map(select(.status == "passed")) | length)"' test-results.json | while read -r line; do
             FILE=$(echo $line | cut -d' ' -f1)
             TOTAL=$(echo $line | cut -d' ' -f2)
             PASSED=$(echo $line | cut -d' ' -f3)
             RATE=$(echo "scale=2; $PASSED/$TOTAL*100" | bc)
             FILE_NAME=$(basename $FILE)
-            printf "| %-15s | %6d | %5d | %13.2f |\n" "$FILE_NAME" "$PASSED" "$TOTAL" "$RATE" >> report.md
+            if [ "$(printf '%.0f' "$RATE")" -eq 100 ]; then
+              RESULT="🍏"
+            else
+              RESULT="❌"
+            fi
+            printf "| %-15s | %6d | %5d | %13.2f%% | %6s |\n" "$FILE_NAME" "$PASSED" "$TOTAL" "$RATE" "$RESULT" >> report.md
           done
           TEST_RESULTS="$(cat report.md)"
           echo "TEST_RESULTS<<EOF" >> $GITHUB_ENV
