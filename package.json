@@ -10,7 +10,8 @@
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "cypress": "npx cypress open"
+    "cypress": "npx cypress open",
+    "chromatic": "chromatic --exit-zero-on-changes"
   },
   "dependencies": {
     "next": "14.1.4",
@@ -33,6 +34,7 @@
     "@types/react-dom": "^18",
     "@typescript-eslint/parser": "^7.4.0",
     "autoprefixer": "^10.0.1",
+    "chromatic": "^11.3.0",
     "cypress": "^13.7.2",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
