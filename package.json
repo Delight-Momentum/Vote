@@ -15,6 +15,7 @@
     "test-storybook": "test-storybook"
   },
   "dependencies": {
+    "@fontsource/noto-sans-kr": "^5.0.18",
     "mysql2": "^3.9.4",
     "next": "14.1.4",
     "react": "^18",
