@@ -25,7 +25,7 @@ const meta = {
     type: {
       control: { type: 'select' },
       options: ['text', 'password'],
-      description: '텍스트 필드의 타입',
+      description: '인풋의 타입',
       defaultValue: 'text',
     },
   },

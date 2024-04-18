@@ -15,7 +15,7 @@ function InputTest() {
         placeholder="비밀번호를 입력해 주세요"
         data-cy="passwordInput"
       />
-      <SearchBar data-cy="searchBar" />
+      <SearchBar placeholder="투표 만들기" data-cy="searchBar" />
     </>
   )
 }

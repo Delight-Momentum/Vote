@@ -18,7 +18,7 @@ function SearchBar({ placeholder }: SearchBarProps) {
         data-cy="searchBarButton"
         className="absolute bottom-5pxr right-5pxr top-5pxr flex h-48pxr w-48pxr items-center justify-center rounded-full bg-gray p-8pxr
         "
-        aria-label="투표 만들기"
+        aria-label={placeholder}
       >
         <ModeEdit />
       </button>

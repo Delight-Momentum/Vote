@@ -1,5 +1,5 @@
 describe('인풋을 테스트 한다', () => {
-  it('text input을 테스트한다', () => {
+  it('텍스트, 비밀번호, 검색바를 테스트한다', () => {
     // given - 테스트 페이지에 접근한다
     cy.visit('http://localhost:3000/inputtest')
     cy.get('[data-cy=textInput]').as('textInput')
