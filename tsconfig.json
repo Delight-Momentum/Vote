@@ -25,7 +25,8 @@
       "@/hooks/*": ["./hooks/*"],
       "@/cypress/*": ["./cypress/*"],
       "@/styles/*": ["./styles/*"],
-      "@/stories/*": ["./stories/*"]
+      "@/stories/*": ["./stories/*"],
+      "@/assets/*": ["./assets/*"]
     },
     "types": ["cypress"]
   },
