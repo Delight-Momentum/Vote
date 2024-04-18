@@ -4,4 +4,9 @@
 
 body {
   font-family: 'Noto Sans KR';
+  background-color: black;
+}
+
+input:focus {
+  outline: none;
 }
