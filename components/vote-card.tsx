@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
+import CirCleButton from './circle-button'
 
 interface Props {
   isClosed: boolean
@@ -25,12 +26,9 @@ function VoteCard({
         <div className="absolute left-0pxr top-0pxr z-10 flex h-full w-full flex-col items-center justify-center gap-10pxr rounded-2xl bg-[rgba(11,11,11,0.60)]">
           <p className="text-16pxr font-medium text-white">투표가 종료됐어요</p>
           <Link href={participateResultUrl}>
-            <button
-              type="button"
-              className="rounded-full bg-[#e1e1e1] px-24pxr py-10pxr text-16pxr font-bold"
-            >
+            <CirCleButton theme="normal" disabled={isClosed}>
               결과보기
-            </button>
+            </CirCleButton>
           </Link>
         </div>
       )}
@@ -57,12 +55,9 @@ function VoteCard({
         </p>
         {isClosed || (
           <Link href={participateUrl}>
-            <button
-              className="rounded-full bg-[#e1e1e1] px-24pxr py-10pxr text-14pxr font-medium"
-              type="button"
-            >
+            <CirCleButton theme="small" disabled={isClosed}>
               참여하기
-            </button>
+            </CirCleButton>
           </Link>
         )}
       </div>
