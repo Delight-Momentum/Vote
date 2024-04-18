@@ -1,4 +1,4 @@
-import ModeEdit from '@/app/svgs/mode-edit'
+import ModeEdit from '@/assets/svgs/mode-edit'
 import Input from './input'
 
 interface SearchBarProps {
