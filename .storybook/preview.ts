@@ -1,5 +1,7 @@
 import type { Preview } from '@storybook/react'
-import '../app/globals.css'
+import '@fontsource/noto-sans-kr/500.css'
+import '@/styles/globals.css'
+
 const preview: Preview = {
   parameters: {
     controls: {
