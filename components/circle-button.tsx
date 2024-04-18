@@ -1,10 +1,10 @@
+import { ButtonHTMLAttributes } from 'react'
+
 type ButtonTheme = 'small' | 'normal' | 'big'
 
-interface ICirCleButtonProps {
+interface ICirCleButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: string
-  onClick: React.MouseEventHandler<HTMLButtonElement>
   theme: ButtonTheme
-  isDisabled: boolean
 }
 
 const small =
@@ -23,16 +23,14 @@ const buttonStyle: Record<ButtonTheme, string> = {
 
 export default function CirCleButton({
   children,
-  onClick,
   theme,
-  isDisabled: disabled,
+  ...props
 }: ICirCleButtonProps) {
   return (
     <button
       type="button"
       className={`rounded-full ${buttonStyle[theme]} ${disabledStyle}`}
-      onClick={onClick}
-      disabled={disabled}
+      {...props}
     >
       {children}
     </button>

@@ -7,6 +7,7 @@ const meta = {
   component: CircleButton,
   parameters: {
     layout: 'centered',
+    backgrounds: { default: 'dark' },
   },
   tags: ['autodocs'],
   decorators: [
@@ -25,18 +26,9 @@ const meta = {
       description: '버튼 테마',
       defaultValue: 'normal',
     },
-    isDisabled: {
-      control: 'boolean',
-      description: '버튼 비활성화 여부',
-      defaultValue: false,
-    },
     children: {
       control: 'text',
       description: 'button의 내용',
-    },
-    onClick: {
-      action: 'clicked',
-      description: '버튼 클릭 이벤트',
     },
   },
 
@@ -50,7 +42,7 @@ export const Small: Story = {
   args: {
     children: '참여하기',
     theme: 'small',
-    isDisabled: false,
+    disabled: false,
   },
 }
 
@@ -58,7 +50,7 @@ export const Normal: Story = {
   args: {
     children: '참여하기',
     theme: 'normal',
-    isDisabled: false,
+    disabled: false,
   },
 }
 
@@ -66,7 +58,7 @@ export const Big: Story = {
   args: {
     children: '참여하기',
     theme: 'big',
-    isDisabled: false,
+    disabled: false,
   },
 }
 
@@ -74,6 +66,6 @@ export const Disabled: Story = {
   args: {
     children: '참여하기',
     theme: 'big',
-    isDisabled: true,
+    disabled: true,
   },
 }
