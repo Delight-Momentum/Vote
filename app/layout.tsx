@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import '@fontsource/noto-sans-kr/500.css'
+import '@fontsource-variable/noto-sans-kr'
 import '@/styles/globals.css'
 
 export const metadata: Metadata = {
