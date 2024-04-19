@@ -1,5 +1,3 @@
-import React from 'react'
-
 function DeleteDialog() {
   return (
     <div className="flex flex-col justify-center gap-25pxr">
