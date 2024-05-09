@@ -40,6 +40,11 @@ const config: Config = {
       backgroundColor: {
         gray: '#D6D6D6',
       },
+      colors: {
+        primary300: '#7E47E1',
+        primary200: '#D5C1F8',
+        primary100: '#F3EEFC',
+      },
     },
   },
   plugins: [],
