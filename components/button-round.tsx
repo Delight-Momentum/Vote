@@ -2,7 +2,7 @@ import React, { ButtonHTMLAttributes, ReactNode } from 'react'
 
 interface ButtonRoundProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string
-  variant: 'primary'
+  variant: 'primary' | 'secondary'
   size: 'sm' | 'lg'
   children: ReactNode
 }
@@ -15,37 +15,34 @@ function ButtonRound({
   ...props
 }: ButtonRoundProps) {
   const variantConfig = () => {
-    let style = ''
     switch (variant) {
       case 'primary':
-        style = 'bg-black text-white'
-        break
+        return 'bg-primary300 text-white'
+      case 'secondary':
+        return 'bg-white text-primary300 border-2 border-primary300'
       default:
-        style = ''
+        return ''
     }
-    return style
   }
 
   const sizeConfig = () => {
-    let style = ''
     switch (size) {
       case 'lg':
-        style = 'py-16pxr px-24pxr w-465pxr h-56pxr'
-        break
+        return 'py-16pxr px-24pxr w-465pxr h-56pxr'
       case 'sm':
-        style = 'py-16pxr px-24pxr w-[222.5px] h-56pxr'
-        break
+        return 'py-16pxr px-24pxr w-[222.5px] h-56pxr'
       default:
-        style = ''
+        return ''
     }
-    return style
   }
+
+  const disabledStyle = 'disabled:bg-[#b18b8b] disalbed:text-white'
 
   return (
     <button
       type="button"
       aria-label="rounded button"
-      className={`flex items-center justify-center gap-10pxr rounded-lg ${variantConfig()} ${sizeConfig()} ${className} disable:bg-white border border-black text-black`}
+      className={`flex items-center justify-center gap-10pxr rounded-lg ${variantConfig()} ${sizeConfig()} ${className} ${disabledStyle}`}
       {...props}
     >
       {children}

@@ -46,7 +46,16 @@ export const Primary: Story = {
     children: 'button',
     variant: 'primary',
     size: 'lg',
-    isDisabled: false,
+    disabled: false,
+  },
+}
+
+export const Secondary: Story = {
+  args: {
+    children: 'button',
+    variant: 'secondary',
+    size: 'lg',
+    disabled: false,
   },
 }
 
@@ -55,7 +64,7 @@ export const disabled: Story = {
     children: 'button',
     variant: 'primary',
     size: 'lg',
-    isDisabled: true,
+    disabled: true,
   },
 }
 
@@ -64,7 +73,7 @@ export const Large: Story = {
     size: 'lg',
     children: 'button',
     variant: 'primary',
-    isDisabled: false,
+    disabled: false,
   },
 }
 
@@ -73,6 +82,6 @@ export const Small: Story = {
     size: 'sm',
     children: 'button',
     variant: 'primary',
-    isDisabled: false,
+    disabled: false,
   },
 }
