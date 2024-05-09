@@ -35,10 +35,14 @@ function ProgressBar({
         value={value}
         max="100"
       />
-      <span className="absolute left-24pxr top-1/2 -translate-y-1/2 text-16pxr font-normal text-primary300">
+      <span
+        className={`absolute left-24pxr top-1/2 -translate-y-1/2 text-16pxr font-semibold ${selected() ? 'text-primary300' : 'text-[#999999]'}`}
+      >
         {voteItem}
       </span>
-      <span className="absolute right-20pxr top-1/2 -translate-y-1/2 text-16pxr font-normal text-primary300">
+      <span
+        className={`absolute right-16pxr top-1/2 -translate-y-1/2 text-16pxr font-semibold ${selected() ? 'text-primary300' : 'text-[#999999]'}`}
+      >
         {value}%
       </span>
     </div>
