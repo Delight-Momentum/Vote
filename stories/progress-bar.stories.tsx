@@ -19,7 +19,7 @@ const meta = {
   argTypes: {
     voteItem: { control: 'text' },
     choiceCount: { control: 'number' },
-    participantsCount: { control: 'number' },
+    participantCounts: { control: 'number' },
   },
 } satisfies Meta<typeof ProgressBar>
 
@@ -28,8 +28,9 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
+    contentId: 1,
     voteItem: '짬뽕',
     choiceCount: 123,
-    participantsCount: 263,
+    participantCounts: 263,
   },
 }
