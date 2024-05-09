@@ -8,11 +8,11 @@ interface ICirCleButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const small =
-  'bg-[#E1E1E1] px-24pxr border-0 h-40pxr w-100pxr inline-block text-14pxr font-medium'
+  'bg-[#E1E1E1] px-24pxr border-0 h-40pxr w-100pxr inline-block text-14pxr font-medium hover:bg-primary300 hover:text-white'
 const normal =
-  'bg-[#E1E1E1] border-0 px-24pxr h-42pxr w-108pxr inline-block text-16pxr font-bold'
+  'bg-[#E1E1E1] border-0 px-24pxr h-42pxr w-108pxr inline-block text-16pxr font-bold hover:bg-primary300 hover:text-white'
 const big =
-  'border border-[#B0B0B0] px-24pxr h-56pxr inline-block w-full text-16pxr font-medium'
+  'border border-[#B0B0B0] px-24pxr h-56pxr inline-block w-full text-16pxr font-medium hover:bg-primary300 hover:text-white'
 const disabledStyle = 'disabled:text-[#B0B0B0]'
 
 const buttonStyle: Record<ButtonTheme, string> = {
