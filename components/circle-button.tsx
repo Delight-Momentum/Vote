@@ -13,7 +13,7 @@ const normal =
   'bg-primary100 border-0 px-24pxr h-42pxr w-108pxr inline-block text-16pxr font-bold hover:bg-primary300 hover:text-white'
 const big =
   'border border-[#B0B0B0] px-24pxr h-56pxr inline-block w-full text-16pxr font-medium hover:bg-primary300 hover:text-white'
-const disabledStyle = 'disabled:text-[#B0B0B0] disabled:bg-[#999999]'
+const disabledStyle = 'disabled:text-[#e8e8e9] disabled:bg-[#999999]'
 
 const buttonStyle: Record<ButtonTheme, string> = {
   small,
