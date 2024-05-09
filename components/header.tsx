@@ -8,7 +8,7 @@ function Header({ children }: HeaderProps) {
       <div className="flex h-40pxr w-80pxr items-center justify-center bg-[#e6e6e6]">
         로고
       </div>
-      <h1 className="text-24pxr font-bold">{children}</h1>
+      <h1 className="text-24pxr font-bold text-[#49454f]">{children}</h1>
     </header>
   )
 }
