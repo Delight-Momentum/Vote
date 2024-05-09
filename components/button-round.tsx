@@ -1,12 +1,10 @@
-import React, { ReactNode } from 'react'
+import React, { ButtonHTMLAttributes, ReactNode } from 'react'
 
-interface Props {
+interface ButtonRoundProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string
   variant: 'primary'
   size: 'sm' | 'lg'
   children: ReactNode
-  onClick?: () => void
-  isDisabled?: boolean
 }
 
 function ButtonRound({
@@ -14,9 +12,8 @@ function ButtonRound({
   variant,
   size,
   children,
-  onClick,
-  isDisabled = false,
-}: Props) {
+  ...props
+}: ButtonRoundProps) {
   const variantConfig = () => {
     let style = ''
     switch (variant) {
@@ -44,17 +41,12 @@ function ButtonRound({
     return style
   }
 
-  const disabledStyle = isDisabled
-    ? 'bg-white !text-black border border-black'
-    : ''
-
   return (
     <button
       type="button"
       aria-label="rounded button"
-      className={`flex items-center justify-center gap-10pxr rounded-lg ${variantConfig()} ${sizeConfig()} ${className} ${disabledStyle}`}
-      onClick={onClick}
-      disabled={isDisabled}
+      className={`flex items-center justify-center gap-10pxr rounded-lg ${variantConfig()} ${sizeConfig()} ${className} disable:bg-white border border-black text-black`}
+      {...props}
     >
       {children}
     </button>
