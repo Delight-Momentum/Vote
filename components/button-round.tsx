@@ -36,7 +36,7 @@ function ButtonRound({
     }
   }
 
-  const disabledStyle = 'disabled:bg-[#b18b8b] disalbed:text-white'
+  const disabledStyle = 'disabled:bg-[#999999] disalbed:text-white hover:'
 
   return (
     <button
