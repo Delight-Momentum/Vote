@@ -1,5 +1,5 @@
 interface HeaderProps {
-  children: string
+  children?: string
 }
 
 function Header({ children }: HeaderProps) {
