@@ -30,16 +30,22 @@ function VoteCard({
           </Link>
         </div>
       )}
-      <div className="pb-17pxr">
-        <h2 className="text-22pxr font-medium">{voteTitle}</h2>
+      <div className="w-282pxr pb-17pxr">
+        <h2 className="overflow-hidden text-ellipsis whitespace-nowrap text-22pxr font-medium">
+          {voteTitle}
+        </h2>
       </div>
       <div className="relative flex h-239pxr flex-col gap-15pxr pb-25pxr pt-10pxr">
         {sliceVoteItems.map((item) => (
           <div
-            className="flex items-center rounded-md bg-[#eBeBeB] py-17pxr pl-24pxr pr-13pxr"
+            className={`relative flex items-center justify-between overflow-hidden rounded-md bg-[#eBeBeB] py-17pxr pl-25pxr pr-13pxr ${isClosed ? 'bg-[#e7e7e8]' : ''}`}
             key={item}
           >
-            <p className="font-[#49454f] text-16pxr font-normal">{item}</p>
+            <div
+              className={`absolute left-0pxr top-0pxr h-full w-1/2 rounded-r-md bg-primary200 ${isClosed ? 'bg-[#999999]' : ''}`}
+            />
+            <p className="z-10 font-[#49454f] text-16pxr font-normal">{item}</p>
+            <p className="font-[#49454f] text-16pxr font-normal">??%</p>
           </div>
         ))}
         <div className="absolute bottom-25pxr h-58pxr w-270pxr bg-[linear-gradient(180deg,rgba(255,255,255,0.00)_0%,#FFF_100%)]" />
