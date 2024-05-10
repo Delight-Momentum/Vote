@@ -7,7 +7,7 @@ interface SearchBarProps {
 
 function SearchBar({ placeholder }: SearchBarProps) {
   return (
-    <div className="relative flex max-w-621pxr flex-1">
+    <div className="relative mb-60pxr mt-40pxr flex max-w-621pxr flex-1">
       <Input
         className="h-58pxr rounded-[28px] bg-white"
         placeholder={placeholder}

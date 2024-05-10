@@ -1,34 +1,19 @@
-'use client'
-
-import Dialog from '@/components/dialog'
-import DeleteDialog from '@/components/dialog-delete'
-import { useRef, useState } from 'react'
+import LoadMore from '@/assets/svgs/load-more'
+import VoteCardList from '@/components/vote-card-list'
+import { Header, SearchBar } from '../components'
 
 function Home() {
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const dialogRef = useRef<HTMLDivElement>(null)
-
-  const dialogOutSideClick = (e: React.MouseEvent) => {
-    if (dialogRef.current === e.target) {
-      setIsDialogOpen(false)
-    }
-  }
   return (
     <>
-      <button
-        type="button"
-        className="bg-white p-20pxr text-black"
-        onClick={() => setIsDialogOpen(true)}
-      >
-        삭제하기
-      </button>
-      <Dialog
-        isOpen={isDialogOpen}
-        dialogOutSideClick={dialogOutSideClick}
-        dialogRef={dialogRef}
-      >
-        <DeleteDialog />
-      </Dialog>
+      <Header />
+      <div className="flex justify-center">
+        <SearchBar placeholder="투표 타이틀을 검색해주세요" />
+      </div>
+      <VoteCardList />
+      <div className="mb-58pxr mt-64pxr flex items-center justify-center gap-4pxr">
+        <span>더보기</span>
+        <LoadMore />
+      </div>
     </>
   )
 }
