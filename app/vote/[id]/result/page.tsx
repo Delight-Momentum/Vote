@@ -27,6 +27,9 @@ function ResultPage() {
                 participantCounts={523}
               />
             </div>
+            <span className="flex justify-end text-14pxr leading-[21px] tracking-[0.5px] text-[#999999]">
+              총 523명 참여
+            </span>
           </div>
           <ButtonRound variant="primary" size="lg">
             결과 공유하기
