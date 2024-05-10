@@ -12,62 +12,17 @@ function VoteCardList() {
         participateUrl="/vote/1"
         participateResultUrl="/vote/1/result"
       />
-      <VoteCard
-        isClosed
-        voteTitle="가장 최고의 아이돌은?"
-        voteItems={['물냉면', '비빔냉면']}
-        participantsCount={35}
-        participateUrl="/vote/1"
-        participateResultUrl="/vote/1/result"
-      />
-      <VoteCard
-        isClosed
-        voteTitle="가장 최고의 아이돌은?"
-        voteItems={['물냉면', '비빔냉면']}
-        participantsCount={35}
-        participateUrl="/vote/1"
-        participateResultUrl="/vote/1/result"
-      />
-      <VoteCard
-        isClosed
-        voteTitle="가장 최고의 아이돌은?"
-        voteItems={['물냉면', '비빔냉면']}
-        participantsCount={35}
-        participateUrl="/vote/1"
-        participateResultUrl="/vote/1/result"
-      />
-      <VoteCard
-        isClosed
-        voteTitle="가장 최고의 아이돌은?"
-        voteItems={['물냉면', '비빔냉면']}
-        participantsCount={35}
-        participateUrl="/vote/1"
-        participateResultUrl="/vote/1/result"
-      />
-      <VoteCard
-        isClosed
-        voteTitle="가장 최고의 아이돌은?"
-        voteItems={['물냉면', '비빔냉면']}
-        participantsCount={35}
-        participateUrl="/vote/1"
-        participateResultUrl="/vote/1/result"
-      />
-      <VoteCard
-        isClosed
-        voteTitle="가장 최고의 아이돌은?"
-        voteItems={['물냉면', '비빔냉면']}
-        participantsCount={35}
-        participateUrl="/vote/1"
-        participateResultUrl="/vote/1/result"
-      />
-      <VoteCard
-        isClosed
-        voteTitle="가장 최고의 아이돌은?"
-        voteItems={['물냉면', '비빔냉면']}
-        participantsCount={35}
-        participateUrl="/vote/1"
-        participateResultUrl="/vote/1/result"
-      />
+      {Array.from({ length: 7 }, (_, i) => (
+        <VoteCard
+          key={i}
+          isClosed
+          voteTitle="가장 최고의 아이돌은?"
+          voteItems={['물냉면', '비빔냉면']}
+          participantsCount={35}
+          participateUrl="/vote/1"
+          participateResultUrl="/vote/1/result"
+        />
+      ))}
     </div>
   )
 }
