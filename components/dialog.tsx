@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom'
 interface Props {
   isOpen: boolean
   children: ReactNode
-  dialogRef: React.ForwardedRef<HTMLDivElement>
-  dialogOutSideClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  dialogRef?: React.ForwardedRef<HTMLDivElement>
+  dialogOutSideClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
 function Dialog({ isOpen, children, dialogRef, dialogOutSideClick }: Props) {

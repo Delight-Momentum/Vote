@@ -15,7 +15,7 @@ function DeleteDialog() {
           삭제
         </button>
         <button
-          className="text-primray300 p-10pxr font-semibold hover:font-bold"
+          className="text-primary300 p-10pxr font-semibold hover:font-bold"
           type="button"
         >
           투표 유지
