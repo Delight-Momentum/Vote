@@ -10,8 +10,9 @@ function Home() {
       </div>
       <VoteCardList />
       <div className="mb-58pxr mt-64pxr flex items-center justify-center gap-4pxr">
-        <span>더보기</span>
-        <LoadMore />
+        <button type="button" className="flex items-center ">
+          더보기 <LoadMore />
+        </button>
       </div>
     </div>
   )
