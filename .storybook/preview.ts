@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/react'
-import '@fontsource/noto-sans-kr/500.css'
+import '@fontsource-variable/noto-sans-kr'
 import '@/styles/globals.css'
 
 const preview: Preview = {

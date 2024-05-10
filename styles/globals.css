@@ -3,11 +3,15 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Noto Sans KR';
+  font-family: 'Noto Sans KR Variable';
 }
 
 input:focus {
   outline: none;
+}
+
+.header::after {
+  content: '';
 }
 
 .custom-progress::-webkit-progress-bar {
