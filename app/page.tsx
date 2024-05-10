@@ -1,6 +1,5 @@
 import LoadMore from '@/assets/svgs/load-more'
-import VoteCardList from '@/components/vote-card-list'
-import { Header, SearchBar } from '../components'
+import { Header, SearchBar, VoteCardList } from '../components'
 
 function Home() {
   return (
