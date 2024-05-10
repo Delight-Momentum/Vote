@@ -29,11 +29,19 @@ input:focus {
 }
 
 .custom-radio {
-  height: 20px;
-  width: 20px;
   appearance: none;
   border-radius: 9999px;
   background-color: #d9d9d9;
+}
+
+.custom-radio-sm {
+  height: 20px;
+  width: 20px;
+}
+
+.custom-radio-lg {
+  width: 32px;
+  height: 32px;
 }
 
 .custom-radio:focus {

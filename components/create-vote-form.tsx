@@ -39,6 +39,7 @@ function CreateVoteForm() {
           <div className="flex gap-22pxr">
             <div className="flex items-center gap-4pxr">
               <RadioButton
+                size="sm"
                 name="voteMethod"
                 value="one"
                 handleValueChange={handleValueChange}
@@ -50,6 +51,7 @@ function CreateVoteForm() {
             </div>
             <div className="flex items-center gap-4pxr">
               <RadioButton
+                size="sm"
                 name="voteMethod"
                 value="multiple"
                 handleValueChange={handleValueChange}
@@ -67,6 +69,7 @@ function CreateVoteForm() {
           <div className="flex gap-22pxr">
             <div className="flex items-center gap-4pxr">
               <RadioButton
+                size="sm"
                 name="voteParticipant"
                 value="public"
                 handleValueChange={handleValueChange}
@@ -78,6 +81,7 @@ function CreateVoteForm() {
             </div>
             <div className="flex items-center gap-4pxr">
               <RadioButton
+                size="sm"
                 name="voteParticipant"
                 value="private"
                 handleValueChange={handleValueChange}

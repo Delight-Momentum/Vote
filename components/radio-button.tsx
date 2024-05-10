@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react'
 
 interface IRadioButtonProps {
+  size: 'sm' | 'lg'
   name: string
   value: string
   handleValueChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -8,6 +9,7 @@ interface IRadioButtonProps {
 }
 
 function RadioButton({
+  size,
   name,
   value,
   handleValueChange,
@@ -17,7 +19,7 @@ function RadioButton({
     <input
       id={value}
       name={name}
-      className="custom-radio"
+      className={`custom-radio ${size === 'sm' ? 'custom-radio-sm' : 'custom-radio-lg'}`}
       onChange={(e) => handleValueChange(e)}
       type="radio"
       value={value}
