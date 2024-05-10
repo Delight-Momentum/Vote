@@ -4,7 +4,7 @@ import { Header, SearchBar } from '../components'
 
 function Home() {
   return (
-    <>
+    <div className="mx-40pxr">
       <Header />
       <div className="flex justify-center">
         <SearchBar placeholder="투표 타이틀을 검색해주세요" />
@@ -14,7 +14,7 @@ function Home() {
         <span>더보기</span>
         <LoadMore />
       </div>
-    </>
+    </div>
   )
 }
 export default Home
