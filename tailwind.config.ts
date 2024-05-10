@@ -41,9 +41,9 @@ const config: Config = {
         gray: '#D6D6D6',
       },
       colors: {
-        primary300: '#7E47E1',
-        primary200: '#D5C1F8',
-        primary100: '#F3EEFC',
+        primary300: '#7e47e1',
+        primary200: '#d5c1f8',
+        primary100: '#f3eefc',
       },
     },
   },
