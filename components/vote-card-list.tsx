@@ -1,5 +1,14 @@
-import React from 'react'
 import VoteCard from './vote-card'
+
+export interface Cards {
+  id: number
+  title: string
+  isClosed: boolean
+}
+interface Props {
+  cards: Cards[]
+  searching: boolean
+}
 
 const cardsDummy = [
   { id: 1, title: '최고의 음식은?', isClosed: false },
@@ -14,36 +23,36 @@ const cardsDummy = [
 
 export const fetchCards = async (query: string) => {
   await new Promise((r) => {
-    setTimeout(r, 2000)
+    setTimeout(r, 3000)
   })
   return cardsDummy.filter((card) =>
     card.title.toLowerCase().includes(query.toLowerCase()),
   )
 }
 
-export interface Cards {
-  id: number
-  title: string
-  isClosed: boolean
-}
-interface Props {
-  cards: Cards[]
-}
-
-function VoteCardList({ cards }: Props) {
+function VoteCardList({ cards, searching }: Props) {
   return (
-    <div className="row-gap-27pxr grid grid-cols-4 place-items-center justify-center gap-27pxr">
-      {cards.map(({ id, title, isClosed }) => (
-        <VoteCard
-          key={id}
-          isClosed={isClosed}
-          voteTitle={title}
-          voteItems={['물냉면', '비빔냉면']}
-          participantsCount={242}
-          participateUrl="/vote/1"
-          participateResultUrl="/vote/1/result"
-        />
-      ))}
+    <div
+      aria-busy={searching}
+      className="row-gap-27pxr grid grid-cols-4 place-items-center justify-center gap-27pxr"
+    >
+      {searching ? (
+        <p className="text-24pxr font-semibold text-primary300">
+          로딩중입니다. 잠시만 기다려주세요!
+        </p>
+      ) : (
+        cards.map(({ id, title, isClosed }) => (
+          <VoteCard
+            key={id}
+            isClosed={isClosed}
+            voteTitle={title}
+            voteItems={['물냉면', '비빔냉면']}
+            participantsCount={242}
+            participateUrl="/vote/1"
+            participateResultUrl="/vote/1/result"
+          />
+        ))
+      )}
     </div>
   )
 }
