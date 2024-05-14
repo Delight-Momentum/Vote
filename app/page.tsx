@@ -1,30 +1,35 @@
 'use client'
 
 import { ChangeEvent, useEffect, useState } from 'react'
-import { Cards, fetchCards } from '@/components/vote-card-list'
 import LoadMore from '@/assets/svgs/load-more'
 import useDebounce from '@/hooks/useDebounce'
+import getVotelist from 'apis/getVotelist'
+import { VoteList } from 'types/voteListType'
 import { Header, SearchBar, VoteCardList } from '../components'
 
 function Home() {
   const [query, setQuery] = useState('')
-  const [cards, setCards] = useState<Cards[]>([])
-  const [searching, setSearching] = useState(false)
+  const [voteList, setVoteList] = useState<VoteList[]>([])
 
   const debouncedValue = useDebounce({ value: query, delay: 1000 })
+
+  const searchVoteList = async (value: string) => {
+    const data = await getVotelist()
+    return data.filter((vote: VoteList) =>
+      vote.title.toLowerCase().includes(value.toLowerCase()),
+    )
+  }
 
   const searchVote = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value)
   }
 
   useEffect(() => {
-    setSearching(true)
-    fetchCards(debouncedValue).then((value) => setCards(value))
-    setSearching(false)
+    searchVoteList(debouncedValue).then((value) => setVoteList(value))
   }, [debouncedValue])
 
   return (
-    <div className="mx-40pxr">
+    <div className="mx-40pxr flex flex-col items-center">
       <Header />
       <div className="flex justify-center">
         <SearchBar
@@ -33,7 +38,7 @@ function Home() {
           value={query}
         />
       </div>
-      <VoteCardList cards={cards} searching={searching} />
+      <VoteCardList voteList={voteList} />
       <div className="mb-58pxr mt-64pxr flex items-center justify-center gap-4pxr">
         <button type="button" className="flex items-center ">
           더보기 <LoadMore />

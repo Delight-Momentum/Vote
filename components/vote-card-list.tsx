@@ -1,58 +1,24 @@
+import { VoteList } from 'types/voteListType'
 import VoteCard from './vote-card'
 
-export interface Cards {
-  id: number
-  title: string
-  isClosed: boolean
-}
 interface Props {
-  cards: Cards[]
-  searching: boolean
+  voteList: VoteList[]
 }
 
-const cardsDummy = [
-  { id: 1, title: '최고의 음식은?', isClosed: false },
-  { id: 2, title: '최고의 아이돌은?', isClosed: true },
-  { id: 3, title: '최고의 운동은?', isClosed: true },
-  { id: 4, title: '최고의 여행지는?', isClosed: true },
-  { id: 5, title: '최고의 영화는?', isClosed: true },
-  { id: 6, title: '최고의 책은?', isClosed: true },
-  { id: 7, title: '최고의 스포츠는?', isClosed: true },
-  { id: 8, title: '최고의 음악은?', isClosed: true },
-]
-
-export const fetchCards = async (query: string) => {
-  await new Promise((r) => {
-    setTimeout(r, 3000)
-  })
-  return cardsDummy.filter((card) =>
-    card.title.toLowerCase().includes(query.toLowerCase()),
-  )
-}
-
-function VoteCardList({ cards, searching }: Props) {
+function VoteCardList({ voteList }: Props) {
   return (
-    <div
-      aria-busy={searching}
-      className="row-gap-27pxr grid grid-cols-4 place-items-center justify-center gap-27pxr"
-    >
-      {searching ? (
-        <p className="text-24pxr font-semibold text-primary300">
-          로딩중입니다. 잠시만 기다려주세요!
-        </p>
-      ) : (
-        cards.map(({ id, title, isClosed }) => (
-          <VoteCard
-            key={id}
-            isClosed={isClosed}
-            voteTitle={title}
-            voteItems={['물냉면', '비빔냉면']}
-            participantsCount={242}
-            participateUrl="/vote/1"
-            participateResultUrl="/vote/1/result"
-          />
-        ))
-      )}
+    <div className=" grid grid-cols-4 place-items-center gap-27pxr">
+      {voteList.map(({ id, title, isClosed, participantCounts, contents }) => (
+        <VoteCard
+          key={id}
+          isClosed={isClosed}
+          voteTitle={title}
+          voteItems={contents}
+          participantsCount={participantCounts}
+          participateUrl={`/vote/${id}`}
+          participateResultUrl={`/vote/${id}/result`}
+        />
+      ))}
     </div>
   )
 }
