@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import '@fontsource-variable/noto-sans-kr'
 import '@/styles/globals.css'
+import 'react-datepicker/dist/react-datepicker.css'
 
 export const metadata: Metadata = {
   title: 'Vote',

@@ -1,6 +1,5 @@
 import CreateVoteForm from '@/components/create-vote-form'
 import Header from '@/components/header'
-import React from 'react'
 
 function page() {
   return (

@@ -16,10 +16,13 @@
   },
   "dependencies": {
     "@fontsource-variable/noto-sans-kr": "^5.0.5",
+    "@types/react-datepicker": "^6.2.0",
     "mysql2": "^3.9.4",
     "next": "14.1.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-datepicker": "^6.9.0",
+    "react-dom": "^18",
+    "react-hook-form": "^7.51.4"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.2.25",

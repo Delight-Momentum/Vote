@@ -3,14 +3,14 @@ import { ChangeEvent } from 'react'
 interface IRadioButtonProps {
   name: string
   value: string
-  handleValueChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onValueChange: (e: ChangeEvent<HTMLInputElement>) => void
   defaultChecked?: boolean
 }
 
 function RadioButton({
   name,
   value,
-  handleValueChange,
+  onValueChange,
   defaultChecked,
 }: IRadioButtonProps) {
   return (
@@ -18,7 +18,7 @@ function RadioButton({
       id={value}
       name={name}
       className="custom-radio"
-      onChange={(e) => handleValueChange(e)}
+      onChange={(e) => onValueChange(e)}
       type="radio"
       value={value}
       defaultChecked={defaultChecked}
