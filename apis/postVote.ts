@@ -4,7 +4,7 @@ interface Ibody {
   periodStart: string
   periodEnd: string
   method: string
-  participantsName: string
+  participantNameMethod: string
   hostName: string
   password: string
 }

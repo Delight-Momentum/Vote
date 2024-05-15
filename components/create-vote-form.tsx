@@ -8,11 +8,12 @@ import {
   VoteSmallInput,
   VoteTitle,
 } from '@/components/index'
-import useRadio from '@/hooks/useRadio'
-import useDatePicker from '@/hooks/useDatePicker'
+import useRadio from '@/hooks/use-radio'
+import useDatePicker from '@/hooks/use-date-picker'
 import { useForm } from 'react-hook-form'
 import postVote from 'apis/postVote'
 import { useRouter } from 'next/navigation'
+import convertToKoreanTime from 'utils/convert-to-korean-time'
 
 export interface ICreateVoteForm extends Record<string, string | string[]> {
   voteTitle: string
@@ -30,11 +31,6 @@ function CreateVoteForm() {
   } = useForm<ICreateVoteForm>()
   const { radioValues, handleValueChange } = useRadio()
   const { date, selectedDate, selectedTime, handleDateChange } = useDatePicker()
-
-  function convertToKoreanTime(prevDate: Date) {
-    const offset = new Date().getTimezoneOffset() * 60000
-    return new Date(prevDate.getTime() - offset)
-  }
 
   const onSubmit = async (data: ICreateVoteForm) => {
     if (!date.startDate || !date.endDate || !date.time) return
@@ -54,7 +50,7 @@ function CreateVoteForm() {
       periodStart: startDateKoreanTime.toISOString(),
       periodEnd: formattedEndDate,
       method: radioValues.voteMethod,
-      participantsName: radioValues.participant,
+      participantNameMethod: radioValues.participantNameMethod,
       hostName: data.voteHost,
       password: data.password,
     }
@@ -74,10 +70,10 @@ function CreateVoteForm() {
 
   return (
     <form
-      className="flex w-465pxr flex-col gap-48pxr"
+      className="flex w-full max-w-465pxr flex-col gap-48pxr px-12pxr"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="flex flex-col gap-40pxr">
+      <div className="flex w-full flex-col gap-40pxr">
         <VoteTitle register={register} errors={errors} />
         <VoteContents register={register} errors={errors} />
         <VotePeriod
@@ -87,11 +83,11 @@ function CreateVoteForm() {
           handleDateChange={handleDateChange}
         />
         <VoteSelectRadio
-          type="voteMethed"
+          type="voteMethod"
           handleValueChange={handleValueChange}
         />
         <VoteSelectRadio
-          type="voteParticipant"
+          type="voteParticipantMethod"
           handleValueChange={handleValueChange}
         />
         <div className="flex gap-15pxr">

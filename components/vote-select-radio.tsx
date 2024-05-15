@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react'
 import { Label, RadioButton } from '.'
 
 interface IVoteSelectRadio {
-  type: 'voteMethed' | 'voteParticipant'
+  type: 'voteMethod' | 'voteParticipantMethod'
   handleValueChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -16,28 +16,28 @@ function VoteSelectRadio({ type, handleValueChange }: IVoteSelectRadio) {
         <div className="flex items-center gap-4pxr">
           <RadioButton
             name={type}
-            value={type === 'voteMethed' ? 'one' : 'public'}
+            value={type === 'voteMethod' ? 'one' : 'public'}
             onValueChange={handleValueChange}
             defaultChecked
           />
           <label
             className="text-16pxr font-medium"
-            htmlFor={type === 'voteMethed' ? 'one' : 'public'}
+            htmlFor={type === 'voteMethod' ? 'one' : 'public'}
           >
-            {type === 'voteMethed' ? '1개만 선택' : '공개'}
+            {type === 'voteMethod' ? '1개만 선택' : '공개'}
           </label>
         </div>
         <div className="flex items-center gap-4pxr">
           <RadioButton
             name={type}
-            value={type === 'voteMethed' ? 'multiple' : 'private'}
+            value={type === 'voteMethod' ? 'multiple' : 'private'}
             onValueChange={handleValueChange}
           />
           <label
             className="text-16pxr font-medium"
-            htmlFor={type === 'voteMethed' ? 'multiple' : 'private'}
+            htmlFor={type === 'voteMethod' ? 'multiple' : 'private'}
           >
-            {type === 'voteMethed' ? '여러개 선택' : '익명'}
+            {type === 'voteMethod' ? '여러개 선택' : '익명'}
           </label>
         </div>
       </div>

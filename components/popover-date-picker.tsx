@@ -1,8 +1,11 @@
-import Clock from '@/assets/svgs/clock'
-import Calender from '@/assets/svgs/calender'
-import { IDate } from '@/hooks/useDatePicker'
-import useModal from '@/hooks/useModal'
-import DatePicker from 'react-datepicker'
+import { IDate } from '@/hooks/use-date-picker'
+import DatePicker, { registerLocale } from 'react-datepicker'
+import { ko } from 'date-fns/locale/ko'
+import filterPassedTime from 'utils/filter-passed-time'
+import useMediaQueries from '@/hooks/use-media-queries'
+import { CustomInputButton } from '.'
+
+registerLocale('ko', ko)
 
 interface IModalDatePickerProps {
   type: 'date' | 'time'
@@ -19,75 +22,67 @@ function PopoverDatePicker({
   selectedTime,
   onDateChange,
 }: IModalDatePickerProps) {
-  const { isDialogOpen, setIsDialogOpen } = useModal()
+  const mobileMediaQuery = useMediaQueries({ breakpoint: 639 })?.mediaQuery
+    .matches
 
-  const handleDatePickerClose = () => {
-    setIsDialogOpen(false)
+  const isMobile = typeof window !== 'undefined' ? mobileMediaQuery : false
+
+  const renderDatePicker = () => {
+    switch (type) {
+      case 'date':
+        return (
+          <DatePicker
+            className="flex gap-4pxr text-16pxr font-semibold text-primary300 sm:gap-9pxr"
+            selected={date.endDate}
+            onChange={(selectedDates) => {
+              onDateChange({
+                ...date,
+                startDate: new Date(),
+                endDate: selectedDates,
+              })
+            }}
+            minDate={new Date()}
+            selectsStart
+            customInput={
+              <CustomInputButton type={type} selectedDate={selectedDate} />
+            }
+            enableTabLoop={false}
+            showPopperArrow={false}
+            locale="ko"
+            withPortal={isMobile}
+          />
+        )
+
+      case 'time':
+        return (
+          <DatePicker
+            className="flex gap-4pxr text-16pxr font-semibold text-primary300 sm:gap-48pxr"
+            selected={date.time}
+            onChange={(selectTime) => {
+              onDateChange({
+                ...date,
+                time: selectTime,
+              })
+            }}
+            showTimeSelect
+            showTimeSelectOnly
+            timeIntervals={30}
+            customInput={
+              <CustomInputButton type={type} selectedTime={selectedTime} />
+            }
+            timeCaption="마감 시간"
+            filterTime={filterPassedTime}
+            showPopperArrow={false}
+            enableTabLoop={false}
+            locale="ko"
+            withPortal={isMobile}
+          />
+        )
+      default:
+        return null
+    }
   }
-
-  return (
-    <div className="relative">
-      {type === 'date' && selectedDate ? (
-        <>
-          <button
-            className="flex gap-9pxr text-16pxr font-semibold text-primary300"
-            type="button"
-            onClick={() => setIsDialogOpen(true)}
-          >
-            {selectedDate()}
-            <Calender />
-          </button>
-          {isDialogOpen && (
-            <div className="absolute left-0pxr top-30pxr z-10">
-              <DatePicker
-                selected={date.endDate}
-                onChange={(selectedDates) => {
-                  onDateChange({
-                    ...date,
-                    startDate: new Date(),
-                    endDate: selectedDates,
-                  })
-                }}
-                onClickOutside={handleDatePickerClose}
-                minDate={new Date()}
-                selectsStart
-                inline
-              />
-            </div>
-          )}
-        </>
-      ) : (
-        <>
-          <button
-            className="flex gap-48pxr text-16pxr font-semibold text-primary300"
-            type="button"
-            onClick={() => setIsDialogOpen(true)}
-          >
-            {selectedTime && selectedTime()}
-            <Clock />
-          </button>
-          {isDialogOpen && (
-            <div className="absolute right-0pxr top-30pxr z-10">
-              <DatePicker
-                selected={date.startDate}
-                onChange={(selectTime) => {
-                  onDateChange({
-                    ...date,
-                    time: selectTime,
-                  })
-                }}
-                onClickOutside={handleDatePickerClose}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={30}
-                inline
-              />
-            </div>
-          )}
-        </>
-      )}
-    </div>
-  )
+  return renderDatePicker()
 }
 
 export default PopoverDatePicker
