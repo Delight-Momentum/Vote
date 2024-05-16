@@ -19,7 +19,7 @@ function VoteCard({
   participateUrl,
   participateResultUrl,
 }: Props) {
-  const sliceVoteItems = voteItems.slice(0, 3)
+  const sliceVoteItems = voteItems?.slice(0, 3)
   return (
     <div className="relative h-376pxr w-320pxr rounded-2xl bg-white px-25pxr pb-25pxr pt-17pxr">
       {isClosed && (
@@ -36,7 +36,7 @@ function VoteCard({
         </h2>
       </div>
       <div className="relative flex h-239pxr flex-col gap-15pxr pb-25pxr pt-10pxr">
-        {sliceVoteItems.map((item) => (
+        {sliceVoteItems?.map((item) => (
           <div
             className={`relative flex items-center justify-between overflow-hidden rounded-md bg-[#eBeBeB] py-17pxr pl-25pxr pr-13pxr ${isClosed ? 'bg-[#e7e7e8]' : ''}`}
             key={item}

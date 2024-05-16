@@ -1,15 +1,12 @@
-// const getVotelist = async () => {
-//   fetch('http://13.125.250.153:3000/api/votelist')
-//     .then((res) => res)
-//     .then((result) => console.log(result))
-// }
+import { IVoteList } from 'types/voteListType'
 
-// export default getVotelist
-
-const getVotelist = async () => {
-  const response = await fetch('http://13.125.250.153:3000/api/votelist', {
-    cache: 'no-store',
-  })
+const getVotelist = async (offset: number): Promise<IVoteList> => {
+  const response = await fetch(
+    `http://13.125.250.153:3000/api/votelist?offset=${offset}&limit=8`,
+    {
+      cache: 'no-store',
+    },
+  )
   return response.json()
 }
 

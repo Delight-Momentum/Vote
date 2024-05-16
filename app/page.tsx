@@ -1,32 +1,55 @@
 'use client'
 
-import { ChangeEvent, useEffect, useState } from 'react'
-import LoadMore from '@/assets/svgs/load-more'
-import useDebounce from '@/hooks/useDebounce'
+import React, { useEffect, useRef, useState } from 'react'
 import getVotelist from 'apis/getVotelist'
-import { VoteList } from 'types/voteListType'
+import useIntersectionObserver from '@/hooks/useIntersectionObserver'
+import { IVote } from 'types/voteListType'
 import { Header, SearchBar, VoteCardList } from '../components'
 
 function Home() {
-  const [query, setQuery] = useState('')
-  const [voteList, setVoteList] = useState<VoteList[]>([])
+  const [voteList, setVoteList] = useState<IVote[]>([])
+  const [offset, setOffset] = useState(1)
+  const [totalCount, setTotalCount] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
+  const limit = 8
+  const itemCounts = voteList.length
 
-  const debouncedValue = useDebounce({ value: query, delay: 1000 })
+  const { observe, unobserve, isVisible, setIsVisible } =
+    useIntersectionObserver(() => setOffset((prev) => prev + limit))
 
-  const searchVoteList = async (value: string) => {
-    const data = await getVotelist()
-    return data.filter((vote: VoteList) =>
-      vote.title.toLowerCase().includes(value.toLowerCase()),
-    )
+  const fetchVoteList = async (offsetValue: number) => {
+    if (isLoading) return
+    setIsLoading(true)
+    const result = await getVotelist(offsetValue)
+    const { votes } = result
+    if (Array.isArray(votes)) {
+      setVoteList((prev) => [...prev, ...votes])
+      setTotalCount(result.total)
+      setIsVisible(false)
+      setIsLoading(false)
+    }
   }
 
-  const searchVote = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value)
-  }
+  const targetRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    searchVoteList(debouncedValue).then((value) => setVoteList(value))
-  }, [debouncedValue])
+    const currentTarget = targetRef.current
+    if (currentTarget && totalCount > itemCounts && !isVisible) {
+      observe(currentTarget)
+    }
+
+    return () => {
+      if (currentTarget && totalCount > itemCounts && !isVisible) {
+        unobserve(currentTarget)
+      }
+    }
+  }, [itemCounts, totalCount, isVisible, observe, unobserve])
+
+  useEffect(() => {
+    if (isVisible) {
+      fetchVoteList(offset)
+    }
+  }, [isVisible])
 
   return (
     <div className="mx-40pxr flex flex-col items-center">
@@ -34,16 +57,12 @@ function Home() {
       <div className="flex justify-center">
         <SearchBar
           placeholder="투표 타이틀을 검색해주세요"
-          onChange={searchVote}
-          value={query}
+          onChange={() => console.log('온체인지 실행됨')}
+          value="구현 예정입니다."
         />
       </div>
       <VoteCardList voteList={voteList} />
-      <div className="mb-58pxr mt-64pxr flex items-center justify-center gap-4pxr">
-        <button type="button" className="flex items-center ">
-          더보기 <LoadMore />
-        </button>
-      </div>
+      <div className="h-1pxr w-1pxr" ref={targetRef} />
     </div>
   )
 }

@@ -1,4 +1,4 @@
-export interface VoteList {
+export interface IVote {
   id: number
   title: string
   period_start: Date
@@ -12,4 +12,9 @@ export interface VoteList {
   participantCounts: number
   isClosed: boolean
   contents: string[]
+}
+
+export interface IVoteList {
+  total: number
+  votes: IVote[]
 }
