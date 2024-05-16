@@ -1,8 +1,7 @@
 import CreateVoteForm from '@/components/create-vote-form'
 import Header from '@/components/header'
-import React from 'react'
 
-function page() {
+function CreateVotePage() {
   return (
     <>
       <Header>투표 만들기</Header>
@@ -13,4 +12,4 @@ function page() {
   )
 }
 
-export default page
+export default CreateVotePage
