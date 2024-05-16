@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import '@fontsource-variable/noto-sans-kr'
 import '@/styles/globals.css'
+import '@/styles/custom-datepicker.css'
+import 'react-datepicker/dist/react-datepicker.css'
 
 export const metadata: Metadata = {
   title: 'Vote',
@@ -14,9 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>
+      <body className="bg-[#F7F5FA]">
         {children}
         <div id="global-dialog" />
+        <div id="portal-datepicker" />
       </body>
     </html>
   )

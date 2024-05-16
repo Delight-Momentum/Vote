@@ -24,6 +24,6 @@ input:focus {
   border-top-right-radius: 0.375rem;
 }
 
-.custom-progress-selected::-webkit-progress-value{
+.custom-progress-selected::-webkit-progress-value {
   background-color: #d5c1f8;
 }
