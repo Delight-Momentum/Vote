@@ -21,6 +21,7 @@ function VoteTitle({ register, errors }: IVoteTitleProps) {
         errors={errors}
         hookFormRequired="제목을 입력해 주세요"
         placeholder="제목을 입력해 주세요"
+        data-cy="titleInput"
       />
     </div>
   )

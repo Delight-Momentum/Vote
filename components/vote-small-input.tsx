@@ -40,6 +40,7 @@ function VoteSmallInput({ type, register, errors }: IVoteSmallInputProps) {
             : '비밀번호를 입력해주세요'
         }
         autoComplete={type === 'voteHost' ? 'name' : 'new-password'}
+        data-cy={type === 'voteHost' ? 'nameInput' : 'passwordInput'}
       />
     </div>
   )

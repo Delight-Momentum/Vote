@@ -19,6 +19,7 @@ function VoteSelectRadio({ type, handleValueChange }: IVoteSelectRadio) {
             value={type === 'voteMethod' ? 'one' : 'public'}
             onValueChange={handleValueChange}
             defaultChecked
+            data-cy={type === 'voteMethod' ? 'radioOne' : 'radioPublic'}
           />
           <label
             className="text-16pxr font-medium"
@@ -32,6 +33,7 @@ function VoteSelectRadio({ type, handleValueChange }: IVoteSelectRadio) {
             name={type}
             value={type === 'voteMethod' ? 'multiple' : 'private'}
             onValueChange={handleValueChange}
+            data-cy={type === 'voteMethod' ? 'radioMultiple' : 'radioPrivate'}
           />
           <label
             className="text-16pxr font-medium"

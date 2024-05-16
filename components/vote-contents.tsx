@@ -38,6 +38,7 @@ function VoteContents({ register, errors }: IVoteContentsProps) {
           errors={errors}
           hookFormRequired="항목을 입력해주세요"
           placeholder={`${i + 1}번 항목`}
+          data-cy={`contentInput-${i + 1}`}
         />,
       )
     }
@@ -61,6 +62,7 @@ function VoteContents({ register, errors }: IVoteContentsProps) {
         theme="big"
         onClick={handleAddClick}
         disabled={inputCount === MAX_CONTENTS}
+        data-cy="addContentButton"
       >
         추가하기
       </CircleButton>

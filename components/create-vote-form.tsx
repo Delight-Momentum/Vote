@@ -11,7 +11,7 @@ import {
 import useRadio from '@/hooks/use-radio'
 import useDatePicker from '@/hooks/use-date-picker'
 import { useForm } from 'react-hook-form'
-import postVote from 'apis/postVote'
+import postVote from 'apis/post-vote'
 import { useRouter } from 'next/navigation'
 import convertToKoreanTime from 'utils/convert-to-korean-time'
 
@@ -95,7 +95,12 @@ function CreateVoteForm() {
           <VoteSmallInput type="password" register={register} errors={errors} />
         </div>
       </div>
-      <ButtonRound type="submit" variant="primary" size="lg">
+      <ButtonRound
+        type="submit"
+        variant="primary"
+        size="lg"
+        data-cy="createVoteButton"
+      >
         투표 등록하기
       </ButtonRound>
     </form>

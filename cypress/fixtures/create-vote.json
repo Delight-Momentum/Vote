@@ -1,0 +1,32 @@
+{
+  "id": 1,
+  "title": "title 입니다.",
+  "periodStart": "2024-05-16T15:01:19.455Z",
+  "periodEnd": "2024-05-16T15:30:19.455Z",
+  "method": "multiple",
+  "participantNameMethod": "private",
+  "hostName": "name 입니다.",
+  "password": "$2a$10$MnZDNE3NtYgUexQIkTSd3.IVu8fM0WNQvkIzn3rbyfbhX08HkES2W",
+  "updatedAt": "2024-05-16T06:01:27.676Z",
+  "createdAt": "2024-05-16T06:01:27.676Z",
+  "contents": [
+    {
+      "content": "content 1 입니다.",
+      "voteId": 1,
+      "createdAt": "2024-05-16T06:01:27.733Z",
+      "updatedAt": "2024-05-16T06:01:27.733Z"
+    },
+    {
+      "content": "content 2 입니다.",
+      "voteId": 1,
+      "createdAt": "2024-05-16T06:01:27.733Z",
+      "updatedAt": "2024-05-16T06:01:27.733Z"
+    },
+    {
+      "content": "content 3 입니다.",
+      "voteId": 1,
+      "createdAt": "2024-05-16T06:01:27.733Z",
+      "updatedAt": "2024-05-16T06:01:27.733Z"
+    }
+  ]
+}

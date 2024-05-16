@@ -12,6 +12,7 @@ function RadioButton({
   value,
   onValueChange,
   defaultChecked,
+  ...props
 }: IRadioButtonProps) {
   return (
     <input
@@ -22,6 +23,7 @@ function RadioButton({
       type="radio"
       value={value}
       defaultChecked={defaultChecked}
+      {...props}
     />
   )
 }
