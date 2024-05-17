@@ -5,11 +5,17 @@ import { ICreateVoteForm } from './create-vote-form'
 
 interface IVoteSmallInputProps {
   type: 'voteHost' | 'password'
-  register: UseFormRegister<ICreateVoteForm>
-  errors: FieldErrors<ICreateVoteForm>
+  register?: UseFormRegister<ICreateVoteForm>
+  errors?: FieldErrors<ICreateVoteForm>
+  value?: string
 }
 
-function VoteSmallInput({ type, register, errors }: IVoteSmallInputProps) {
+function VoteSmallInput({
+  type,
+  register,
+  errors,
+  value,
+}: IVoteSmallInputProps) {
   return (
     <div className="flex flex-col gap-10pxr">
       <Label
@@ -21,7 +27,7 @@ function VoteSmallInput({ type, register, errors }: IVoteSmallInputProps) {
       <Input
         id={type === 'voteHost' ? 'voteHost' : 'password'}
         className={
-          errors[type === 'voteHost' ? 'voteHost' : 'password']
+          errors && errors[type === 'voteHost' ? 'voteHost' : 'password']
             ? 'w-full border border-red-500'
             : 'w-full'
         }
@@ -40,6 +46,8 @@ function VoteSmallInput({ type, register, errors }: IVoteSmallInputProps) {
             : '비밀번호를 입력해주세요'
         }
         autoComplete={type === 'voteHost' ? 'name' : 'new-password'}
+        value={value && value}
+        disabled={!!value}
         data-cy={type === 'voteHost' ? 'nameInput' : 'passwordInput'}
       />
     </div>

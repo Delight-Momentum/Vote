@@ -1,3 +1,5 @@
+'use client'
+
 import { IDate } from '@/hooks/use-date-picker'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import { ko } from 'date-fns/locale/ko'

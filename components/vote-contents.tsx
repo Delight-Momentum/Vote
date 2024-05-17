@@ -1,15 +1,19 @@
+'use client'
+
 import { ReactNode, useEffect, useState } from 'react'
 import { FieldErrors, UseFormRegister } from 'react-hook-form'
+import { VoteContent } from 'apis/get-vote'
 import { CircleButton, Input, Label } from '.'
 import { ICreateVoteForm } from './create-vote-form'
 
 interface IVoteContentsProps {
-  register: UseFormRegister<ICreateVoteForm>
-  errors: FieldErrors<ICreateVoteForm>
+  register?: UseFormRegister<ICreateVoteForm>
+  errors?: FieldErrors<ICreateVoteForm>
+  values?: VoteContent[]
 }
 const MAX_CONTENTS = 10
 
-function VoteContents({ register, errors }: IVoteContentsProps) {
+function VoteContents({ register, errors, values }: IVoteContentsProps) {
   const [inputCount, setInputCount] = useState(2)
   const [inputs, setInputs] = useState<ReactNode[]>([])
 
@@ -29,9 +33,10 @@ function VoteContents({ register, errors }: IVoteContentsProps) {
         <Input
           id={`voteContents${i}`}
           className={
-            errors.voteContents && errors.voteContents[i]
+            errors &&
+            (errors.voteContents && errors.voteContents[i]
               ? 'border border-red-500'
-              : ''
+              : '')
           }
           hookFormId={i}
           register={register}
@@ -39,12 +44,20 @@ function VoteContents({ register, errors }: IVoteContentsProps) {
           hookFormRequired="항목을 입력해주세요"
           placeholder={`${i + 1}번 항목`}
           data-cy={`contentInput-${i + 1}`}
+          value={values && values[i].content}
+          disabled={!!values}
         />,
       )
     }
 
     setInputs(updatedInputs)
-  }, [inputCount, register, errors])
+  }, [inputCount, register, errors, values])
+
+  useEffect(() => {
+    if (values) {
+      setInputCount(values.length)
+    }
+  }, [values])
 
   return (
     <div className="flex flex-col gap-10pxr">
@@ -61,7 +74,7 @@ function VoteContents({ register, errors }: IVoteContentsProps) {
       <CircleButton
         theme="big"
         onClick={handleAddClick}
-        disabled={inputCount === MAX_CONTENTS}
+        disabled={inputCount === MAX_CONTENTS || !!values}
         data-cy="addContentButton"
       >
         추가하기
