@@ -23,7 +23,7 @@ function VoteCard({
   return (
     <div className="relative h-376pxr w-320pxr rounded-2xl bg-white px-25pxr pb-25pxr pt-17pxr">
       {isClosed && (
-        <div className="absolute left-0pxr top-0pxr z-10 flex h-full w-full flex-col items-center justify-center gap-10pxr rounded-2xl bg-[rgba(11,11,11,0.60)]">
+        <div className="absolute left-0pxr top-0pxr z-50 flex h-full w-full flex-col items-center justify-center gap-10pxr rounded-2xl bg-[rgba(11,11,11,0.60)]">
           <p className="text-16pxr font-medium text-white">투표가 종료됐어요</p>
           <Link href={participateResultUrl}>
             <CirCleButton theme="normal">결과보기</CirCleButton>
