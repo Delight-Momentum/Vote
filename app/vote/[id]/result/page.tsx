@@ -1,34 +1,52 @@
+'use client'
+
 import ButtonRound from '@/components/button-round'
 import Header from '@/components/header'
 import ProgressBar from '@/components/progress-bar'
-import React from 'react'
+import getVote from 'apis/getVote'
+import { useParams } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+import { IOneVote } from 'types/voteType'
 
 function ResultPage() {
+  const [vote, setVote] = useState<IOneVote>({})
+  const { id } = useParams()
+
+  useEffect(() => {
+    const fetchVoteData = async () => {
+      try {
+        const result = await getVote(Number(id))
+        setVote(result)
+      } catch (error) {
+        console.error('fetch에 실패했습니다.', error)
+      }
+    }
+
+    fetchVoteData()
+  }, [id])
+  const { title, participantCounts, contents } = vote
   return (
     <>
       <Header>투표결과</Header>
-      <div className="flex flex-col items-center">
+      <div className="mt-62pxr flex flex-col items-center">
         <div className="mt-62pxr flex h-320pxr w-465pxr flex-col justify-center">
           <div className="mb-48pxr flex flex-col gap-20pxr">
             <h1 className="text-24pxr font-semibold leading-[36px] tracking-[0.12px]">
-              가장 최고의 아이돌은?
+              {title}
             </h1>
             <div className="flex flex-col gap-10pxr">
-              <ProgressBar
-                contentId={1}
-                voteItem="BTS"
-                choiceCount={300}
-                participantCounts={523}
-              />
-              <ProgressBar
-                contentId={2}
-                voteItem="빅뱅"
-                choiceCount={223}
-                participantCounts={523}
-              />
+              {contents?.map((content) => (
+                <ProgressBar
+                  key={content.id}
+                  contentId={content.id}
+                  voteItem={content.content}
+                  choiceCount={content.selectedCounts}
+                  participantCounts={participantCounts}
+                />
+              ))}
             </div>
             <span className="flex justify-end text-14pxr leading-[21px] tracking-[0.5px] text-[#999999]">
-              총 523명 참여
+              총 {participantCounts}명 참여
             </span>
           </div>
           <ButtonRound variant="primary" size="lg">
