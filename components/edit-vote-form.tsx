@@ -1,124 +1,144 @@
 'use client'
 
-import { ButtonRound, Input, Label } from '@/components/index'
-import useRadio from '@/hooks/useRadio'
-import RadioButton from './radio-button'
+import {
+  ButtonRound,
+  VoteContents,
+  VotePeriod,
+  VoteSelectRadio,
+  VoteSmallInput,
+  VoteTitle,
+} from '@/components/index'
+import useRadio from '@/hooks/use-radio'
+import { useParams, useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import useDatePicker from '@/hooks/use-date-picker'
+import convertToKoreanTime from 'utils/convert-to-korean-time'
+import deConvertToKoreanTime from 'utils/de-convert-to-korean-time'
+import { useEffect, useState } from 'react'
+import getVote, { IGetVoteResponse } from 'apis/get-vote'
+import putVote from 'apis/put-vote'
+
+export interface ICreateVoteForm extends Record<string, string | string[]> {
+  voteTitle: string
+  voteContents: string[]
+  voteHost: string
+  password: string
+}
 
 function EditVoteForm() {
-  const { radioValues, handleValueChange } = useRadio()
-  console.log(radioValues)
+  const route = useRouter()
+  const params = useParams()
+  const { id } = params
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ICreateVoteForm>()
+  const [voteData, setVoteData] = useState<IGetVoteResponse | null>(null)
+  const { handleValueChange } = useRadio()
+  const { date, selectedDate, selectedTime, handleDateChange } = useDatePicker()
+
+  const onSubmit = async (data: ICreateVoteForm) => {
+    try {
+      if (!date.startDate || !date.endDate || !date.time) return
+
+      const endDateKoreanTime = convertToKoreanTime(date.endDate)
+      const endTimeKoreanTime = convertToKoreanTime(date.time)
+
+      const formattedEndDate = endDateKoreanTime
+        .toISOString()
+        .split('T')[0]
+        .concat('T', endTimeKoreanTime.toISOString().split('T')[1])
+
+      const voteBody = {
+        periodEnd: formattedEndDate,
+        password: data.password,
+      }
+
+      const response = await putVote({ voteId: id as string, body: voteBody })
+
+      if (response.status === 401) {
+        alert('비밀번호가 일치하지 않습니다.')
+        return
+      }
+
+      route.push(`/vote/${id}`)
+    } catch (error) {
+      console.error('Error editing vote:', error)
+    }
+  }
+
+  useEffect(() => {
+    const fetchVoteData = async () => {
+      try {
+        const response = await getVote({ id: id as string })
+        if (response.status === 404) {
+          alert('존재하지 않는 투표입니다.')
+          route.push('/')
+          return
+        }
+
+        const res = await response.json()
+
+        setVoteData(res)
+        const startDateKoreanTime = deConvertToKoreanTime(
+          new Date(res.periodStart),
+        )
+        const endKoreanTime = deConvertToKoreanTime(new Date(res.periodEnd))
+
+        handleDateChange({
+          startDate: startDateKoreanTime,
+          endDate: endKoreanTime,
+          time: endKoreanTime,
+        })
+      } catch (error) {
+        console.error('Error fetching vote data:', error)
+      }
+    }
+
+    fetchVoteData()
+  }, [handleDateChange, id, route])
+
   return (
-    <form className="flex w-465pxr flex-col gap-48pxr">
-      <div className="flex flex-col gap-40pxr">
-        <div className="flex flex-col gap-10pxr">
-          <Label htmlFor="voteTitle" theme="small">
-            투표 제목
-          </Label>
-          <Input id="voteTitle" placeholder="제목을 입력해 주세요" />
-        </div>
-        <div className="flex flex-col gap-10pxr">
-          <Label htmlFor="voteContent" theme="small">
-            투표 내용
-          </Label>
-          <div className="flex flex-col gap-15pxr">
-            <Input id="voteContent" placeholder="1번 항목" />
-            <Input placeholder="2번 항목" />
-          </div>
-        </div>
-        <div className="flex flex-col gap-10pxr">
-          <Label htmlFor="votePeriod" theme="small">
-            투표 기간
-          </Label>
-          <Input id="votePeriod" type="date" />
-        </div>
-        <div className="flex flex-col gap-10pxr">
-          <Label htmlFor="voteMethod" theme="small">
-            투표 방식
-          </Label>
-          <div className="flex gap-22pxr">
-            <div className="flex items-center gap-4pxr">
-              <RadioButton
-                size="sm"
-                name="voteMethod"
-                value="one"
-                handleValueChange={handleValueChange}
-                defaultChecked
-              />
-              <label className="text-16pxr font-medium" htmlFor="one">
-                1개만 선택
-              </label>
-            </div>
-            <div className="flex items-center gap-4pxr">
-              <RadioButton
-                size="sm"
-                name="voteMethod"
-                value="multiple"
-                handleValueChange={handleValueChange}
-              />
-              <label className="text-16pxr font-medium" htmlFor="multiple">
-                여러개 선택
-              </label>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col gap-10pxr">
-          <Label htmlFor="voteParticipant" theme="small">
-            참여자 이름
-          </Label>
-          <div className="flex gap-22pxr">
-            <div className="flex items-center gap-4pxr">
-              <RadioButton
-                size="sm"
-                name="voteParticipant"
-                value="public"
-                handleValueChange={handleValueChange}
-                defaultChecked
-              />
-              <label className="text-16pxr font-medium" htmlFor="public">
-                공개
-              </label>
-            </div>
-            <div className="flex items-center gap-4pxr">
-              <RadioButton
-                size="sm"
-                name="voteParticipant"
-                value="private"
-                handleValueChange={handleValueChange}
-              />
-              <label className="text-16pxr font-medium" htmlFor="private">
-                익명
-              </label>
-            </div>
-          </div>
-        </div>
-        <div className="flex gap-20pxr">
-          <div className="flex flex-col gap-10pxr">
-            <Label htmlFor="voteHostName" theme="small">
-              투표 제작자
-            </Label>
-            <Input
-              id="voteHostName"
-              className="w-full"
-              placeholder="닉네임을 입력해 주세요"
-            />
-          </div>
-          <div className="flex flex-col gap-10pxr">
-            <Label htmlFor="password" theme="small">
-              비밀번호
-            </Label>
-            <Input
-              id="password"
-              className="w-full"
-              placeholder="비밀번호를 입력해 주세요"
-            />
-          </div>
+    <form
+      className="flex w-full max-w-465pxr flex-col gap-48pxr px-12pxr"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div className="flex w-full flex-col gap-40pxr">
+        <VoteTitle value={voteData?.title} />
+        <VoteContents values={voteData?.contents} />
+        <VotePeriod
+          date={date}
+          selectedDate={selectedDate}
+          selectedTime={selectedTime}
+          handleDateChange={handleDateChange}
+        />
+        <VoteSelectRadio
+          type="voteMethod"
+          handleValueChange={handleValueChange}
+          value={voteData?.method}
+        />
+        <VoteSelectRadio
+          type="voteParticipantMethod"
+          handleValueChange={handleValueChange}
+          value={voteData?.participantNameMethod}
+        />
+        <div className="flex gap-15pxr">
+          <VoteSmallInput type="voteHost" value={voteData?.hostName} />
+          <VoteSmallInput type="password" register={register} errors={errors} />
         </div>
       </div>
       <div className="flex gap-20pxr">
         <ButtonRound variant="primary" size="sm">
           재투표 하기
         </ButtonRound>
-        <ButtonRound variant="primary" size="sm">
+        <ButtonRound
+          type="submit"
+          variant="primary"
+          size="sm"
+          data-cy="editVoteButton"
+        >
           수정완료
         </ButtonRound>
       </div>

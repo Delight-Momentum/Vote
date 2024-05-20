@@ -34,7 +34,6 @@ function CreateVoteForm() {
 
   const onSubmit = async (data: ICreateVoteForm) => {
     if (!date.startDate || !date.endDate || !date.time) return
-
     const startDateKoreanTime = convertToKoreanTime(date.startDate)
     const endDateKoreanTime = convertToKoreanTime(date.endDate)
     const endTimeKoreanTime = convertToKoreanTime(date.time)
@@ -56,16 +55,18 @@ function CreateVoteForm() {
     }
 
     const response = await postVote({ body: voteData })
+    const res = await response.json()
 
     const getLocalStorage = localStorage.getItem('voteId')
     localStorage.setItem(
       'voteId',
       JSON.stringify([
         ...(getLocalStorage ? JSON.parse(getLocalStorage) : []),
-        response.id,
+        res.id,
       ]),
     )
-    route.push(`/vote/${response.id}`)
+
+    route.push(`/vote/${res.id}`)
   }
 
   return (

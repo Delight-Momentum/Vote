@@ -3,10 +3,11 @@ import { Label, RadioButton } from '.'
 
 interface IVoteSelectRadio {
   type: 'voteMethod' | 'voteParticipantMethod'
-  handleValueChange: (e: ChangeEvent<HTMLInputElement>) => void
+  handleValueChange?: (e: ChangeEvent<HTMLInputElement>) => void
+  value?: string
 }
 
-function VoteSelectRadio({ type, handleValueChange }: IVoteSelectRadio) {
+function VoteSelectRadio({ type, handleValueChange, value }: IVoteSelectRadio) {
   return (
     <div className="flex flex-col gap-10pxr">
       <Label htmlFor={type} theme="small">
@@ -18,7 +19,9 @@ function VoteSelectRadio({ type, handleValueChange }: IVoteSelectRadio) {
             name={type}
             value={type === 'voteMethod' ? 'one' : 'public'}
             onValueChange={handleValueChange}
-            defaultChecked
+            disabled={value ? true : value === 'one' || value === 'public'}
+            checked={value ? value === 'one' || value === 'public' : undefined}
+            defaultChecked={!value}
             data-cy={type === 'voteMethod' ? 'radioOne' : 'radioPublic'}
           />
           <label
@@ -33,6 +36,10 @@ function VoteSelectRadio({ type, handleValueChange }: IVoteSelectRadio) {
             name={type}
             value={type === 'voteMethod' ? 'multiple' : 'private'}
             onValueChange={handleValueChange}
+            disabled={value ? true : value === 'multiple' || value === 'public'}
+            checked={
+              value ? value === 'multiple' || value === 'private' : undefined
+            }
             data-cy={type === 'voteMethod' ? 'radioMultiple' : 'radioPrivate'}
           />
           <label

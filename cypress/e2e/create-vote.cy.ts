@@ -7,7 +7,7 @@ describe('투표 생성 페이지를 테스트 한다', () => {
   })
 
   it('제목 인풋, 콘텐츠 인풋, 콘텐츠 인풋 추가, 라디오 버튼, 이름 인풋, 비밀번호 인풋, 투표 등록 버튼을 테스트한다', () => {
-    // given - 테스트 페이지에 접근한다
+    // given - 투표 생성 페이지에 접근에 접근해 요소 하나하나를 찾는다.
     cy.visit('http://localhost:3000/create-vote')
     cy.get('[data-cy=titleInput]').as('titleInput')
     cy.get('[data-cy=contentInput-1]').as('contentInput-1')

@@ -1,5 +1,4 @@
 import { EditVoteForm, Header } from '@/components/index'
-import React from 'react'
 
 function VoteEditPage() {
   return (

@@ -1,5 +1,4 @@
-import CreateVoteForm from '@/components/create-vote-form'
-import Header from '@/components/header'
+import { CreateVoteForm, Header } from '@/components/index'
 
 function CreateVotePage() {
   return (

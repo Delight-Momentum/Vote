@@ -27,7 +27,7 @@ function Input({
       type={type}
       className={`flex flex-1 items-center rounded-lg px-24pxr py-16pxr ${className}`}
       {...(register &&
-        hookFormId && {
+        hookFormId !== undefined && {
           ...register(
             typeof hookFormId === 'number'
               ? `voteContents.${hookFormId}`
