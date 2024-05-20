@@ -4,12 +4,13 @@ import ButtonRound from '@/components/button-round'
 import Header from '@/components/header'
 import ProgressBar from '@/components/progress-bar'
 import getVote from 'apis/getVote'
+import defaultVote from 'constants/vote-default-value'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { IOneVote } from 'types/voteType'
 
 function ResultPage() {
-  const [vote, setVote] = useState<IOneVote>({})
+  const [vote, setVote] = useState<IOneVote>(defaultVote)
   const { id } = useParams()
 
   useEffect(() => {
