@@ -1,99 +1,106 @@
 'use client'
 
-import { ButtonRound, CirCleButton, Input, Label } from '@/components/index'
-import useRadio from '@/hooks/useRadio'
-import RadioButton from './radio-button'
+import {
+  ButtonRound,
+  VoteContents,
+  VotePeriod,
+  VoteSelectRadio,
+  VoteSmallInput,
+  VoteTitle,
+} from '@/components/index'
+import useRadio from '@/hooks/use-radio'
+import useDatePicker from '@/hooks/use-date-picker'
+import { useForm } from 'react-hook-form'
+import postVote from 'apis/post-vote'
+import { useRouter } from 'next/navigation'
+import convertToKoreanTime from 'utils/convert-to-korean-time'
+
+export interface ICreateVoteForm extends Record<string, string | string[]> {
+  voteTitle: string
+  voteContents: string[]
+  voteHost: string
+  password: string
+}
 
 function CreateVoteForm() {
+  const route = useRouter()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ICreateVoteForm>()
   const { radioValues, handleValueChange } = useRadio()
-  console.log(radioValues)
+  const { date, selectedDate, selectedTime, handleDateChange } = useDatePicker()
+
+  const onSubmit = async (data: ICreateVoteForm) => {
+    if (!date.startDate || !date.endDate || !date.time) return
+
+    const startDateKoreanTime = convertToKoreanTime(date.startDate)
+    const endDateKoreanTime = convertToKoreanTime(date.endDate)
+    const endTimeKoreanTime = convertToKoreanTime(date.time)
+
+    const formattedEndDate = endDateKoreanTime
+      .toISOString()
+      .split('T')[0]
+      .concat('T', endTimeKoreanTime.toISOString().split('T')[1])
+
+    const voteData = {
+      title: data.voteTitle,
+      contents: data.voteContents,
+      periodStart: startDateKoreanTime.toISOString(),
+      periodEnd: formattedEndDate,
+      method: radioValues.voteMethod,
+      participantNameMethod: radioValues.participantNameMethod,
+      hostName: data.voteHost,
+      password: data.password,
+    }
+
+    const response = await postVote({ body: voteData })
+
+    const getLocalStorage = localStorage.getItem('voteId')
+    localStorage.setItem(
+      'voteId',
+      JSON.stringify([
+        ...(getLocalStorage ? JSON.parse(getLocalStorage) : []),
+        response.id,
+      ]),
+    )
+    route.push(`/vote/${response.id}`)
+  }
+
   return (
-    <form className="flex w-465pxr flex-col gap-48pxr">
-      <div className="flex flex-col gap-40pxr">
-        <div className="flex flex-col gap-10pxr">
-          <Label htmlFor="voteTitle" theme="small">
-            투표 제목
-          </Label>
-          <Input id="voteTitle" placeholder="제목을 입력해 주세요" />
-        </div>
-        <div className="flex flex-col gap-10pxr">
-          <Label htmlFor="voteContent" theme="small">
-            투표 제목
-          </Label>
-          <div className="flex flex-col gap-15pxr">
-            <Input id="voteContent" placeholder="1번 항목" />
-            <Input placeholder="2번 항목" />
-            <CirCleButton theme="big">추가하기</CirCleButton>
-          </div>
-        </div>
-        <div className="flex flex-col gap-10pxr">
-          <Label htmlFor="votePeriod" theme="small">
-            투표 기간
-          </Label>
-          <Input id="votePeriod" type="date" />
-        </div>
-        <div className="flex flex-col gap-10pxr">
-          <Label htmlFor="voteMethod" theme="small">
-            투표 방식
-          </Label>
-          <div className="flex gap-22pxr">
-            <div className="flex items-center gap-4pxr">
-              <RadioButton
-                size="sm"
-                name="voteMethod"
-                value="one"
-                handleValueChange={handleValueChange}
-                defaultChecked
-              />
-              <label className="text-16pxr font-medium" htmlFor="one">
-                1개만 선택
-              </label>
-            </div>
-            <div className="flex items-center gap-4pxr">
-              <RadioButton
-                size="sm"
-                name="voteMethod"
-                value="multiple"
-                handleValueChange={handleValueChange}
-              />
-              <label className="text-16pxr font-medium" htmlFor="multiple">
-                여러개 선택
-              </label>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col gap-10pxr">
-          <Label htmlFor="voteParticipant" theme="small">
-            참여자 이름
-          </Label>
-          <div className="flex gap-22pxr">
-            <div className="flex items-center gap-4pxr">
-              <RadioButton
-                size="sm"
-                name="voteParticipant"
-                value="public"
-                handleValueChange={handleValueChange}
-                defaultChecked
-              />
-              <label className="text-16pxr font-medium" htmlFor="public">
-                공개
-              </label>
-            </div>
-            <div className="flex items-center gap-4pxr">
-              <RadioButton
-                size="sm"
-                name="voteParticipant"
-                value="private"
-                handleValueChange={handleValueChange}
-              />
-              <label className="text-16pxr font-medium" htmlFor="private">
-                익명
-              </label>
-            </div>
-          </div>
+    <form
+      className="flex w-full max-w-465pxr flex-col gap-48pxr px-12pxr"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div className="flex w-full flex-col gap-40pxr">
+        <VoteTitle register={register} errors={errors} />
+        <VoteContents register={register} errors={errors} />
+        <VotePeriod
+          date={date}
+          selectedDate={selectedDate}
+          selectedTime={selectedTime}
+          handleDateChange={handleDateChange}
+        />
+        <VoteSelectRadio
+          type="voteMethod"
+          handleValueChange={handleValueChange}
+        />
+        <VoteSelectRadio
+          type="voteParticipantMethod"
+          handleValueChange={handleValueChange}
+        />
+        <div className="flex gap-15pxr">
+          <VoteSmallInput type="voteHost" register={register} errors={errors} />
+          <VoteSmallInput type="password" register={register} errors={errors} />
         </div>
       </div>
-      <ButtonRound variant="primary" size="lg">
+      <ButtonRound
+        type="submit"
+        variant="primary"
+        size="lg"
+        data-cy="createVoteButton"
+      >
         투표 등록하기
       </ButtonRound>
     </form>

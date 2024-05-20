@@ -4,7 +4,7 @@ interface IRadioButtonProps {
   size: 'sm' | 'lg'
   name: string
   value: string
-  handleValueChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onValueChange: (e: ChangeEvent<HTMLInputElement>) => void
   defaultChecked?: boolean
 }
 
@@ -12,18 +12,20 @@ function RadioButton({
   size,
   name,
   value,
-  handleValueChange,
+  onValueChange,
   defaultChecked,
+  ...props
 }: IRadioButtonProps) {
   return (
     <input
       id={value}
       name={name}
-      className={`custom-radio ${size === 'sm' ? 'custom-radio-sm' : 'custom-radio-lg'}`}
-      onChange={(e) => handleValueChange(e)}
+      className="visible h-28pxr w-28pxr appearance-none rounded-full bg-[#d9d9d9] checked:bg-[#eee6fc] checked:bg-[url('../assets/svgs/check.svg')] checked:bg-center checked:bg-no-repeat hover:bg-[#eee6fc] hover:bg-[url('../assets/svgs/check-hover.svg')] hover:bg-center hover:bg-no-repeat focus:shadow-[0_0_0_0.1875rem_rgba(164,135,255,0.5)] focus:outline-none"
+      onChange={(e) => onValueChange(e)}
       type="radio"
       value={value}
       defaultChecked={defaultChecked}
+      {...props}
     />
   )
 }

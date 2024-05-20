@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from 'react'
 function useRadio() {
   const [radioValues, setRadioValues] = useState({
     voteMethod: 'one',
-    participant: 'public',
+    participantNameMethod: 'public',
   })
 
   const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -15,10 +15,10 @@ function useRadio() {
         setRadioValues({ ...radioValues, voteMethod: 'multiple' })
         break
       case 'public':
-        setRadioValues({ ...radioValues, participant: 'public' })
+        setRadioValues({ ...radioValues, participantNameMethod: 'public' })
         break
       case 'private':
-        setRadioValues({ ...radioValues, participant: 'private' })
+        setRadioValues({ ...radioValues, participantNameMethod: 'private' })
         break
       default:
         break
