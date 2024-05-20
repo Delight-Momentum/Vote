@@ -1,4 +1,6 @@
-import { useState } from 'react'
+'use client'
+
+import { useCallback, useState } from 'react'
 
 export interface IDate {
   startDate: Date | null
@@ -24,9 +26,9 @@ function useDatePicker() {
     time: initialTime,
   })
 
-  const handleDateChange = (newDate: IDate) => {
+  const handleDateChange = useCallback((newDate: IDate) => {
     setDate(newDate)
-  }
+  }, [])
 
   const formattedDate = (selectedDate: Date) => {
     if (!selectedDate) return '선택되지 않음'
