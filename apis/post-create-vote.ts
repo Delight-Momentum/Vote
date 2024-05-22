@@ -1,3 +1,5 @@
+import BASE_URL from './api-config'
+
 interface Ibody {
   title: string
   contents: string[]
@@ -14,7 +16,7 @@ interface IPostVoteProps {
 }
 
 async function postCreateVote({ body }: IPostVoteProps) {
-  const response = await fetch('http://13.125.250.153:3000/api/vote', {
+  const response = await fetch(`${BASE_URL}/api/vote`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
