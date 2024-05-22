@@ -5,9 +5,15 @@ interface SearchBarProps {
   placeholder?: string
   value?: string
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  defaultValue?: string
 }
 
-function SearchBar({ placeholder, value, onChange }: SearchBarProps) {
+function SearchBar({
+  placeholder,
+  value,
+  onChange,
+  defaultValue,
+}: SearchBarProps) {
   return (
     <div className="relative mb-60pxr mt-40pxr flex w-320pxr flex-1 md:w-480pxr lg:w-560pxr 2xl:w-720pxr">
       <Input
@@ -16,6 +22,8 @@ function SearchBar({ placeholder, value, onChange }: SearchBarProps) {
         type="search"
         onChange={onChange}
         value={value}
+        data-cy="searchInput"
+        defaultValue={defaultValue}
       />
     </div>
   )

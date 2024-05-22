@@ -66,14 +66,14 @@ function Home() {
     if (isVisible) {
       fetchVoteList()
     }
-  }, [isVisible, query, totalCount, setIsVisible, offset, fetchVoteList])
+  }, [isVisible, query, totalCount, setIsVisible, offset])
 
   useEffect(() => {
     if (query === '') {
       setQuery('')
       fetchVoteList()
     }
-  }, [query, fetchVoteList])
+  }, [query])
 
   return (
     <div>
