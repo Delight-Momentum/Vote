@@ -28,9 +28,9 @@ function ButtonRound({
   const sizeConfig = () => {
     switch (size) {
       case 'lg':
-        return 'py-16pxr px-24pxr w-465pxr h-56pxr'
+        return 'py-16pxr px-24pxr max-w-465pxr w-full h-56pxr'
       case 'sm':
-        return 'py-16pxr px-24pxr w-[222.5px] h-56pxr'
+        return 'py-16pxr px-24pxr max-w-[222.5px] w-full h-56pxr'
       default:
         return ''
     }

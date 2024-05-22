@@ -4,7 +4,7 @@ interface HeaderProps {
 
 function Header({ children }: HeaderProps) {
   return (
-    <header className="header flex w-screen items-center justify-between bg-white px-40pxr py-8pxr">
+    <header className="header flex w-full items-center justify-between bg-white px-40pxr py-8pxr">
       <div className="flex h-40pxr w-80pxr items-center justify-center bg-[#e6e6e6]">
         로고
       </div>

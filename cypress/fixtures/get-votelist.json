@@ -1,0 +1,50 @@
+{
+  "id": 1,
+  "title": "테스트 1",
+  "periodStart": "2024-05-14T15:00:00.000Z",
+  "periodEnd": "2024-05-17T22:30:59.000Z",
+  "method": "one",
+  "participantNameMethod": "private",
+  "hostName": "난 개발자",
+  "createdAt": "2024-05-15T12:12:57.000Z",
+  "updatedAt": "2024-05-15T12:12:57.000Z",
+  "participantCounts": 0,
+  "contents": [
+    {
+      "id": 1,
+      "voteId": 1,
+      "content": "1",
+      "createdAt": "2024-05-15T12:12:57.000Z",
+      "updatedAt": "2024-05-15T12:12:57.000Z",
+      "selectedCounts": 0,
+      "participantNames": "private"
+    },
+    {
+      "id": 2,
+      "voteId": 1,
+      "content": "2",
+      "createdAt": "2024-05-15T12:12:57.000Z",
+      "updatedAt": "2024-05-15T12:12:57.000Z",
+      "selectedCounts": 0,
+      "participantNames": "private"
+    },
+    {
+      "id": 3,
+      "voteId": 1,
+      "content": "3",
+      "createdAt": "2024-05-15T12:12:57.000Z",
+      "updatedAt": "2024-05-15T12:12:57.000Z",
+      "selectedCounts": 0,
+      "participantNames": "private"
+    },
+    {
+      "id": 4,
+      "voteId": 1,
+      "content": "4",
+      "createdAt": "2024-05-15T12:12:57.000Z",
+      "updatedAt": "2024-05-15T12:12:57.000Z",
+      "selectedCounts": 0,
+      "participantNames": "private"
+    }
+  ]
+}
