@@ -1,7 +1,5 @@
-import { RadioValue } from '@/hooks/use-radio'
+import { TValue } from '@/hooks/use-radio'
 import { InputHTMLAttributes } from 'react'
-
-type TValue = RadioValue | string
 
 interface IRadioButtonProps extends InputHTMLAttributes<HTMLInputElement> {
   radioSize: 'sm' | 'lg'

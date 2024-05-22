@@ -1,9 +1,9 @@
-import { RadioValue } from '@/hooks/use-radio'
+import { TValue } from '@/hooks/use-radio'
 import { Label, RadioButton } from '.'
 
 interface IVoteSelectRadio {
   type: 'voteMethod' | 'voteParticipantMethod'
-  handleValueChange?: (value: RadioValue) => void
+  handleValueChange?: (value: TValue) => void
   value?: string
 }
 

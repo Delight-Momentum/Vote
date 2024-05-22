@@ -3,6 +3,7 @@
 import { useState } from 'react'
 
 export type RadioValue = 'one' | 'multiple' | 'public' | 'private'
+export type TValue = RadioValue | string
 
 function useRadio() {
   const [radioValues, setRadioValues] = useState({
@@ -10,7 +11,7 @@ function useRadio() {
     participantNameMethod: 'public',
   })
 
-  const handleValueChange = (value: RadioValue) => {
+  const handleValueChange = (value: TValue) => {
     switch (value) {
       case 'one':
         setRadioValues({ ...radioValues, voteMethod: 'one' })
