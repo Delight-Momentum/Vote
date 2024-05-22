@@ -57,12 +57,14 @@ function CreateVoteForm() {
     const response = await postCreateVote({ body: voteData })
     const res = await response.json()
 
-    const getLocalStorageVoteId = localStorage.getItem('voteId')
+    const getLocalStorageCreatedVoteId = localStorage.getItem('createdVoteId')
     localStorage.setItem(
-      'voteId',
+      'createdVoteId',
       JSON.stringify([
-        ...(getLocalStorageVoteId ? JSON.parse(getLocalStorageVoteId) : []),
-        res.id,
+        ...(getLocalStorageCreatedVoteId
+          ? JSON.parse(getLocalStorageCreatedVoteId)
+          : []),
+        String(res.id),
       ]),
     )
 

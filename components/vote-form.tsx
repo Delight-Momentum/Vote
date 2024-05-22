@@ -39,6 +39,16 @@ function VoteForm() {
 
   const onSubmit = async (data: IVoteForm) => {
     try {
+      const getLocalStorageCreatedVoteId = localStorage.getItem('createdVoteId')
+      const parsedCreatedVoteIds = getLocalStorageCreatedVoteId
+        ? JSON.parse(getLocalStorageCreatedVoteId)
+        : []
+
+      if (parsedCreatedVoteIds.includes(id)) {
+        alert('자신이 생성한 투표는 투표할 수 없습니다.')
+        return
+      }
+
       const getLocalStorageParticipantVoteId =
         localStorage.getItem('participantVoteId')
       const parsedParticipantVoteIds = getLocalStorageParticipantVoteId
