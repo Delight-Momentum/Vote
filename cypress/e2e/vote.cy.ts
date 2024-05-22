@@ -1,15 +1,15 @@
 describe('투표 페이지를 테스트 한다', () => {
   beforeEach(() => {
-    cy.intercept('GET', 'http://13.125.250.153:3000/api/votelist/1', {
+    cy.intercept('GET', 'https://vote-server.xyz/api/votelist/1', {
       statusCode: 200,
       fixture: 'vote.json',
     })
 
-    cy.intercept('POST', 'http://13.125.250.153:3000/api/vote/1/1', {
+    cy.intercept('POST', 'https://vote-server.xyz/api/vote/1/1', {
       statusCode: 200,
     })
 
-    cy.intercept('DELETE', 'http://13.125.250.153:3000/api/vote/1', {
+    cy.intercept('DELETE', 'https://vote-server.xyz/api/vote/1', {
       statusCode: 200,
     })
   })
