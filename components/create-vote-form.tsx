@@ -11,7 +11,7 @@ import {
 import useRadio from '@/hooks/use-radio'
 import useDatePicker from '@/hooks/use-date-picker'
 import { useForm } from 'react-hook-form'
-import postVote from 'apis/post-vote'
+import postCreateVote from 'apis/post-create-vote'
 import { useRouter } from 'next/navigation'
 import convertToKoreanTime from 'utils/convert-to-korean-time'
 
@@ -23,7 +23,7 @@ export interface ICreateVoteForm extends Record<string, string | string[]> {
 }
 
 function CreateVoteForm() {
-  const route = useRouter()
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -54,24 +54,26 @@ function CreateVoteForm() {
       password: data.password,
     }
 
-    const response = await postVote({ body: voteData })
+    const response = await postCreateVote({ body: voteData })
     const res = await response.json()
 
-    const getLocalStorage = localStorage.getItem('voteId')
+    const getLocalStorageCreatedVoteId = localStorage.getItem('createdVoteId')
     localStorage.setItem(
-      'voteId',
+      'createdVoteId',
       JSON.stringify([
-        ...(getLocalStorage ? JSON.parse(getLocalStorage) : []),
-        res.id,
+        ...(getLocalStorageCreatedVoteId
+          ? JSON.parse(getLocalStorageCreatedVoteId)
+          : []),
+        String(res.id),
       ]),
     )
 
-    route.push(`/vote/${res.id}`)
+    router.push(`/vote/${res.id}`)
   }
 
   return (
     <form
-      className="flex w-full max-w-465pxr flex-col gap-48pxr px-12pxr"
+      className="flex w-full max-w-465pxr flex-col gap-48pxr"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex w-full flex-col gap-40pxr">

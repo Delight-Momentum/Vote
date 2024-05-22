@@ -31,14 +31,15 @@ function VoteContents({ register, errors, values }: IVoteContentsProps) {
     for (let i = 0; i < inputCount; i += 1) {
       updatedInputs.push(
         <Input
-          id={`voteContents${i}`}
           className={
             errors &&
             (errors.voteContents && errors.voteContents[i]
               ? 'border border-red-500'
               : '')
           }
-          hookFormId={i}
+          dataType="array"
+          id={`voteContents${i}`}
+          hookFormId={String(i)}
           register={register}
           errors={errors}
           hookFormRequired="항목을 입력해주세요"

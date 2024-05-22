@@ -13,7 +13,7 @@ interface IPostVoteProps {
   body: Ibody
 }
 
-async function postVote({ body }: IPostVoteProps) {
+async function postCreateVote({ body }: IPostVoteProps) {
   const response = await fetch('http://13.125.250.153:3000/api/vote', {
     method: 'POST',
     headers: {
@@ -25,4 +25,4 @@ async function postVote({ body }: IPostVoteProps) {
   return response
 }
 
-export default postVote
+export default postCreateVote

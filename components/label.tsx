@@ -18,7 +18,11 @@ const labelStyle: Record<LabelTheme, string> = {
 
 export default function Label({ children, htmlFor, theme }: ILabelProps) {
   return (
-    <label htmlFor={htmlFor} className={`text-[#000] ${labelStyle[theme]}`}>
+    <label
+      htmlFor={htmlFor}
+      className={`text-[#000] ${labelStyle[theme]}`}
+      data-cy="label"
+    >
       {children}
     </label>
   )

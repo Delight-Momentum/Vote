@@ -14,9 +14,9 @@ import { useForm } from 'react-hook-form'
 import useDatePicker from '@/hooks/use-date-picker'
 import convertToKoreanTime from 'utils/convert-to-korean-time'
 import deConvertToKoreanTime from 'utils/de-convert-to-korean-time'
-import { useEffect, useState } from 'react'
-import getVote, { IGetVoteResponse } from 'apis/get-vote'
+import { useEffect } from 'react'
 import putVote from 'apis/put-vote'
+import useVoteData from '@/hooks/use-vote-data'
 
 export interface ICreateVoteForm extends Record<string, string | string[]> {
   voteTitle: string
@@ -26,7 +26,7 @@ export interface ICreateVoteForm extends Record<string, string | string[]> {
 }
 
 function EditVoteForm() {
-  const route = useRouter()
+  const router = useRouter()
   const params = useParams()
   const { id } = params
 
@@ -35,7 +35,7 @@ function EditVoteForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<ICreateVoteForm>()
-  const [voteData, setVoteData] = useState<IGetVoteResponse | null>(null)
+  const voteData = useVoteData(id as string)
   const { handleValueChange } = useRadio()
   const { date, selectedDate, selectedTime, handleDateChange } = useDatePicker()
 
@@ -63,7 +63,7 @@ function EditVoteForm() {
         return
       }
 
-      route.push(`/vote/${id}`)
+      router.push(`/vote/${id}`)
     } catch (error) {
       console.error('Error editing vote:', error)
     }
@@ -72,37 +72,29 @@ function EditVoteForm() {
   useEffect(() => {
     const fetchVoteData = async () => {
       try {
-        const response = await getVote({ id: id as string })
-        if (response.status === 404) {
-          alert('존재하지 않는 투표입니다.')
-          route.push('/')
-          return
+        if (voteData) {
+          const startDateKoreanTime = deConvertToKoreanTime(
+            voteData.periodStart,
+          )
+          const endKoreanTime = deConvertToKoreanTime(voteData.periodEnd)
+
+          handleDateChange({
+            startDate: startDateKoreanTime,
+            endDate: endKoreanTime,
+            time: endKoreanTime,
+          })
         }
-
-        const res = await response.json()
-
-        setVoteData(res)
-        const startDateKoreanTime = deConvertToKoreanTime(
-          new Date(res.periodStart),
-        )
-        const endKoreanTime = deConvertToKoreanTime(new Date(res.periodEnd))
-
-        handleDateChange({
-          startDate: startDateKoreanTime,
-          endDate: endKoreanTime,
-          time: endKoreanTime,
-        })
       } catch (error) {
         console.error('Error fetching vote data:', error)
       }
     }
 
     fetchVoteData()
-  }, [handleDateChange, id, route])
+  }, [handleDateChange, id, router, voteData])
 
   return (
     <form
-      className="flex w-full max-w-465pxr flex-col gap-48pxr px-12pxr"
+      className="flex w-full max-w-465pxr flex-col gap-48pxr"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex w-full flex-col gap-40pxr">
