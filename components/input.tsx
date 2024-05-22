@@ -1,17 +1,21 @@
 import { InputHTMLAttributes } from 'react'
 import { FieldErrors, UseFormRegister, ValidationRule } from 'react-hook-form'
 import { ICreateVoteForm } from './create-vote-form'
+import { IVoteForm } from './vote-form'
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  hookFormId?: number | string
-  register?: UseFormRegister<ICreateVoteForm>
-  errors?: FieldErrors<ICreateVoteForm>
+  dataType?: 'array' | 'string'
+  hookFormId?: string
+  register?: UseFormRegister<ICreateVoteForm> | UseFormRegister<IVoteForm>
+  errors?: FieldErrors<ICreateVoteForm> | FieldErrors<IVoteForm>
   hookFormRequired?: string
   hookFormPattern?: ValidationRule<RegExp>
   hookFormMaxLength?: ValidationRule<number>
+  ref?: React.Ref<HTMLInputElement>
 }
 
 function Input({
+  dataType,
   type,
   className,
   hookFormId,
@@ -28,10 +32,8 @@ function Input({
       className={`flex flex-1 items-center rounded-lg px-24pxr py-16pxr ${className}`}
       {...(register &&
         hookFormId !== undefined && {
-          ...register(
-            typeof hookFormId === 'number'
-              ? `voteContents.${hookFormId}`
-              : hookFormId,
+          ...(register as UseFormRegister<ICreateVoteForm | IVoteForm>)(
+            dataType === 'array' ? `voteContents.${hookFormId}` : hookFormId,
             {
               required: `${hookFormRequired}`,
               ...(hookFormPattern ? { pattern: hookFormPattern } : {}),

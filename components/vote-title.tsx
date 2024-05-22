@@ -16,6 +16,7 @@ function VoteTitle({ register, errors, value }: IVoteTitleProps) {
       </Label>
       <Input
         className={errors && (errors.voteTitle ? 'border border-red-500' : '')}
+        dataType="string"
         id="voteTitle"
         hookFormId="voteTitle"
         register={register}

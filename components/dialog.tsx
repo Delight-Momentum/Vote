@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import ReactDOM from 'react-dom'
 
 interface Props {
   isOpen: boolean
-  children: ReactNode
+  children?: ReactNode
   dialogRef?: React.ForwardedRef<HTMLDivElement>
   dialogOutSideClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
@@ -18,7 +18,10 @@ function Dialog({ isOpen, children, dialogRef, dialogOutSideClick }: Props) {
         onClick={dialogOutSideClick}
         className="z-5 fixed bottom-0pxr left-0pxr right-0pxr top-0pxr bg-black bg-opacity-50"
       />
-      <div className="z-5 fixed left-1/2 top-1/2 flex w-312pxr -translate-x-1/2 -translate-y-1/2 flex-col rounded-[28px] bg-white p-25pxr">
+      <div
+        className="z-5 fixed left-1/2 top-1/2 flex w-full max-w-312pxr -translate-x-1/2 -translate-y-1/2 flex-col rounded-[28px] bg-white p-25pxr"
+        data-cy="dialog"
+      >
         {children}
       </div>
     </div>,

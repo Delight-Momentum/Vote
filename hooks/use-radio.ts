@@ -1,6 +1,8 @@
 'use client'
 
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
+
+export type RadioValue = 'one' | 'multiple' | 'public' | 'private'
 
 function useRadio() {
   const [radioValues, setRadioValues] = useState({
@@ -8,20 +10,24 @@ function useRadio() {
     participantNameMethod: 'public',
   })
 
-  const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
-    switch (e.target.value) {
+  const handleValueChange = (value: RadioValue) => {
+    switch (value) {
       case 'one':
         setRadioValues({ ...radioValues, voteMethod: 'one' })
         break
+
       case 'multiple':
         setRadioValues({ ...radioValues, voteMethod: 'multiple' })
         break
+
       case 'public':
         setRadioValues({ ...radioValues, participantNameMethod: 'public' })
         break
+
       case 'private':
         setRadioValues({ ...radioValues, participantNameMethod: 'private' })
         break
+
       default:
         break
     }

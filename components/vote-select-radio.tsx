@@ -1,9 +1,9 @@
-import { ChangeEvent } from 'react'
+import { RadioValue } from '@/hooks/use-radio'
 import { Label, RadioButton } from '.'
 
 interface IVoteSelectRadio {
   type: 'voteMethod' | 'voteParticipantMethod'
-  handleValueChange?: (e: ChangeEvent<HTMLInputElement>) => void
+  handleValueChange?: (value: RadioValue) => void
   value?: string
 }
 
@@ -16,6 +16,7 @@ function VoteSelectRadio({ type, handleValueChange, value }: IVoteSelectRadio) {
       <div className="flex gap-22pxr">
         <div className="flex items-center gap-4pxr">
           <RadioButton
+            radioSize="sm"
             name={type}
             value={type === 'voteMethod' ? 'one' : 'public'}
             onValueChange={handleValueChange}
@@ -33,6 +34,7 @@ function VoteSelectRadio({ type, handleValueChange, value }: IVoteSelectRadio) {
         </div>
         <div className="flex items-center gap-4pxr">
           <RadioButton
+            radioSize="sm"
             name={type}
             value={type === 'voteMethod' ? 'multiple' : 'private'}
             onValueChange={handleValueChange}

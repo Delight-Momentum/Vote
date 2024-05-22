@@ -5,7 +5,7 @@ function VotePage() {
   return (
     <>
       <Header>투표하기</Header>
-      <div className="flex justify-center pb-89pxr pt-62pxr">
+      <div className="flex justify-center px-12pxr pb-89pxr pt-62pxr">
         <VoteForm />
       </div>
     </>
