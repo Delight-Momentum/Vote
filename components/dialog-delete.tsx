@@ -2,6 +2,7 @@
 
 import deleteVote from 'apis/delete-vote'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 interface IDeleteDialog {
   voteId?: string
@@ -26,18 +27,33 @@ function DeleteDialog({ voteId, onClose }: IDeleteDialog) {
 
       if (response.status === 401) {
         setIsError(true)
-        alert('비밀번호가 일치하지않아요')
+        toast.error('비밀번호가 일치하지않아요.')
         return
       }
 
       if (response.status === 500) {
-        alert('서버 오류입니다. 다시 시도해주세요.')
+        toast.error(
+          <div>
+            서버 오류에요.
+            <br />
+            계속해서 문제가 발생하면 관리자에게 문의해주세요.
+          </div>,
+        )
         return
       }
 
-      alert('투표가 삭제되었습니다.')
+      toast.success(
+        <div data-cy="voteDeletedSuccessMessage">투표가 삭제되었어요.</div>,
+      )
     } catch (error) {
-      console.error('Error deleting vote:', error)
+      toast.error(
+        <div>
+          투표를 삭제하는데 실패했어요.
+          <br />
+          계속해서 문제가 발생하면 관리자에게 문의해주세요.
+          <p>{String(error)}</p>
+        </div>,
+      )
     }
   }
 

@@ -3,6 +3,8 @@ import '@fontsource-variable/noto-sans-kr'
 import '@/styles/globals.css'
 import '@/styles/custom-datepicker.css'
 import 'react-datepicker/dist/react-datepicker.css'
+import 'react-toastify/dist/ReactToastify.css'
+import { Bounce, ToastContainer } from 'react-toastify'
 
 export const metadata: Metadata = {
   title: 'Vote',
@@ -20,6 +22,19 @@ export default function RootLayout({
         {children}
         <div id="global-dialog" />
         <div id="portal-datepicker" />
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
       </body>
     </html>
   )
