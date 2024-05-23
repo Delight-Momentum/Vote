@@ -19,6 +19,7 @@ function ResultPage() {
         const result = await getVote(Number(id))
         setVote(result)
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('fetch에 실패했습니다.', error)
       }
     }
@@ -26,6 +27,14 @@ function ResultPage() {
     fetchVoteData()
   }, [id])
   const { title, participantCounts, contents } = vote
+
+  const handleShareToKakao = () => {
+    const { Kakao, location } = window
+    Kakao.Share.sendScrap({
+      requestUrl: location.href,
+    })
+  }
+
   return (
     <>
       <Header>투표결과</Header>
@@ -50,7 +59,7 @@ function ResultPage() {
               총 {participantCounts}명 참여
             </span>
           </div>
-          <ButtonRound variant="primary" size="lg">
+          <ButtonRound variant="primary" size="lg" onClick={handleShareToKakao}>
             결과 공유하기
           </ButtonRound>
         </div>

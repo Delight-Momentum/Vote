@@ -43,7 +43,7 @@ function ProgressBar({
       <span
         className={`absolute right-16pxr top-1/2 -translate-y-1/2 text-16pxr font-semibold ${selected() ? 'text-primary300' : 'text-[#999999]'}`}
       >
-        {value}%
+        {Number.isNaN(value) ? '0' : value}%
       </span>
     </div>
   )
