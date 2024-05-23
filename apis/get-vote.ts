@@ -1,3 +1,5 @@
+import BASE_URL from './api-config'
+
 interface IGetVoteProps {
   id: string
 }
@@ -27,12 +29,9 @@ export interface VoteContent {
 }
 
 async function getVote({ id }: IGetVoteProps) {
-  const response = await fetch(
-    `http://13.125.250.153:3000/api/votelist/${id}`,
-    {
-      method: 'GET',
-    },
-  )
+  const response = await fetch(`${BASE_URL}/api/votelist/${id}`, {
+    method: 'GET',
+  })
 
   return response
 }

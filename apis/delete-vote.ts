@@ -1,3 +1,5 @@
+import BASE_URL from './api-config'
+
 interface Ibody {
   password: string
 }
@@ -18,7 +20,7 @@ export interface VoteContent {
 }
 
 async function deleteVote({ id, body }: IDeleteVoteProps) {
-  const response = await fetch(`http://13.125.250.153:3000/api/vote/${id}`, {
+  const response = await fetch(`${BASE_URL}/api/vote/${id}`, {
     method: 'Delete',
     headers: {
       'Content-Type': 'application/json',
