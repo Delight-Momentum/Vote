@@ -3,21 +3,20 @@
 import ButtonRound from '@/components/button-round'
 import Header from '@/components/header'
 import ProgressBar from '@/components/progress-bar'
-import getVote from 'apis/getVote'
+import getVote, { IGetVoteResponse } from 'apis/get-vote'
 import defaultVote from 'constants/vote-default-value'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import { IOneVote } from 'types/voteType'
 
 function ResultPage() {
-  const [vote, setVote] = useState<IOneVote>(defaultVote)
-  const { id } = useParams()
+  const [vote, setVote] = useState<IGetVoteResponse>(defaultVote)
+  const { id } = useParams<{ id: string }>()
 
   useEffect(() => {
     const fetchVoteData = async () => {
       try {
-        const result = await getVote(Number(id))
-        setVote(result)
+        const result = await getVote({ id })
+        result.json().then((value) => setVote(value))
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('fetch에 실패했습니다.', error)

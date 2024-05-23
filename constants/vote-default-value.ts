@@ -1,10 +1,10 @@
-import { IOneVote } from 'types/voteType'
+import { IGetVoteResponse } from 'apis/get-vote'
 
-const defaultVote: IOneVote = {
+const defaultVote: IGetVoteResponse = {
   id: 0,
   title: '',
-  periodStart: new Date(),
-  periodEnd: new Date(),
+  periodStart: '',
+  periodEnd: '',
   method: 'one',
   participantNameMethod: 'public',
   hostName: '',
