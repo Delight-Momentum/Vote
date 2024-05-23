@@ -25,12 +25,13 @@ function VoteSmallInput({
         {type === 'voteHost' ? '투표 제작자' : '비밀번호'}
       </Label>
       <Input
-        id={type === 'voteHost' ? 'voteHost' : 'password'}
         className={
           errors && errors[type === 'voteHost' ? 'voteHost' : 'password']
             ? 'w-full border border-red-500'
             : 'w-full'
         }
+        dataType="string"
+        id={type === 'voteHost' ? 'voteHost' : 'password'}
         type={type === 'voteHost' ? 'text' : 'password'}
         hookFormId={type === 'voteHost' ? 'voteHost' : 'password'}
         register={register}

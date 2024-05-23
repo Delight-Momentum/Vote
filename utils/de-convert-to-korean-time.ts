@@ -1,7 +1,7 @@
-function deConvertToKoreanTime(prevDate: Date) {
+function deConvertToKoreanTime(prevDate: string) {
   const offset = new Date().getTimezoneOffset() * 60000
 
-  return new Date(prevDate.getTime() + offset)
+  return new Date(new Date(prevDate).getTime() + offset)
 }
 
 export default deConvertToKoreanTime

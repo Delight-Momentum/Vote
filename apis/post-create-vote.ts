@@ -1,3 +1,5 @@
+import BASE_URL from './api-config'
+
 interface Ibody {
   title: string
   contents: string[]
@@ -13,8 +15,8 @@ interface IPostVoteProps {
   body: Ibody
 }
 
-async function postVote({ body }: IPostVoteProps) {
-  const response = await fetch('http://13.125.250.153:3000/api/vote', {
+async function postCreateVote({ body }: IPostVoteProps) {
+  const response = await fetch(`${BASE_URL}/api/vote`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -25,4 +27,4 @@ async function postVote({ body }: IPostVoteProps) {
   return response
 }
 
-export default postVote
+export default postCreateVote

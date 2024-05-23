@@ -27,7 +27,7 @@ function Home() {
         dialogOutSideClick={dialogOutSideClick}
         dialogRef={dialogRef}
       >
-        <DeleteDialog />
+        <DeleteDialog voteId="1" onClose={() => setIsDialogOpen(false)} />
       </Dialog>
     </>
   )

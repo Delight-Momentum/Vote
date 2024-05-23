@@ -1,3 +1,5 @@
+import BASE_URL from './api-config'
+
 interface IGetVoteProps {
   id: string
 }
@@ -5,8 +7,8 @@ interface IGetVoteProps {
 export interface IGetVoteResponse {
   id: number
   title: string
-  periodStart: Date
-  periodEnd: Date
+  periodStart: string
+  periodEnd: string
   method: 'one' | 'multiple' // 투표 방법: 하나 선택 또는 다중 선택
   participantNameMethod: 'public' | 'anonymous' // 참가자 이름 공개 여부
   hostName: string
@@ -27,15 +29,9 @@ export interface VoteContent {
 }
 
 async function getVote({ id }: IGetVoteProps) {
-  const response = await fetch(
-    `http://13.125.250.153:3000/api/votelist/${id}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
-  )
+  const response = await fetch(`${BASE_URL}/api/votelist/${id}`, {
+    method: 'GET',
+  })
 
   return response
 }

@@ -1,3 +1,5 @@
+import BASE_URL from './api-config'
+
 interface Ibody {
   periodEnd: string
   password: string
@@ -9,16 +11,13 @@ interface IPutVoteProps {
 }
 
 async function putVote({ voteId, body }: IPutVoteProps) {
-  const response = await fetch(
-    `http://13.125.250.153:3000/api/vote/${voteId}`,
-    {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...body }),
+  const response = await fetch(`${BASE_URL}/api/vote/${voteId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  )
+    body: JSON.stringify({ ...body }),
+  })
 
   return response
 }
