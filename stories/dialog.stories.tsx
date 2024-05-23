@@ -18,6 +18,9 @@ const meta = {
         }),
       ],
     },
+    nextjs: {
+      appDirectory: true,
+    },
   },
   tags: ['autodocs'],
 } satisfies Meta<typeof Dialog>

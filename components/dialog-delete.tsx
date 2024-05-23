@@ -1,6 +1,7 @@
 'use client'
 
 import deleteVote from 'apis/delete-vote'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -10,6 +11,7 @@ interface IDeleteDialog {
 }
 
 function DeleteDialog({ voteId, onClose }: IDeleteDialog) {
+  const router = useRouter()
   const [isError, setIsError] = useState(false)
   const [password, setPassword] = useState('')
 
@@ -43,8 +45,14 @@ function DeleteDialog({ voteId, onClose }: IDeleteDialog) {
       }
 
       toast.success(
-        <div data-cy="voteDeletedSuccessMessage">투표가 삭제되었어요.</div>,
+        <div data-cy="voteDeletedSuccessMessage">
+          투표가 삭제되었어요.
+          <br />
+          홈으로 이동할게요.
+        </div>,
       )
+
+      router.push('/')
     } catch (error) {
       toast.error(
         <div>
