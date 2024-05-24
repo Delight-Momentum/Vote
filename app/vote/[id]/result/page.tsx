@@ -44,12 +44,13 @@ function ResultPage() {
               {title}
             </h1>
             <div className="flex flex-col gap-10pxr">
-              {contents?.map((content) => (
+              {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
+              {contents?.map(({ id, content, selectedCounts }) => (
                 <ProgressBar
-                  key={content.id}
-                  contentId={content.id}
-                  voteItem={content.content}
-                  choiceCount={content.selectedCounts}
+                  key={id}
+                  contentId={id}
+                  voteItem={content}
+                  choiceCount={selectedCounts}
                   participantCounts={participantCounts}
                 />
               ))}
