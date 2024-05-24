@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { HttpResponse, http } from 'msw'
 import Dialog from '@/components/dialog'
 import DeleteDialog from '@/components/dialog-delete'
 import useModal from '@/hooks/useModal'
@@ -8,6 +9,15 @@ const meta = {
   component: Dialog,
   parameters: {
     backgrounds: { default: 'dark' },
+    msw: {
+      handlers: [
+        http.delete('http://13.125.250.153:3000/api/vote/1', () => {
+          return HttpResponse.json({
+            message: 'Vote: 1개, Counts: 0개, Contents: 2개 삭제 되었습니다.',
+          })
+        }),
+      ],
+    },
   },
   tags: ['autodocs'],
 } satisfies Meta<typeof Dialog>
@@ -18,7 +28,7 @@ type Story = StoryObj<typeof meta>
 export const Delete: Story = {
   args: {
     isOpen: false,
-    children: <DeleteDialog />,
+    children: <DeleteDialog voteId="1" onClose={() => {}} />,
   },
   render: () => {
     const { isDialogOpen, dialogOutSideClick, setIsDialogOpen, dialogRef } =
@@ -38,7 +48,7 @@ export const Delete: Story = {
           dialogOutSideClick={dialogOutSideClick}
           dialogRef={dialogRef}
         >
-          <DeleteDialog />
+          <DeleteDialog voteId="1" onClose={() => setIsDialogOpen(false)} />
         </Dialog>
       </>
     )
