@@ -11,12 +11,15 @@ const meta = {
     backgrounds: { default: 'dark' },
     msw: {
       handlers: [
-        http.delete('http://13.125.250.153:3000/api/vote/1', () => {
+        http.delete('https://vote-server.xyz/api/vote/1', () => {
           return HttpResponse.json({
             message: 'Vote: 1개, Counts: 0개, Contents: 2개 삭제 되었습니다.',
           })
         }),
       ],
+    },
+    nextjs: {
+      appDirectory: true,
     },
   },
   tags: ['autodocs'],
