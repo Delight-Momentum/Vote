@@ -8,9 +8,9 @@ import {
   VoteSelectContent,
   VoteSelectDescription,
 } from '@/components/index'
+import useModal from '@/hooks/use-modal'
 import useSelectedContent from '@/hooks/use-selected-content'
 import useVoteData from '@/hooks/use-vote-data'
-import useModal from '@/hooks/useModal'
 import postDoVote from 'apis/post-do-vote'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'

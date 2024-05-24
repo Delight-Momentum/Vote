@@ -1,7 +1,7 @@
 'use client'
 
 import Dialog from '@/components/dialog'
-import DeleteDialog from '@/components/dialog-delete'
+import DialogRevote from '@/components/dialog-revote'
 import { useRef, useState } from 'react'
 
 function Home() {
@@ -20,14 +20,15 @@ function Home() {
         className="bg-white p-20pxr text-black"
         onClick={() => setIsDialogOpen(true)}
       >
-        삭제하기
+        재투표하기
       </button>
       <Dialog
         isOpen={isDialogOpen}
         dialogOutSideClick={dialogOutSideClick}
         dialogRef={dialogRef}
+        className="h-291pxr max-w-488pxr p-12pxr"
       >
-        <DeleteDialog voteId="1" onClose={() => setIsDialogOpen(false)} />
+        <DialogRevote voteId="74" onClose={() => setIsDialogOpen(false)} />
       </Dialog>
     </>
   )
