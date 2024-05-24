@@ -7,8 +7,8 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import getVotelist from 'apis/getVotelist'
-import useIntersectionObserver from '@/hooks/useIntersectionObserver'
+import getVotelist from 'apis/get-votelist'
+import useIntersectionObserver from '@/hooks/use-intersection-observer'
 import { IVote } from 'types/voteListType'
 import { Header, SearchBar, VoteCardList } from '../components'
 
