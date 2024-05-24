@@ -1,7 +1,7 @@
 'use client'
 
 import Dialog from '@/components/dialog'
-import DialogRevote from '@/components/dialog-revote'
+import RevoteDialog from '@/components/dialog-revote'
 import { useRef, useState } from 'react'
 
 function Home() {
@@ -28,7 +28,7 @@ function Home() {
         dialogRef={dialogRef}
         className="h-291pxr max-w-488pxr p-12pxr"
       >
-        <DialogRevote voteId="74" onClose={() => setIsDialogOpen(false)} />
+        <RevoteDialog voteId="74" onClose={() => setIsDialogOpen(false)} />
       </Dialog>
     </>
   )

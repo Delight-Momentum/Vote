@@ -12,7 +12,7 @@ interface IProps {
   onClose?: () => void
 }
 
-function DialogRevote({ voteId, onClose }: IProps) {
+function RevoteDialog({ voteId, onClose }: IProps) {
   const router = useRouter()
   const [password, setPassword] = useState('')
   const [isError, setIsError] = useState(false)
@@ -121,4 +121,4 @@ function DialogRevote({ voteId, onClose }: IProps) {
   )
 }
 
-export default DialogRevote
+export default RevoteDialog
