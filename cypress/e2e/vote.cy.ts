@@ -56,10 +56,8 @@ describe('투표 페이지를 테스트 한다', () => {
     cy.get('@deleteDialogInput').type('1234')
     cy.get('[data-cy=deleteDialogButton]').click()
 
-    // then - alert가 뜨는지 확인한다
-    cy.on('window:alert', (str) => {
-      expect(str).to.equal('투표가 삭제되었습니다.')
-    })
+    // then - 삭제 성공 메시지가 뜨는지 확인한다
+    cy.get('[data-cy=voteDeletedSuccessMessage]').should('be.visible')
 
     // given - 투표 페이지에 접근해 투표 수정하기 버튼을 찾는다
     cy.visit('http://localhost:3000/vote/1')

@@ -16,6 +16,7 @@ import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import deConvertToKoreanTime from 'utils/de-convert-to-korean-time'
 
 export interface IVoteForm extends Record<string, string> {
@@ -45,7 +46,7 @@ function VoteForm() {
         : []
 
       if (parsedCreatedVoteIds.includes(id)) {
-        alert('자신이 생성한 투표는 투표할 수 없습니다.')
+        toast.warn('자신이 생성한 투표는 투표할 수 없어요.')
         return
       }
 
@@ -56,7 +57,7 @@ function VoteForm() {
         : []
 
       if (parsedParticipantVoteIds.includes(id)) {
-        alert('이미 투표한 내역이 있습니다. 결과 페이지로 이동합니다.')
+        toast.warn('이미 투표한 내역이 있어요. 결과 페이지로 이동할게요.')
         router.push(`/vote/${id}/result`)
         return
       }
@@ -83,7 +84,14 @@ function VoteForm() {
 
       router.push(`/vote/${id}/result`)
     } catch (error) {
-      console.error('Error posting vote content:', error)
+      toast.error(
+        <div>
+          투표에 실패했어요.
+          <br />
+          계속해서 문제가 발생하면 관리자에게 문의해주세요.
+          <p>{String(error)}</p>
+        </div>,
+      )
     }
   }
 
@@ -92,7 +100,13 @@ function VoteForm() {
       voteData?.periodEnd &&
       new Date(deConvertToKoreanTime(voteData.periodEnd)) < new Date()
     ) {
-      alert('종료된 투표입니다. 결과 페이지로 이동합니다.')
+      toast.info(
+        <div>
+          종료된 투표에요.
+          <br />
+          결과 페이지로 이동할게요.
+        </div>,
+      )
       router.push(`/vote/${id}/result`)
     }
   }, [id, router, voteData?.periodEnd])
