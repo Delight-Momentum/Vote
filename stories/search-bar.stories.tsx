@@ -31,5 +31,6 @@ type Story = StoryObj<typeof meta>
 export const searchBar: Story = {
   args: {
     placeholder: '투표 만들기',
+    onChange: () => console.log('Changed'),
   },
 }

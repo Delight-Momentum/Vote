@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { HttpResponse, http } from 'msw'
 import Dialog from '@/components/dialog'
 import DeleteDialog from '@/components/dialog-delete'
-import useModal from '@/hooks/useModal'
+import useModal from '@/hooks/use-modal'
 
 const meta = {
   title: 'Dialog',
