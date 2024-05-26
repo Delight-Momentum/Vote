@@ -40,7 +40,7 @@ function RadioButton({
       {...props}
     />
   ) : (
-    <div className={disabledClassNames} />
+    <div className={disabledClassNames} {...props} />
   )
 }
 

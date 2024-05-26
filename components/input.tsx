@@ -13,7 +13,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   hookFormMaxLength?: ValidationRule<number>
   ref?: React.Ref<HTMLInputElement>
   value?: string
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 function Input({
@@ -69,6 +69,7 @@ function Input({
         ) : (
           <div
             className={`flex min-h-56pxr flex-1 items-center rounded-lg bg-[#E6E6E7] px-24pxr py-16pxr ${className}`}
+            {...props}
           >
             {value}
           </div>

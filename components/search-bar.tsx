@@ -4,7 +4,7 @@ import Input from './input'
 interface SearchBarProps {
   placeholder?: string
   value?: string
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
   defaultValue?: string
 }
 
