@@ -10,7 +10,7 @@ export interface IGetVoteResponse {
   periodStart: string
   periodEnd: string
   method: 'one' | 'multiple' // 투표 방법: 하나 선택 또는 다중 선택
-  participantNameMethod: 'public' | 'anonymous' // 참가자 이름 공개 여부
+  participantNameMethod: 'public' | 'private' // 참가자 이름 공개 여부
   hostName: string
   createdAt: Date
   updatedAt: Date

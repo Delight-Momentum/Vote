@@ -12,6 +12,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   hookFormPattern?: ValidationRule<RegExp>
   hookFormMaxLength?: ValidationRule<number>
   ref?: React.Ref<HTMLInputElement>
+  value?: string
 }
 
 function Input({
@@ -24,9 +25,10 @@ function Input({
   hookFormRequired,
   hookFormPattern,
   hookFormMaxLength,
+  value,
   ...props
 }: InputProps) {
-  return (
+  return register ? (
     <input
       type={type}
       className={`flex flex-1 items-center rounded-lg px-24pxr py-16pxr ${className}`}
@@ -41,8 +43,15 @@ function Input({
             },
           ),
         })}
+      value={value}
       {...props}
     />
+  ) : (
+    <div
+      className={`flex min-h-56pxr flex-1 items-center rounded-lg bg-[#E6E6E7] px-24pxr py-16pxr ${className}`}
+    >
+      {value}
+    </div>
   )
 }
 

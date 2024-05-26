@@ -16,40 +16,44 @@ function VoteSmallInput({
   errors,
   value,
 }: IVoteSmallInputProps) {
+  const options = {
+    voteHost: {
+      labelTexts: '투표 제작자',
+      placeholderTexts: '이름을 입력해주세요',
+      autoCompleteTypes: 'name',
+      inputTypes: 'text',
+      dataCy: 'nameInput',
+    },
+    password: {
+      labelTexts: '비밀번호',
+      placeholderTexts: '비밀번호를 입력해주세요',
+      autoCompleteTypes: 'new-password',
+      inputTypes: 'password',
+      dataCy: 'passwordInput',
+    },
+  }
+
+  const error = errors ? errors[type] : undefined
+
   return (
-    <div className="flex flex-col gap-10pxr">
-      <Label
-        htmlFor={type === 'voteHost' ? 'voteHost' : 'password'}
-        theme="small"
-      >
-        {type === 'voteHost' ? '투표 제작자' : '비밀번호'}
+    <div className="flex w-full flex-col gap-10pxr">
+      <Label htmlFor={type} theme="small">
+        {options[type].labelTexts}
       </Label>
       <Input
-        className={
-          errors && errors[type === 'voteHost' ? 'voteHost' : 'password']
-            ? 'w-full border border-red-500'
-            : 'w-full'
-        }
+        className={`w-full ${error ? 'border border-red-500' : ''}`}
         dataType="string"
-        id={type === 'voteHost' ? 'voteHost' : 'password'}
-        type={type === 'voteHost' ? 'text' : 'password'}
-        hookFormId={type === 'voteHost' ? 'voteHost' : 'password'}
+        id={type}
+        type={options[type].inputTypes}
+        hookFormId={type}
         register={register}
         errors={errors}
-        hookFormRequired={
-          type === 'voteHost'
-            ? '이름을 입력해주세요'
-            : '비밀번호를 입력해주세요'
-        }
-        placeholder={
-          type === 'voteHost'
-            ? '이름을 입력해주세요'
-            : '비밀번호를 입력해주세요'
-        }
-        autoComplete={type === 'voteHost' ? 'name' : 'new-password'}
-        value={value && value}
+        hookFormRequired={options[type].placeholderTexts}
+        placeholder={options[type].placeholderTexts}
+        autoComplete={options[type].autoCompleteTypes}
+        value={value}
         disabled={!!value}
-        data-cy={type === 'voteHost' ? 'nameInput' : 'passwordInput'}
+        data-cy={options[type].dataCy}
       />
     </div>
   )
