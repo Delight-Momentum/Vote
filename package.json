@@ -24,7 +24,8 @@
     "react-datepicker": "^6.9.0",
     "react-dom": "^18",
     "react-hook-form": "^7.51.4",
-    "react-popper": "^2.3.0"
+    "react-popper": "^2.3.0",
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.2.25",

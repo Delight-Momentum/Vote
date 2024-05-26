@@ -16,6 +16,7 @@ import convertToKoreanTime from 'utils/convert-to-korean-time'
 import deConvertToKoreanTime from 'utils/de-convert-to-korean-time'
 import { useEffect } from 'react'
 import putVote from 'apis/put-vote'
+import { toast } from 'react-toastify'
 import useVoteData from '@/hooks/use-vote-data'
 
 export interface ICreateVoteForm extends Record<string, string | string[]> {
@@ -59,13 +60,20 @@ function EditVoteForm() {
       const response = await putVote({ voteId: id as string, body: voteBody })
 
       if (response.status === 401) {
-        alert('비밀번호가 일치하지 않습니다.')
+        toast.error('비밀번호가 일치하지 않습니다.')
         return
       }
 
       router.push(`/vote/${id}`)
     } catch (error) {
-      console.error('Error editing vote:', error)
+      toast.error(
+        <div>
+          수정에 실패 했어요.
+          <br />
+          계속해서 문제가 발생하면 관리자에게 문의해주세요.
+          <p>{String(error)}</p>
+        </div>,
+      )
     }
   }
 
@@ -85,7 +93,14 @@ function EditVoteForm() {
           })
         }
       } catch (error) {
-        console.error('Error fetching vote data:', error)
+        toast.error(
+          <div>
+            투표 수정에 실패했어요.
+            <br />
+            계속해서 문제가 발생하면 관리자에게 문의해주세요.
+            <p>{String(error)}</p>
+          </div>,
+        )
       }
     }
 

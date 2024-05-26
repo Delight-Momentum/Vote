@@ -1,27 +1,30 @@
-import ModeEdit from '@/assets/svgs/mode-edit'
+import { ChangeEvent } from 'react'
 import Input from './input'
 
 interface SearchBarProps {
   placeholder?: string
+  value?: string
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  defaultValue?: string
 }
 
-function SearchBar({ placeholder }: SearchBarProps) {
+function SearchBar({
+  placeholder,
+  value,
+  onChange,
+  defaultValue,
+}: SearchBarProps) {
   return (
-    <div className="relative flex max-w-621pxr flex-1">
+    <div className="relative mb-60pxr mt-40pxr flex w-320pxr flex-1 md:w-480pxr lg:w-560pxr 2xl:w-720pxr">
       <Input
-        className="h-58pxr rounded-[28px] bg-white"
+        className="h-58pxr w-512pxr !rounded-full border border-primary300 bg-white"
         placeholder={placeholder}
-        data-cy="searchBarInput"
+        type="search"
+        onChange={onChange}
+        value={value}
+        data-cy="searchInput"
+        defaultValue={defaultValue}
       />
-      <button
-        type="button"
-        data-cy="searchBarButton"
-        className="absolute bottom-5pxr right-5pxr top-5pxr flex h-48pxr w-48pxr items-center justify-center rounded-full bg-gray p-8pxr
-        "
-        aria-label={placeholder}
-      >
-        <ModeEdit />
-      </button>
     </div>
   )
 }
