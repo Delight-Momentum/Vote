@@ -44,10 +44,10 @@ function VoteCard({
         </h2>
       </div>
       <div className="relative flex h-239pxr flex-col gap-15pxr pb-25pxr pt-10pxr">
-        {sliceVoteItems?.map((item) => (
+        {sliceVoteItems?.map((item, index) => (
           <div
             className={`relative flex items-center justify-between overflow-hidden rounded-md bg-[#eBeBeB] py-17pxr pl-25pxr pr-13pxr ${isClosed ? 'bg-[#e7e7e8]' : ''}`}
-            key={item}
+            key={`${item}-${index + 1}`}
           >
             <div
               className={`absolute left-0pxr top-0pxr h-full w-1/2 rounded-r-md bg-primary200 ${isClosed ? 'bg-[#999999]' : ''}`}
