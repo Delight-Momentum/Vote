@@ -86,11 +86,13 @@ function CreateVoteForm() {
           handleDateChange={handleDateChange}
         />
         <VoteSelectRadio
-          type="voteMethod"
+          radioType="create"
+          method="vote"
           handleValueChange={handleValueChange}
         />
         <VoteSelectRadio
-          type="voteParticipantMethod"
+          radioType="create"
+          method="voteParticipant"
           handleValueChange={handleValueChange}
         />
         <div className="flex gap-15pxr">

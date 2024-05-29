@@ -65,9 +65,14 @@ function PopoverDatePicker({
             className="flex gap-4pxr text-16pxr font-semibold text-primary300 sm:gap-48pxr"
             selected={date.time}
             onChange={(selectTime) => {
+              if (!date.endDate || !selectTime) return
+              const selectedDateTime = new Date(date.endDate)
+              selectedDateTime.setHours(selectTime.getHours())
+              selectedDateTime.setMinutes(selectTime.getMinutes())
+
               onDateChange({
                 ...date,
-                time: selectTime,
+                time: selectedDateTime,
               })
             }}
             showTimeSelect
@@ -92,6 +97,7 @@ function PopoverDatePicker({
         return null
     }
   }
+
   return renderDatePicker()
 }
 

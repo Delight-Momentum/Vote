@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 export interface IDate {
   startDate: Date | null
@@ -64,6 +64,20 @@ function useDatePicker() {
 
     return '시간 선택'
   }
+
+  useEffect(() => {
+    if (date.endDate && date.time) {
+      const currentTime = new Date(date.endDate)
+      currentTime.setHours(date.time.getHours())
+      currentTime.setMinutes(date.time.getMinutes())
+
+      setDate((prevDate) => ({
+        ...prevDate,
+        time: currentTime,
+      }))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [date.endDate])
 
   return {
     date,
