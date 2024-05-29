@@ -29,7 +29,7 @@ function ProgressBar({
   }
 
   return (
-    <div className="relative h-56pxr w-full">
+    <div className="relative h-56pxr w-full" data-cy="progressBar">
       <progress
         className={`custom-progress h-full w-full overflow-hidden rounded-lg ${selected() ? 'custom-progress-selected' : ''}`}
         value={value}
@@ -43,7 +43,7 @@ function ProgressBar({
       <span
         className={`absolute right-16pxr top-1/2 -translate-y-1/2 text-16pxr font-semibold ${selected() ? 'text-primary300' : 'text-[#999999]'}`}
       >
-        {value}%
+        {Number.isNaN(value) ? '0' : value}%
       </span>
     </div>
   )

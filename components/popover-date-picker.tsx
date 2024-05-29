@@ -46,7 +46,11 @@ function PopoverDatePicker({
             minDate={new Date()}
             selectsStart
             customInput={
-              <CustomInputButton type={type} selectedDate={selectedDate} />
+              <CustomInputButton
+                type={type}
+                selectedDate={selectedDate}
+                data-cy="dateButton"
+              />
             }
             enableTabLoop={false}
             showPopperArrow={false}
@@ -75,7 +79,11 @@ function PopoverDatePicker({
             showTimeSelectOnly
             timeIntervals={30}
             customInput={
-              <CustomInputButton type={type} selectedTime={selectedTime} />
+              <CustomInputButton
+                type={type}
+                selectedTime={selectedTime}
+                data-cy="timeButton"
+              />
             }
             timeCaption="마감 시간"
             filterTime={filterPassedTime}
