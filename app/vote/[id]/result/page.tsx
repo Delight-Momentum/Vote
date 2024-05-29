@@ -1,8 +1,11 @@
 'use client'
 
 import ButtonRound from '@/components/button-round'
+import Dialog from '@/components/dialog'
+import RevoteDialog from '@/components/dialog-revote'
 import Header from '@/components/header'
 import ProgressBar from '@/components/progress-bar'
+import useModal from '@/hooks/use-modal'
 import getVote, { IGetVoteResponse } from 'apis/get-vote'
 import defaultVote from 'constants/vote-default-value'
 import { useParams } from 'next/navigation'
@@ -10,6 +13,8 @@ import React, { useEffect, useState } from 'react'
 
 function ResultPage() {
   const [vote, setVote] = useState<IGetVoteResponse>(defaultVote)
+  const { isDialogOpen, setIsDialogOpen, dialogOutSideClick, dialogRef } =
+    useModal()
   const { id } = useParams<{ id: string }>()
 
   useEffect(() => {
@@ -59,9 +64,35 @@ function ResultPage() {
               총 {participantCounts}명 참여
             </span>
           </div>
-          <ButtonRound variant="primary" size="lg" onClick={handleShareToKakao}>
-            결과 공유하기
-          </ButtonRound>
+          <div className="flex flex-col gap-16pxr">
+            <ButtonRound
+              variant="primary"
+              size="lg"
+              onClick={handleShareToKakao}
+              data-cy="shareResultButton"
+            >
+              결과 공유하기
+            </ButtonRound>
+            <ButtonRound
+              variant="secondary"
+              size="lg"
+              onClick={() => setIsDialogOpen(!isDialogOpen)}
+              data-cy="revoteButton"
+            >
+              재투표 하기
+            </ButtonRound>
+            <Dialog
+              isOpen={isDialogOpen}
+              dialogOutSideClick={dialogOutSideClick}
+              dialogRef={dialogRef}
+              className="h-291pxr max-w-488pxr p-12pxr"
+            >
+              <RevoteDialog
+                voteId="74"
+                onClose={() => setIsDialogOpen(false)}
+              />
+            </Dialog>
+          </div>
         </div>
       </div>
     </>

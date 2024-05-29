@@ -29,7 +29,7 @@ function ProgressBar({
   }
 
   return (
-    <div className="relative h-56pxr w-full">
+    <div className="relative h-56pxr w-full" data-cy="progressBar">
       <progress
         className={`custom-progress h-full w-full overflow-hidden rounded-lg ${selected() ? 'custom-progress-selected' : ''}`}
         value={value}

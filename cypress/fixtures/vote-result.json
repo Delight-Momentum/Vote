@@ -1,0 +1,50 @@
+{
+  "id": 3,
+  "title": "가장 맛있는 분식은?",
+  "periodStart": "2024-05-14T15:00:00.000Z",
+  "periodEnd": "2200-06-25T22:30:59.000Z",
+  "method": "one",
+  "participantNameMethod": "private",
+  "hostName": "난 개발자",
+  "createdAt": "2024-05-15T12:14:25.000Z",
+  "updatedAt": "2024-05-15T12:14:25.000Z",
+  "participantCounts": 330,
+  "contents": [
+    {
+      "id": 1,
+      "voteId": 3,
+      "content": "라면",
+      "createdAt": "2024-05-15T12:14:25.000Z",
+      "updatedAt": "2024-05-15T12:14:25.000Z",
+      "selectedCounts": 30,
+      "participantNames": "private"
+    },
+    {
+      "id": 2,
+      "voteId": 3,
+      "content": "만두",
+      "createdAt": "2024-05-15T12:14:25.000Z",
+      "updatedAt": "2024-05-15T12:14:25.000Z",
+      "selectedCounts": 60,
+      "participantNames": "private"
+    },
+    {
+      "id": 3,
+      "voteId": 3,
+      "content": "김밥",
+      "createdAt": "2024-05-15T12:14:25.000Z",
+      "updatedAt": "2024-05-15T12:14:25.000Z",
+      "selectedCounts": 40,
+      "participantNames": "private"
+    },
+    {
+      "id": 4,
+      "voteId": 3,
+      "content": "떡볶이",
+      "createdAt": "2024-05-15T12:14:25.000Z",
+      "updatedAt": "2024-05-15T12:14:25.000Z",
+      "selectedCounts": 200,
+      "participantNames": "private"
+    }
+  ]
+}
