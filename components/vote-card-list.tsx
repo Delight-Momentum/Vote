@@ -16,17 +16,19 @@ function VoteCardList({ voteList, isLoading }: Props) {
         <h1>로딩중입니다!</h1>
       ) : (
         voteList?.map(
-          ({ id, title, isClosed, participantCounts, contents }) => (
-            <VoteCard
-              key={id}
-              isClosed={isClosed}
-              voteTitle={title}
-              voteItems={contents}
-              participantsCount={participantCounts}
-              participateUrl={`/vote/${id}`}
-              participateResultUrl={`/vote/${id}/result`}
-            />
-          ),
+          ({ id, title, isClosed, participantCounts, contents }) => {
+            return (
+              <VoteCard
+                key={id}
+                isClosed={isClosed}
+                voteTitle={title}
+                voteItems={contents}
+                participantsCount={participantCounts}
+                participateUrl={`/vote/${id}`}
+                participateResultUrl={`/vote/${id}/result`}
+              />
+            )
+          },
         )
       )}
     </div>

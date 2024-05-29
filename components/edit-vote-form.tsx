@@ -122,12 +122,14 @@ function EditVoteForm() {
           handleDateChange={handleDateChange}
         />
         <VoteSelectRadio
-          type="voteMethod"
+          radioType="edit"
+          method="vote"
           handleValueChange={handleValueChange}
           value={voteData?.method}
         />
         <VoteSelectRadio
-          type="voteParticipantMethod"
+          radioType="edit"
+          method="voteParticipant"
           handleValueChange={handleValueChange}
           value={voteData?.participantNameMethod}
         />
@@ -136,19 +138,14 @@ function EditVoteForm() {
           <VoteSmallInput type="password" register={register} errors={errors} />
         </div>
       </div>
-      <div className="flex gap-20pxr">
-        <ButtonRound variant="primary" size="sm">
-          재투표 하기
-        </ButtonRound>
-        <ButtonRound
-          type="submit"
-          variant="primary"
-          size="sm"
-          data-cy="editVoteButton"
-        >
-          수정완료
-        </ButtonRound>
-      </div>
+      <ButtonRound
+        type="submit"
+        variant="primary"
+        size="lg"
+        data-cy="editVoteButton"
+      >
+        수정완료
+      </ButtonRound>
     </form>
   )
 }

@@ -16,5 +16,7 @@ export interface IVote {
 
 export interface IVoteList {
   total: number
+  contentTotal: number
+  hasNext: boolean
   votes: IVote[]
 }
