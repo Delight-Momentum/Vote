@@ -31,11 +31,19 @@ function ResultPage() {
     fetchVoteData()
   }, [id])
   const { title, participantCounts, contents } = vote
+  const templateId = 108158
 
   const handleShareToKakao = () => {
     const { Kakao, location } = window
+    if (!contents) return
     Kakao.Share.sendScrap({
       requestUrl: location.href,
+      templateId,
+      templateArgs: {
+        description: title,
+        content1: contents[0].content,
+        content2: contents[1].content,
+      },
     })
   }
 
