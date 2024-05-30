@@ -10,10 +10,6 @@ input:focus {
   outline: none;
 }
 
-.header::after {
-  content: '';
-}
-
 .custom-progress::-webkit-progress-bar {
   background-color: white;
 }
