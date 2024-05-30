@@ -13,7 +13,10 @@ function ProgressBar({
   choiceCount,
   participantCounts,
 }: ProgressBarProps) {
-  const value = Math.trunc((choiceCount / participantCounts) * 100)
+  const contentCountPercent = Math.trunc(
+    (choiceCount / participantCounts) * 100,
+  )
+  const value = Number.isNaN(contentCountPercent) ? 0 : contentCountPercent
 
   const selected = () => {
     const getSelectedVoteContentsString = localStorage.getItem(
@@ -43,7 +46,7 @@ function ProgressBar({
       <span
         className={`absolute right-16pxr top-1/2 -translate-y-1/2 text-16pxr font-semibold ${selected() ? 'text-primary300' : 'text-[#999999]'}`}
       >
-        {Number.isNaN(value) ? '0' : value}%
+        {value}%
       </span>
     </div>
   )
