@@ -11,7 +11,7 @@ import {
 import getVotelist from 'apis/get-votelist'
 import useIntersectionObserver from '@/hooks/use-intersection-observer'
 import { IVote, IVoteList } from 'types/voteListType'
-import { Header, SearchBar } from '../components'
+import { Footer, Header, SearchBar } from '../components'
 
 const VoteCardList = lazy(() => import('@/components/vote-card-list'))
 
@@ -91,6 +91,9 @@ function Home() {
         <VoteCardList voteList={voteList} />
 
         <div className="h-1pxr w-1pxr" ref={targetRef} />
+      </div>
+      <div className="mt-60pxr">
+        <Footer />
       </div>
     </div>
   )
