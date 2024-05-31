@@ -41,16 +41,15 @@ function ResultPage() {
   const templateId = 108158
 
   const handleShareToKakao = () => {
-    const { Kakao, location } = window
+    const { Kakao } = window
     if (!contents) return
-
-    Kakao.Share.sendScrap({
-      requestUrl: location.href,
+    Kakao.Share.sendCustom({
       templateId,
       templateArgs: {
         description: title,
         content1: contents[0].content,
         content2: contents[1].content,
+        url: `/vote/${id}/result`,
       },
     })
   }
