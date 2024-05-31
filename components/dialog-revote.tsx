@@ -69,7 +69,7 @@ function RevoteDialog({ voteId, onClose }: IProps) {
     }
   }
   return (
-    <div className="flex flex-col justify-center " data-cy="revoteDialog">
+    <div className="flex h-full flex-col justify-center" data-cy="revoteDialog">
       <div className="flex flex-col gap-15pxr px-25pxr pt-25pxr">
         <h1 className="text-22pxr font-semibold">재투표를 할까요?</h1>
         <h2 className="text-14pxr font-semibold text-[#6E6E6E]">

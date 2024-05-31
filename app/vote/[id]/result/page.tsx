@@ -8,8 +8,9 @@ import ProgressBar from '@/components/progress-bar'
 import useModal from '@/hooks/use-modal'
 import getVote, { IGetVoteResponse } from 'apis/get-vote'
 import defaultVote from 'constants/vote-default-value'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import convertToKoreanTime from 'utils/convert-to-korean-time'
 import handleShareToKakao from 'utils/share-kakao'
 
 function ResultPage() {
@@ -17,6 +18,7 @@ function ResultPage() {
   const { isDialogOpen, setIsDialogOpen, dialogOutSideClick, dialogRef } =
     useModal()
   const { id } = useParams<{ id: string }>()
+  const router = useRouter()
 
   useEffect(() => {
     const fetchVoteData = async () => {
@@ -31,18 +33,31 @@ function ResultPage() {
 
     fetchVoteData()
   }, [id])
-  const { title, participantCounts, contents } = vote
+
+  useEffect(() => {
+    router.prefetch(`/vote/${id}`)
+  }, [router])
+
+  const { title, participantCounts, contents, periodEnd } = vote
+  const periodEndDate = new Date(periodEnd).getTime()
+  const date = new Date()
+  const now = convertToKoreanTime(date).getTime()
+  const isPossibleToVote =
+    !(now > periodEndDate) &&
+    !localStorage.getItem('participantVoteId')?.includes(id)
+
   const kakaoShareArgs = {
     id,
     title,
     contents,
     url: `/vote/${id}/result`,
   }
+
   return (
     <>
       <Header>투표결과</Header>
-      <div className="flex flex-col items-center">
-        <div className="mt-62pxr flex flex-col justify-center xl:w-465pxr">
+      <div className="flex  flex-col items-center">
+        <div className="mt-62pxr flex w-375pxr flex-col justify-center sm:w-465pxr">
           <div className="mb-48pxr flex flex-col gap-20pxr">
             <h1 className="text-24pxr font-semibold leading-[36px] tracking-[0.12px]">
               {title}
@@ -72,13 +87,22 @@ function ResultPage() {
             >
               결과 공유하기
             </ButtonRound>
+            {isPossibleToVote ? (
+              <ButtonRound
+                variant="primary"
+                size="lg"
+                onClick={() => router.push(`/vote/${id}`)}
+              >
+                투표 하러가기
+              </ButtonRound>
+            ) : null}
             <ButtonRound
               variant="secondary"
               size="lg"
               onClick={() => setIsDialogOpen(!isDialogOpen)}
               data-cy="revoteButton"
             >
-              재투표 하기
+              투표 기간 재설정
             </ButtonRound>
             <Dialog
               isOpen={isDialogOpen}
