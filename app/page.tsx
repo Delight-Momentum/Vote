@@ -11,7 +11,7 @@ import {
 import getVotelist from 'apis/get-votelist'
 import useIntersectionObserver from '@/hooks/use-intersection-observer'
 import { IVote, IVoteList } from 'types/voteListType'
-import { Footer, Header, SearchBar } from '../components'
+import { FloatingButton, Footer, Header, SearchBar } from '../components'
 
 const VoteCardList = lazy(() => import('@/components/vote-card-list'))
 
@@ -77,7 +77,7 @@ function Home() {
   }, [fetchVoteList, hasNext, isVisible])
 
   return (
-    <div>
+    <div className="relative">
       <Header />
       <div className="mx-40pxr flex flex-col items-center">
         <div className="flex justify-center">
@@ -95,6 +95,7 @@ function Home() {
       <div className="mt-60pxr">
         <Footer />
       </div>
+      <FloatingButton />
     </div>
   )
 }
