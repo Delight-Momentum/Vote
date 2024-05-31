@@ -30,24 +30,31 @@ function VoteContents({ register, errors, values }: IVoteContentsProps) {
 
     for (let i = 0; i < inputCount; i += 1) {
       updatedInputs.push(
-        <Input
-          className={
-            errors &&
-            (errors.voteContents && errors.voteContents[i]
-              ? 'border border-red-500'
-              : '')
-          }
-          dataType="array"
-          id={`voteContents${i}`}
-          hookFormId={String(i)}
-          register={register}
-          errors={errors}
-          hookFormRequired="항목을 입력해주세요"
-          placeholder={`${i + 1}번 항목`}
-          data-cy={`contentInput-${i + 1}`}
-          value={values && values[i].content}
-          disabled={!!values}
-        />,
+        <>
+          <Input
+            className={
+              errors &&
+              (errors.voteContents && errors.voteContents[i]
+                ? 'border border-red-500'
+                : '')
+            }
+            dataType="array"
+            id={`voteContents${i}`}
+            hookFormId={String(i)}
+            register={register}
+            errors={errors}
+            hookFormRequired={`${i + 1} 항목을 입력해주세요`}
+            placeholder={`${i + 1}번 항목`}
+            data-cy={`contentInput-${i + 1}`}
+            value={values && values[i].content}
+            disabled={!!values}
+          />
+          {errors && (
+            <p className="absolute -bottom-20pxr left-4pxr text-14pxr text-red-500">
+              {errors.voteContents?.[i]?.message}
+            </p>
+          )}
+        </>,
       )
     }
 
@@ -65,21 +72,23 @@ function VoteContents({ register, errors, values }: IVoteContentsProps) {
       <Label htmlFor="voteContents0" theme="small">
         투표 내용
       </Label>
-      <ul className="flex flex-col gap-15pxr">
-        {inputs.map((item, index) => (
-          <li className="relative flex" key={`${item}${index + 1}`}>
-            {item}
-          </li>
-        ))}
-      </ul>
-      <CircleButton
-        theme="big"
-        onClick={handleAddClick}
-        disabled={inputCount === MAX_CONTENTS || !!values}
-        data-cy="addContentButton"
-      >
-        추가하기
-      </CircleButton>
+      <div className="flex flex-col gap-20pxr">
+        <ul className="flex flex-col gap-20pxr">
+          {inputs.map((item, index) => (
+            <li className="relative flex" key={`${item}${index + 1}`}>
+              {item}
+            </li>
+          ))}
+        </ul>
+        <CircleButton
+          theme="big"
+          onClick={handleAddClick}
+          disabled={inputCount === MAX_CONTENTS || !!values}
+          data-cy="addContentButton"
+        >
+          추가하기
+        </CircleButton>
+      </div>
     </div>
   )
 }

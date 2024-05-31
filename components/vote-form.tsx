@@ -62,6 +62,11 @@ function VoteForm() {
         return
       }
 
+      if (selectedContent.length === 0) {
+        toast.info('투표할 항목을 선택해 주세요.')
+        return
+      }
+
       await Promise.all(
         selectedContent.map((contentId) =>
           postDoVote({

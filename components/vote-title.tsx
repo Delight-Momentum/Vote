@@ -9,24 +9,33 @@ interface IVoteTitleProps {
 }
 
 function VoteTitle({ register, errors, value }: IVoteTitleProps) {
+  const error = errors ? errors.voteTitle : undefined
+
   return (
     <div className="relative flex flex-col gap-10pxr">
       <Label htmlFor="voteTitle" theme="small">
         투표 제목
       </Label>
-      <Input
-        className={errors && (errors.voteTitle ? 'border border-red-500' : '')}
-        dataType="string"
-        id="voteTitle"
-        hookFormId="voteTitle"
-        register={register}
-        errors={errors}
-        hookFormRequired="제목을 입력해 주세요"
-        placeholder="제목을 입력해 주세요"
-        data-cy="titleInput"
-        value={value}
-        disabled={!!value}
-      />
+      <div className="relative">
+        <Input
+          className={`w-full ${error ? 'border border-red-500' : ''}`}
+          dataType="string"
+          id="voteTitle"
+          hookFormId="voteTitle"
+          register={register}
+          errors={errors}
+          hookFormRequired="제목을 입력해 주세요"
+          placeholder="제목을 입력해 주세요"
+          data-cy="titleInput"
+          value={value}
+          disabled={!!value}
+        />
+        {errors && (
+          <p className="absolute left-4pxr text-14pxr text-red-500">
+            {errors.voteTitle?.message}
+          </p>
+        )}
+      </div>
     </div>
   )
 }
