@@ -12,6 +12,7 @@ import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import convertToKoreanTime from 'utils/convert-to-korean-time'
 import handleShareToKakao from 'utils/share-kakao'
+import { toast } from 'react-toastify'
 
 function ResultPage() {
   const [vote, setVote] = useState<IGetVoteResponse>(defaultVote)
@@ -26,8 +27,14 @@ function ResultPage() {
         const result = await getVote({ id })
         result.json().then((value) => setVote(value))
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('fetch에 실패했습니다.', error)
+        toast.error(
+          <div>
+            페이지를 불러오는데 실패했어요.
+            <br />
+            계속해서 문제가 발생하면 관리자에게 문의해주세요.
+            <p>{String(error)}</p>
+          </div>,
+        )
       }
     }
 
