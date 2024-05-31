@@ -10,6 +10,7 @@ import getVote, { IGetVoteResponse } from 'apis/get-vote'
 import defaultVote from 'constants/vote-default-value'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import handleShareToKakao from 'utils/share-kakao'
 
 function ResultPage() {
   const [vote, setVote] = useState<IGetVoteResponse>(defaultVote)
@@ -31,22 +32,12 @@ function ResultPage() {
     fetchVoteData()
   }, [id])
   const { title, participantCounts, contents } = vote
-  const templateId = 108158
-
-  const handleShareToKakao = () => {
-    const { Kakao } = window
-    if (!contents) return
-    Kakao.Share.sendCustom({
-      templateId,
-      templateArgs: {
-        description: title,
-        content1: contents[0].content,
-        content2: contents[1].content,
-        url: `/vote/${id}/result`,
-      },
-    })
+  const kakaoShareArgs = {
+    id,
+    title,
+    contents,
+    url: `/vote/${id}/result`,
   }
-
   return (
     <>
       <Header>투표결과</Header>
@@ -76,7 +67,7 @@ function ResultPage() {
             <ButtonRound
               variant="primary"
               size="lg"
-              onClick={handleShareToKakao}
+              onClick={() => handleShareToKakao(kakaoShareArgs)}
               data-cy="shareResultButton"
             >
               결과 공유하기
