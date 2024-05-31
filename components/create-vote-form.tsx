@@ -75,7 +75,7 @@ function CreateVoteForm() {
     value: /^[a-zA-Z0-9]{6,12}$/,
     message: '비밀번호는 6 ~ 12자의 영문 대소문자와 숫자로 입력해주세요.',
   }
-  console.log(errors)
+
   return (
     <form
       className="flex w-full max-w-465pxr flex-col gap-48pxr"
