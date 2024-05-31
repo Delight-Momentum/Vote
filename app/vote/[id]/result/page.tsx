@@ -41,8 +41,8 @@ function ResultPage() {
   return (
     <>
       <Header>투표결과</Header>
-      <div className="mt-62pxr flex flex-col items-center">
-        <div className="mt-62pxr flex h-320pxr w-320pxr flex-col justify-center xl:w-465pxr">
+      <div className="flex flex-col items-center">
+        <div className="mt-62pxr flex flex-col justify-center xl:w-465pxr">
           <div className="mb-48pxr flex flex-col gap-20pxr">
             <h1 className="text-24pxr font-semibold leading-[36px] tracking-[0.12px]">
               {title}
