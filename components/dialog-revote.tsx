@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import useDatePicker from '@/hooks/use-date-picker'
 import convertToKoreanTime from 'utils/convert-to-korean-time'
 import putVote from 'apis/put-vote'
+import { toast } from 'react-toastify'
 import PopoverDatePicker from './popover-date-picker'
 
 interface IProps {
@@ -53,19 +54,26 @@ function RevoteDialog({ voteId, onClose }: IProps) {
 
       if (response.status === 401) {
         setIsError(true)
-        alert('비밀번호가 일치하지않아요')
+        toast.error('비밀번호가 일치하지않아요')
         return
       }
 
       if (response.status === 500) {
-        alert('서버 오류입니다. 다시 시도해주세요.')
+        toast.error('서버 오류입니다. 다시 시도해주세요.')
         return
       }
 
-      alert('재투표합니다.')
+      toast.info('재투표합니다.')
       router.push(`/vote/${voteId}/result`)
     } catch (error) {
-      console.error('Error deleting vote:', error)
+      toast.error(
+        <div>
+          재투표 생성에 실패했어요.
+          <br />
+          계속해서 문제가 발생하면 관리자에게 문의해주세요.
+          <p>{String(error)}</p>
+        </div>,
+      )
     }
   }
   return (
