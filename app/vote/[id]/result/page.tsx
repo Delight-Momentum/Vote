@@ -10,9 +10,9 @@ import getVote, { IGetVoteResponse } from 'apis/get-vote'
 import defaultVote from 'constants/vote-default-value'
 import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import convertToKoreanTime from 'utils/convert-to-korean-time'
 import handleShareToKakao from 'utils/share-kakao'
 import { toast } from 'react-toastify'
+import deConvertToKoreanTime from 'utils/de-convert-to-korean-time'
 
 function ResultPage() {
   const [vote, setVote] = useState<IGetVoteResponse>(defaultVote)
@@ -20,6 +20,7 @@ function ResultPage() {
     useModal()
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
+  const [isPossibleToVote, setIsPossibleToVote] = useState(false)
 
   useEffect(() => {
     const fetchVoteData = async () => {
@@ -43,15 +44,18 @@ function ResultPage() {
 
   useEffect(() => {
     router.prefetch(`/vote/${id}`)
-  }, [router])
+  }, [id, router])
 
   const { title, participantCounts, contents, periodEnd } = vote
-  const periodEndDate = new Date(periodEnd).getTime()
-  const date = new Date()
-  const now = convertToKoreanTime(date).getTime()
-  const isPossibleToVote =
-    !(now > periodEndDate) &&
-    !localStorage.getItem('participantVoteId')?.includes(id)
+  const periodEndDate = deConvertToKoreanTime(periodEnd)
+
+  useEffect(() => {
+    const nowDate = new Date()
+    const participantVoteId = localStorage.getItem('participantVoteId')
+    setIsPossibleToVote(
+      nowDate < periodEndDate && !participantVoteId?.includes(id),
+    )
+  }, [periodEndDate, id])
 
   const kakaoShareArgs = {
     id,
@@ -63,7 +67,7 @@ function ResultPage() {
   return (
     <>
       <Header>투표결과</Header>
-      <div className="flex  flex-col items-center">
+      <div className="flex flex-col items-center">
         <div className="mt-62pxr flex w-375pxr flex-col justify-center sm:w-465pxr">
           <div className="mb-48pxr flex flex-col gap-20pxr">
             <h1 className="text-24pxr font-semibold leading-[36px] tracking-[0.12px]">
@@ -94,7 +98,7 @@ function ResultPage() {
             >
               결과 공유하기
             </ButtonRound>
-            {isPossibleToVote ? (
+            {isPossibleToVote && (
               <ButtonRound
                 variant="primary"
                 size="lg"
@@ -102,7 +106,7 @@ function ResultPage() {
               >
                 투표 하러가기
               </ButtonRound>
-            ) : null}
+            )}
             <ButtonRound
               variant="secondary"
               size="lg"
