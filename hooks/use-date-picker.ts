@@ -10,20 +10,20 @@ export interface IDate {
 
 function useDatePicker() {
   const currentDate = new Date()
-  const initialTime = new Date()
+  const initialDate = new Date()
 
   if (currentDate.getMinutes() < 30) {
-    initialTime.setMinutes(30)
+    initialDate.setMinutes(30)
   } else {
-    initialTime.setHours(currentDate.getHours() + 1)
-    initialTime.setMinutes(0)
-    initialTime.setSeconds(0)
+    initialDate.setHours(currentDate.getHours() + 1)
+    initialDate.setMinutes(0)
+    initialDate.setSeconds(0)
   }
 
   const [date, setDate] = useState<IDate>({
     startDate: currentDate,
-    endDate: currentDate,
-    time: initialTime,
+    endDate: initialDate,
+    time: initialDate,
   })
 
   const handleDateChange = useCallback((newDate: IDate) => {

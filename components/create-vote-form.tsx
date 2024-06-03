@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form'
 import postCreateVote from 'apis/post-create-vote'
 import { useRouter } from 'next/navigation'
 import convertToKoreanTime from 'utils/convert-to-korean-time'
+import { toast } from 'react-toastify'
 
 export interface ICreateVoteForm extends Record<string, string | string[]> {
   voteTitle: string
@@ -56,6 +57,16 @@ function CreateVoteForm() {
 
     const response = await postCreateVote({ body: voteData })
     const res = await response.json()
+    if (response.status === 400) {
+      toast.error(
+        <div>
+          {res.message}
+          <br />
+          계속해서 문제가 발생하면 관리자에게 문의해주세요.
+        </div>,
+      )
+      return
+    }
 
     const getLocalStorageCreatedVoteId = localStorage.getItem('createdVoteId')
     localStorage.setItem(
