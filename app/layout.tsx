@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import KakaoScript from '@/components/kakao-script'
 import 'react-toastify/dist/ReactToastify.css'
 import { Bounce, ToastContainer } from 'react-toastify'
+import { GoogleAnalytics } from '../components'
 
 export const metadata: Metadata = {
   title: 'Vote',
@@ -21,6 +22,11 @@ export default function RootLayout({
     <html lang="ko">
       <KakaoScript />
       <body className="bg-[#F7F5FA]">
+        {process.env.NEXT_PUBLIC_GA_ID ? (
+          <GoogleAnalytics />
+        ) : (
+          <div>GA환경변수값필요</div>
+        )}
         {children}
         <div id="global-dialog" />
         <div id="portal-datepicker" />
