@@ -31,21 +31,32 @@ describe('메인페이지를 테스트 한다.', () => {
     cy.get('[data-cy=voteCard]').as('voteCard')
   })
 
-  it('투표중일시 참여하기 버튼이 렌더되고 클릭시 투표창으로 이동한다.', () => {
-    cy.get('@voteCard').should('exist')
-    cy.get('[data-cy=joinButton]').as('joinButton')
-    cy.get('@joinButton').should('exist')
-    cy.get('@joinButton').first().click()
-    cy.url().should('match', /\/vote\/\d+$/)
+  it('투표 진행중인 카드 클릭시 투표 페이지로 라우팅 된다.', () => {
+    cy.get('@voteCard').each(($card) => {
+      cy.wrap($card)
+        .invoke('attr', 'href')
+        .then((href) => {
+          if (typeof href === 'string' && href.includes('/vote/')) {
+            cy.wrap($card).click()
+            cy.url().should('include', '/vote/')
+            cy.go('back')
+          }
+        })
+    })
   })
 
-  it('투표 종료시 결과보기 버튼이 렌더되고 클릭시 결과창으로 이동한다.', () => {
-    cy.get('@voteCard').should('exist')
-    cy.get('[data-cy=resultButton]').as('resultButton')
-    cy.get('@resultButton').should('exist')
-
-    cy.get('@resultButton').first().click()
-    cy.url().should('match', /\/vote\/\d+\/result$/)
+  it('투표가 끝난 카드를 클릭하면 결과 페이지로 라우팅된다.', () => {
+    cy.get('@voteCard').each(($card) => {
+      cy.wrap($card)
+        .invoke('attr', 'href')
+        .then((href) => {
+          if (typeof href === 'string' && href.includes('/result/')) {
+            cy.wrap($card).click()
+            cy.url().should('include', '/result/')
+            cy.go('back')
+          }
+        })
+    })
   })
 
   it('검색 기능을 테스트한다.', () => {
