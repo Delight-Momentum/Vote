@@ -24,10 +24,10 @@ describe('투표 수정 페이지를 테스트 한다', () => {
     cy.get('[data-cy=passwordInput]').as('passwordInput')
 
     // when - passwordInput에 값을 입력한다
-    cy.get('@passwordInput').type('1234')
+    cy.get('@passwordInput').type('password123')
 
     // then - 입력한 값이 정상적으로 출력되는지 확인한다
-    cy.get('@passwordInput').should('have.value', '1234')
+    cy.get('@passwordInput').should('have.value', 'password123')
 
     // given - editVoteButton을 찾는다
     cy.get('[data-cy=editVoteButton]').as('editVoteButton')

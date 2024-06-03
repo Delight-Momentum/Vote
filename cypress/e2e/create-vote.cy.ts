@@ -33,7 +33,7 @@ describe('투표 생성 페이지를 테스트 한다', () => {
     cy.get('@radioMultiple').click()
     cy.get('@radioPrivate').click()
     cy.get('@nameInput').type('name 입니다.')
-    cy.get('@passwordInput').type('password 입니다.')
+    cy.get('@passwordInput').type('password123')
 
     // then - 입력한 값이 정상적으로 출력되는지 확인한다
     cy.get('@titleInput').should('have.value', 'title 입니다.')
@@ -43,7 +43,7 @@ describe('투표 생성 페이지를 테스트 한다', () => {
     cy.get('@radioMultiple').should('be.checked')
     cy.get('@radioPrivate').should('be.checked')
     cy.get('@nameInput').should('have.value', 'name 입니다.')
-    cy.get('@passwordInput').should('have.value', 'password 입니다.')
+    cy.get('@passwordInput').should('have.value', 'password123')
 
     // given - contentInput-3를 찾는다
     cy.get('[data-cy=contentInput-3]').as('contentInput-3')

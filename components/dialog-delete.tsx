@@ -81,13 +81,20 @@ function DeleteDialog({ voteId, onClose }: IDeleteDialog) {
           투표를 삭제하면 다시 되돌릴 수 없어요. <br /> 그래도 삭제할까요?
         </h2>
       </div>
-      <input
-        type="password"
-        className={`flex flex-1 items-center rounded-lg bg-[#f2f2f2] px-24pxr py-16pxr ${isError ? 'border border-red-500' : ''}`}
-        placeholder="비밀번호를 입력해주세요"
-        onChange={(e) => handlePasswordChange(e.target.value)}
-        data-cy="deleteDialogInput"
-      />
+      <div className="relative">
+        <input
+          type="password"
+          className={`flex flex-1 items-center rounded-lg bg-[#f2f2f2] px-24pxr py-16pxr ${isError ? 'border border-red-500' : ''}`}
+          placeholder="비밀번호를 입력해주세요"
+          onChange={(e) => handlePasswordChange(e.target.value)}
+          data-cy="deleteDialogInput"
+        />
+        {isError && (
+          <p className="absolute left-4pxr text-14pxr text-red-500">
+            비밀번호를 입력해주세요.
+          </p>
+        )}
+      </div>
       <div className="flex justify-end gap-10pxr">
         <button
           type="button"
@@ -97,6 +104,7 @@ function DeleteDialog({ voteId, onClose }: IDeleteDialog) {
         >
           삭제
         </button>
+
         <button
           className="p-10pxr font-semibold text-primary300 hover:font-bold"
           type="button"

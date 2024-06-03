@@ -71,6 +71,11 @@ function CreateVoteForm() {
     router.push(`/vote/${res.id}`)
   }
 
+  const pattern = {
+    value: /^[a-zA-Z0-9]{6,12}$/,
+    message: '비밀번호는 6 ~ 12자의 영문 대소문자와 숫자로 입력해주세요.',
+  }
+
   return (
     <form
       className="flex w-full max-w-465pxr flex-col gap-48pxr"
@@ -97,7 +102,12 @@ function CreateVoteForm() {
         />
         <div className="flex gap-15pxr">
           <VoteSmallInput type="voteHost" register={register} errors={errors} />
-          <VoteSmallInput type="password" register={register} errors={errors} />
+          <VoteSmallInput
+            type="password"
+            register={register}
+            errors={errors}
+            pattern={pattern}
+          />
         </div>
       </div>
       <ButtonRound
