@@ -68,7 +68,7 @@ function ResultPage() {
     <>
       <Header>투표결과</Header>
       <div className="flex flex-col items-center">
-        <div className="mt-62pxr flex w-375pxr flex-col justify-center sm:w-465pxr">
+        <div className="mt-62pxr flex w-full max-w-465pxr flex-col justify-center px-12pxr">
           <div className="mb-48pxr flex flex-col gap-20pxr">
             <h1 className="text-24pxr font-semibold leading-[36px] tracking-[0.12px]">
               {title}
