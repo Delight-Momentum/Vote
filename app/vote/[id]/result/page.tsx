@@ -8,15 +8,19 @@ import ProgressBar from '@/components/progress-bar'
 import useModal from '@/hooks/use-modal'
 import getVote, { IGetVoteResponse } from 'apis/get-vote'
 import defaultVote from 'constants/vote-default-value'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import handleShareToKakao from 'utils/share-kakao'
 import { toast } from 'react-toastify'
+import deConvertToKoreanTime from 'utils/de-convert-to-korean-time'
 
 function ResultPage() {
   const [vote, setVote] = useState<IGetVoteResponse>(defaultVote)
   const { isDialogOpen, setIsDialogOpen, dialogOutSideClick, dialogRef } =
     useModal()
   const { id } = useParams<{ id: string }>()
+  const router = useRouter()
+  const [isPossibleToVote, setIsPossibleToVote] = useState(false)
 
   useEffect(() => {
     const fetchVoteData = async () => {
@@ -37,28 +41,34 @@ function ResultPage() {
 
     fetchVoteData()
   }, [id])
-  const { title, participantCounts, contents } = vote
-  const templateId = 108158
 
-  const handleShareToKakao = () => {
-    const { Kakao } = window
-    if (!contents) return
-    Kakao.Share.sendCustom({
-      templateId,
-      templateArgs: {
-        description: title,
-        content1: contents[0].content,
-        content2: contents[1].content,
-        url: `/vote/${id}/result`,
-      },
-    })
+  useEffect(() => {
+    router.prefetch(`/vote/${id}`)
+  }, [id, router])
+
+  const { title, participantCounts, contents, periodEnd } = vote
+  const periodEndDate = deConvertToKoreanTime(periodEnd)
+
+  useEffect(() => {
+    const nowDate = new Date()
+    const participantVoteId = localStorage.getItem('participantVoteId')
+    setIsPossibleToVote(
+      nowDate < periodEndDate && !participantVoteId?.includes(id),
+    )
+  }, [periodEndDate, id])
+
+  const kakaoShareArgs = {
+    id,
+    title,
+    contents,
+    url: `/vote/${id}/result`,
   }
 
   return (
     <>
       <Header>투표결과</Header>
-      <div className="mt-62pxr flex flex-col items-center">
-        <div className="mt-62pxr flex h-320pxr w-320pxr flex-col justify-center xl:w-465pxr">
+      <div className="flex flex-col items-center">
+        <div className="mt-62pxr flex w-375pxr flex-col justify-center sm:w-465pxr">
           <div className="mb-48pxr flex flex-col gap-20pxr">
             <h1 className="text-24pxr font-semibold leading-[36px] tracking-[0.12px]">
               {title}
@@ -83,18 +93,27 @@ function ResultPage() {
             <ButtonRound
               variant="primary"
               size="lg"
-              onClick={handleShareToKakao}
+              onClick={() => handleShareToKakao(kakaoShareArgs)}
               data-cy="shareResultButton"
             >
               결과 공유하기
             </ButtonRound>
+            {isPossibleToVote && (
+              <ButtonRound
+                variant="primary"
+                size="lg"
+                onClick={() => router.push(`/vote/${id}`)}
+              >
+                투표 하러가기
+              </ButtonRound>
+            )}
             <ButtonRound
               variant="secondary"
               size="lg"
               onClick={() => setIsDialogOpen(!isDialogOpen)}
               data-cy="revoteButton"
             >
-              재투표 하기
+              투표 기간 재설정
             </ButtonRound>
             <Dialog
               isOpen={isDialogOpen}
