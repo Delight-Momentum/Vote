@@ -4,8 +4,8 @@
 <p>프로젝트를 진행하면서 투표할 일이 많아졌지만, 디스코드 메신저에는 투표 기능이 없어 이모지를 사용한 투표 방식에 불편함을 느꼈습니다. 이에 따라 손쉽게 투표를 생성하고 참여할 수 있는 웹 서비스를 기획하고 개발하게 되었습니다.</p>
 
 <h2>팀원 소개 & 역할</h2>
-| <a href='https://github.com/wecaners'><img style='width:150px;' src='https://avatars.githubusercontent.com/u/90304025?v=4' /></a> | <a href='https://github.com/lsc58461'><img style='width:150px;' src='https://avatars.githubusercontent.com/u/79037820?&v=4' /></a> |
-| :-----------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: |
+| <a href='https://github.com/wecaners'><img src='https://avatars.githubusercontent.com/u/90304025?v=4' /></a> | <a href='https://github.com/lsc58461'><img src='https://avatars.githubusercontent.com/u/79037820?&v=4' /></a> |
+| :--------: | :--------: |
 | 김진우 | 이정윤 |
 | <h3>역할</h3><ul><li>메인 페이지</li><li>투표 결과 페이지</li><li>전반적인 수정</li></ul> | <h3>역할</h3><ul><li>투표 생성 페이지</li><li>투표 수정 페이지</li><li>투표 페이지</li><li>전반적인 수정</li></ul> |
 
