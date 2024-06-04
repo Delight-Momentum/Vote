@@ -53,15 +53,20 @@
 <h2>프로젝트 주요 기능</h2>
 <h3>메인페이지</h3>
 <img src='https://media.discordapp.net/attachments/1205482328231776287/1247549047099752478/2024-06-04_10.54.02.png?ex=66606e17&is=665f1c97&hm=a1669df3ceaf56779fd77b53bce5610a500f93ff45f5d751bb1775e66e5b9654&=&format=webp&quality=lossless&width=1139&height=686'/>
-<p>많은 카드를 불러올 때 무한스크롤로 스크롤 할때마다 8개의 카드가 불러져와요.</p>
-<p>검색창에 관심 있는 키워드로 투표가 진행되고 있는지 검색해보세요!</p>
+<pre>많은 카드를 불러올 때 무한스크롤로 스크롤 할때마다 8개의 카드가 불러져와요.
+검색창에 관심 있는 키워드로 투표가 진행되고 있는지 검색해보세요!</pre>
 <h3>투표 만들기 페이지</h3>
 <img src='https://media.discordapp.net/attachments/1205482328231776287/1247547866478674060/vote-create-vote-page.png?ex=66606cfd&is=665f1b7d&hm=fca5a989beed53a12852cf90849c4f5b46e75477c0cb7f9517ecb66b561ea42b&=&format=webp&quality=lossless&width=915&height=686'/>
-<p>익명 투표와, 공개 투표를 선태할 수 있어</p>
+<pre>투표 방식으로 단일선택, 다수선택, 공개투표, 익명투표를 설정할 수 있어요! 
+비밀번호는 삭제하거나 수정할때 사용돼요.</pre>
 <h3>투표하기 페이지</h3>
 <img src='https://media.discordapp.net/attachments/1205482328231776287/1247547867091046431/vote-vote-page.png?ex=66606cfd&is=665f1b7d&hm=275dd152c0e6c327e12e461744fadc521dd590195d72caf4516f72f87fffd6cc&=&format=webp&quality=lossless&width=1137&height=686'/>
+<pre>실제로 투표를 진행하는 페이지에요! 비밀번호를 알고있다면 삭제와 수정이 가능해요 또한 투표를 만든사람과 투표를 이미 진행한 사람은 투표가 불가능해요! 
+투표의 공정성을 위해서 수정하기는 기간만 변경 가능해요!
+투표를 다른 유저에게 공유할 수 있어요 현재는 카카오톡 공유가 가능해요!</pre>
 <h3>투표 결과 페이지</h3>
 <img src='https://media.discordapp.net/attachments/1205482328231776287/1247547866789183561/vote-result-page.png?ex=66606cfd&is=665f1b7d&hm=853d40f89c70a3d3eb063ee15ee4c69bd2017df98c950fa9dce48e58eb567f80&=&format=webp&quality=lossless&width=1137&height=686'/>
+<pre>투표페이지와 마친가지로 공유가 가능해요! 투표의 결과를 다른 유저들에게 공유해보세요!</pre>
 <h3>투표 결과 공유 기능</h3>
 <img src='https://media.discordapp.net/attachments/1205482328231776287/1247547867393032252/2024-06-04_10.46.04.png?ex=66606cfd&is=665f1b7d&hm=40db583ab247d30851f796164cd1bd8f595b08f67a7727199d8b32da78250b93&=&format=webp&quality=lossless&width=1143&height=686'/>
 <h3>재투표 기능</h3>
