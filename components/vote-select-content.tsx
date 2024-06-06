@@ -36,6 +36,7 @@ function VoteSelectContent({
                   </label>
                   {voteMethod === 'one' ? (
                     <RadioButton
+                      id={content.id.toString()}
                       radioType="create"
                       radioSize="lg"
                       name="voteContent"
