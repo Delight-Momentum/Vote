@@ -18,7 +18,9 @@ function VoteCard({
   participateUrl,
   participateResultUrl,
 }: Props) {
-  const sliceVoteItems = voteItems?.slice(0, 3)
+  const MAX_VOTE_ITEMS = 3
+  const sliceVoteItems = voteItems?.slice(0, MAX_VOTE_ITEMS)
+
   return (
     <Link href={`${isClosed ? participateResultUrl : participateUrl}`}>
       <div
@@ -27,8 +29,10 @@ function VoteCard({
       >
         {isClosed && (
           <div className="absolute left-0pxr top-0pxr z-50 flex h-full w-full flex-col items-center justify-center gap-10pxr rounded-2xl bg-[rgba(11,11,11,0.60)]">
-            <p className="text-16pxr font-medium text-white">
+            <p className="text-center text-16pxr font-medium text-white">
               투표가 종료됐어요
+              <br />
+              <span className="text-18pxr">결과를 확인해보세요!</span>
             </p>
           </div>
         )}
@@ -56,8 +60,15 @@ function VoteCard({
             </div>
           ))}
           <div className="absolute bottom-25pxr h-58pxr w-270pxr bg-[linear-gradient(180deg,rgba(255,255,255,0.00)_0%,#FFF_100%)]" />
+          {voteItems?.length > MAX_VOTE_ITEMS && (
+            <div className="absolute bottom-6pxr left-0pxr z-10 flex w-full items-center justify-center bg-[linear-gradient(180deg,rgba(255,255,255,0.00)_0%,#FFF_100%)]">
+              <p className="text-14pxr font-normal text-[#49454F]">
+                +{voteItems.length - MAX_VOTE_ITEMS}개의 선택지가 더 있어요
+              </p>
+            </div>
+          )}
         </div>
-        <div className="flex items-center justify-between pt-5pxr">
+        <div className="flex h-40pxr items-end pt-5pxr">
           <p
             className={`${isClosed && 'flex h-full w-full items-center justify-center !text-[#999999]'} text-14pxr font-normal text-[#49454F]`}
           >
