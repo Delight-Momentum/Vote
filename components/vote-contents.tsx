@@ -1,65 +1,35 @@
 'use client'
 
 import { ReactNode, useEffect, useState } from 'react'
-import { FieldErrors, UseFormRegister } from 'react-hook-form'
 import { VoteContent } from 'apis/get-vote'
 import { CircleButton, Input, Label } from '.'
-import { ICreateVoteForm } from './create-vote-form'
 
 interface IVoteContentsProps {
-  register?: UseFormRegister<ICreateVoteForm>
-  errors?: FieldErrors<ICreateVoteForm>
   values?: VoteContent[]
 }
 const MAX_CONTENTS = 10
 
-function VoteContents({ register, errors, values }: IVoteContentsProps) {
+function VoteContents({ values }: IVoteContentsProps) {
   const [inputCount, setInputCount] = useState(2)
   const [inputs, setInputs] = useState<ReactNode[]>([])
-
-  const handleAddClick = () => {
-    if (inputCount > MAX_CONTENTS - 1) {
-      return
-    }
-
-    setInputCount(inputCount + 1)
-  }
 
   useEffect(() => {
     const updatedInputs: ReactNode[] = []
 
     for (let i = 0; i < inputCount; i += 1) {
       updatedInputs.push(
-        <>
-          <Input
-            className={
-              errors &&
-              (errors.voteContents && errors.voteContents[i]
-                ? 'border border-red-500'
-                : '')
-            }
-            dataType="array"
-            id={`voteContents${i}`}
-            hookFormId={String(i)}
-            register={register}
-            errors={errors}
-            hookFormRequired={`${i + 1} 항목을 입력해주세요`}
-            placeholder={`${i + 1}번 항목`}
-            data-cy={`contentInput-${i + 1}`}
-            value={values && values[i].content}
-            disabled={!!values}
-          />
-          {errors && (
-            <p className="absolute -bottom-20pxr left-4pxr text-14pxr text-red-500">
-              {errors.voteContents?.[i]?.message}
-            </p>
-          )}
-        </>,
+        <Input
+          dataType="array"
+          id={`voteContents${i}`}
+          data-cy={`contentInput-${i + 1}`}
+          value={values && values[i].content}
+          disabled={!!values}
+        />,
       )
     }
 
     setInputs(updatedInputs)
-  }, [inputCount, register, errors, values])
+  }, [inputCount, values])
 
   useEffect(() => {
     if (values) {
@@ -82,7 +52,6 @@ function VoteContents({ register, errors, values }: IVoteContentsProps) {
         </ul>
         <CircleButton
           theme="big"
-          onClick={handleAddClick}
           disabled={inputCount === MAX_CONTENTS || !!values}
           data-cy="addContentButton"
         >

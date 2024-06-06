@@ -19,9 +19,7 @@ function VotePeriod({
 
   return (
     <div className="flex w-full flex-col gap-10pxr">
-      <Label htmlFor="votePeriod" theme="small">
-        투표 기간
-      </Label>
+      <Label theme="small">투표 기간</Label>
       <div className="flex h-100pxr w-full flex-col items-center justify-between rounded-lg bg-white px-24pxr py-16pxr sm:h-56pxr sm:flex-row">
         {isMounted && (
           <>

@@ -52,7 +52,7 @@ function Input({
               hookFormId !== undefined && {
                 ...(register as UseFormRegister<ICreateVoteForm | IVoteForm>)(
                   dataType === 'array'
-                    ? `voteContents.${hookFormId}`
+                    ? `voteContents.${hookFormId}.content`
                     : hookFormId,
                   {
                     required: `${hookFormRequired}`,
