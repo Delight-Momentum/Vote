@@ -16,7 +16,7 @@ function VoteSelectContent({
 }: IVoteSelectContentProps) {
   return (
     <div className="flex flex-col gap-20pxr">
-      <Label htmlFor="vote" theme="normal">
+      <Label className="break-all" htmlFor="vote" theme="normal">
         {title || '투표 제목'}
       </Label>
       <div className="flex flex-col gap-16pxr">
@@ -29,7 +29,7 @@ function VoteSelectContent({
                   data-cy={`voteContent${index + 1}`}
                 >
                   <label
-                    className="w-full overflow-hidden text-ellipsis break-words text-16pxr"
+                    className="w-full overflow-hidden text-ellipsis break-all text-16pxr"
                     htmlFor={content.id.toString()}
                   >
                     {content.content}
