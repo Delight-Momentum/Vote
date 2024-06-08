@@ -1,6 +1,7 @@
 'use client'
 
 import ButtonRound from '@/components/button-round'
+import ButtonShare from '@/components/button-share'
 import Dialog from '@/components/dialog'
 import RevoteDialog from '@/components/dialog-revote'
 import Header from '@/components/header'
@@ -10,7 +11,6 @@ import getVote, { IGetVoteResponse } from 'apis/get-vote'
 import defaultVote from 'constants/vote-default-value'
 import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import handleShareToKakao from 'utils/share-kakao'
 import { toast } from 'react-toastify'
 import deConvertToKoreanTime from 'utils/de-convert-to-korean-time'
 
@@ -57,13 +57,6 @@ function ResultPage() {
     )
   }, [periodEndDate, id])
 
-  const kakaoShareArgs = {
-    id,
-    title,
-    contents,
-    url: `/vote/${id}/result`,
-  }
-
   return (
     <>
       <Header>투표결과</Header>
@@ -74,8 +67,8 @@ function ResultPage() {
               {title}
             </h1>
             <div className="flex flex-col gap-10pxr">
-              {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
-              {contents?.map(({ id, content, selectedCounts }) => (
+              {// eslint-disable-next-line @typescript-eslint/no-shadow
+              contents?.map(({ id, content, selectedCounts }) => (
                 <ProgressBar
                   key={id}
                   contentId={id}
@@ -90,14 +83,12 @@ function ResultPage() {
             </span>
           </div>
           <div className="flex flex-col gap-16pxr">
-            <ButtonRound
-              variant="primary"
-              size="lg"
-              onClick={() => handleShareToKakao(kakaoShareArgs)}
+            <ButtonShare
+              id={id}
+              title={title}
+              contents={contents}
               data-cy="shareResultButton"
-            >
-              결과 공유하기
-            </ButtonRound>
+            />
             {isPossibleToVote && (
               <ButtonRound
                 variant="primary"
@@ -110,7 +101,7 @@ function ResultPage() {
             <ButtonRound
               variant="secondary"
               size="lg"
-              onClick={() => setIsDialogOpen(!isDialogOpen)}
+              onClick={() => setIsDialogOpen(true)}
               data-cy="revoteButton"
             >
               투표 기간 재설정
@@ -120,6 +111,7 @@ function ResultPage() {
               dialogOutSideClick={dialogOutSideClick}
               dialogRef={dialogRef}
               className="h-291pxr max-w-488pxr p-12pxr"
+              data-cy="revoteDialog"
             >
               <RevoteDialog
                 voteId="74"
