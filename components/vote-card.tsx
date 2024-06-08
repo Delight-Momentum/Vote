@@ -49,7 +49,7 @@ function VoteCard({
               <div
                 className={`absolute left-0pxr top-0pxr h-full w-1/2 rounded-r-md bg-primary200 ${isClosed ? 'bg-[#999999]' : ''}`}
               />
-              <p className="z-10 font-[#49454f] text-16pxr font-normal">
+              <p className="z-10 w-190pxr overflow-hidden text-ellipsis text-nowrap font-[#49454f] text-16pxr font-normal">
                 {item}
               </p>
               <p className="font-[#49454f] text-16pxr font-normal">??%</p>

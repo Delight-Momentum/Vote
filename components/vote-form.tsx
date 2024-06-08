@@ -126,7 +126,7 @@ function VoteForm() {
 
   return (
     <form
-      className="flex w-465pxr flex-col gap-48pxr"
+      className="flex w-full max-w-465pxr flex-col gap-48pxr"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col gap-40pxr">
