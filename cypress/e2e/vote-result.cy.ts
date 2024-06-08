@@ -19,7 +19,6 @@ describe('투표결과 페이지를 테스트한다.', () => {
     cy.get('[data-cy=revoteButton]').as('revoteButton')
     // when - 재투표하기 버튼을 누른다.
     cy.get('@revoteButton').click()
-    cy.get('@revoteButton').click()
     // then - 재투표 모달이 뜬다.
     cy.get('[data-cy=revoteDialog]').should('be.visible')
 
