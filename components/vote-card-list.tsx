@@ -19,7 +19,7 @@ function VoteCardList({ voteList, isLoading }: Props) {
           ({ id, title, isClosed, participantCounts, contents }) => {
             return (
               <VoteCard
-                key={id}
+                key={id + title}
                 isClosed={isClosed}
                 voteTitle={title}
                 voteItems={contents}
