@@ -2,11 +2,15 @@ import { ChangeEvent, InputHTMLAttributes } from 'react'
 import { FieldErrors, UseFormRegister, ValidationRule } from 'react-hook-form'
 import { ICreateVoteForm } from './create-vote-form'
 import { IVoteForm } from './vote-form'
+import { IEditVoteForm } from './edit-vote-form'
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   dataType?: 'array' | 'string'
   hookFormId?: string
-  register?: UseFormRegister<ICreateVoteForm> | UseFormRegister<IVoteForm>
+  register?:
+    | UseFormRegister<ICreateVoteForm>
+    | UseFormRegister<IEditVoteForm>
+    | UseFormRegister<IVoteForm>
   errors?: FieldErrors<ICreateVoteForm> | FieldErrors<IVoteForm>
   hookFormRequired?: string
   hookFormPattern?: ValidationRule<RegExp>
@@ -52,7 +56,7 @@ function Input({
               hookFormId !== undefined && {
                 ...(register as UseFormRegister<ICreateVoteForm | IVoteForm>)(
                   dataType === 'array'
-                    ? `voteContents.${hookFormId}`
+                    ? `voteContents.${hookFormId}.content`
                     : hookFormId,
                   {
                     required: `${hookFormRequired}`,

@@ -19,10 +19,7 @@ import putVote from 'apis/put-vote'
 import { toast } from 'react-toastify'
 import useVoteData from '@/hooks/use-vote-data'
 
-export interface ICreateVoteForm extends Record<string, string | string[]> {
-  voteTitle: string
-  voteContents: string[]
-  voteHost: string
+export interface IEditVoteForm extends Record<string, string | string[]> {
   password: string
 }
 
@@ -35,12 +32,12 @@ function EditVoteForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ICreateVoteForm>()
+  } = useForm<IEditVoteForm>()
   const voteData = useVoteData(id as string)
   const { handleValueChange } = useRadio()
   const { date, selectedDate, selectedTime, handleDateChange } = useDatePicker()
 
-  const onSubmit = async (data: ICreateVoteForm) => {
+  const onSubmit = async (data: IEditVoteForm) => {
     try {
       if (!date.startDate || !date.endDate || !date.time) return
 

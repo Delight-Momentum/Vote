@@ -27,13 +27,14 @@ function VoteSelectRadio({
 
   return (
     <div className="flex flex-col gap-10pxr">
-      <Label htmlFor={method} theme="small">
-        투표 방식
+      <Label htmlFor={options[method][0].value} theme="small">
+        {method === 'vote' ? '투표 방식' : '참여자 이름'}
       </Label>
       <div className="flex gap-22pxr">
         {options[method].map((option) => (
           <div key={option.value} className="flex items-center gap-4pxr">
             <RadioButton
+              id={option.value}
               radioType={radioType}
               radioSize="sm"
               name={method}

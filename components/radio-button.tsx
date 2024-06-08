@@ -28,7 +28,6 @@ function RadioButton({
 
   return radioType === 'create' || radioType === 'vote' ? (
     <input
-      id={value}
       name={name}
       className={commonClassNames}
       onChange={(e) => onValueChange && onValueChange(e.target.value)}
