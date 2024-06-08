@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React from 'react'
+import CirCleButton from './circle-button'
 
 interface Props {
   isClosed: boolean
@@ -22,11 +22,11 @@ function VoteCard({
   const sliceVoteItems = voteItems?.slice(0, MAX_VOTE_ITEMS)
 
   return (
-    <Link href={`${isClosed ? participateResultUrl : participateUrl}`}>
-      <div
-        data-cy="voteCard"
-        className="relative h-376pxr w-320pxr rounded-2xl bg-white px-25pxr pb-25pxr pt-17pxr"
-      >
+    <div
+      data-cy="voteCard"
+      className="relative h-376pxr w-320pxr transform rounded-2xl bg-white px-25pxr pb-25pxr pt-17pxr transition duration-300 hover:scale-110"
+    >
+      <Link href={`${isClosed ? participateResultUrl : participateUrl}`}>
         {isClosed && (
           <div className="absolute left-0pxr top-0pxr z-50 flex h-full w-full flex-col items-center justify-center gap-10pxr rounded-2xl bg-[rgba(11,11,11,0.60)]">
             <p className="text-center text-16pxr font-medium text-white">
@@ -68,6 +68,8 @@ function VoteCard({
             </div>
           )}
         </div>
+      </Link>
+      <div className="flex h-55pxr items-center justify-between">
         <div className="flex h-40pxr items-end pt-5pxr">
           <p
             className={`${isClosed && 'flex h-full w-full items-center justify-center !text-[#999999]'} text-14pxr font-normal text-[#49454F]`}
@@ -76,8 +78,15 @@ function VoteCard({
             {isClosed ? '명 참여 완료' : '명 참여중'}
           </p>
         </div>
+        {!isClosed && (
+          <Link href={participateResultUrl}>
+            <div className="z-20 flex items-end">
+              <CirCleButton theme="small">결과보기</CirCleButton>
+            </div>
+          </Link>
+        )}
       </div>
-    </Link>
+    </div>
   )
 }
 
