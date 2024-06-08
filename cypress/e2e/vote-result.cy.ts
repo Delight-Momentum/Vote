@@ -49,8 +49,8 @@ describe('투표결과 페이지를 테스트한다.', () => {
   })
 
   it('재투표 기능을 테스트한다.', () => {
-    cy.get('[data-cy=revoteButton]').click()
     cy.wait(2000)
+    cy.get('[data-cy=revoteButton]').click()
     cy.get('[data-cy=revoteDialog]').should('be.visible')
     // given - 삭제 비밀번호 인풋을 가져온다.
     cy.get('[data-cy=deleteDialogInput]').as('deleteInput')
