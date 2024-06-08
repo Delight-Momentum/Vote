@@ -24,7 +24,11 @@ function VoteSelectDescription({
         이 투표는 {voteMethodText} 선택이 가능해요.
       </li>
       <li className="text-[#616161]" data-cy="voteRemainingPeriod">
-        약 {days}일 {hours}시간 후에 투표가 종료됩니다.
+        약{' '}
+        <span className="font-semibold text-primary300 underline underline-offset-4">
+          {days}일 {hours}시간 후에 투표가 종료
+        </span>
+        됩니다.
       </li>
     </ul>
   )

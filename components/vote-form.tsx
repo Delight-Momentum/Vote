@@ -18,7 +18,7 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import deConvertToKoreanTime from 'utils/de-convert-to-korean-time'
-import handleShareToKakao from 'utils/share-kakao'
+import ButtonShare from './button-share'
 
 export interface IVoteForm extends Record<string, string> {
   participantName: string
@@ -117,16 +117,9 @@ function VoteForm() {
     }
   }, [id, router, voteData?.periodEnd])
 
-  const kakaoShareOption = {
-    id,
-    title: voteData?.title,
-    contents: voteData?.contents,
-    url: `/vote/${id}`,
-  }
-
   return (
     <form
-      className="flex w-465pxr flex-col gap-48pxr"
+      className="flex w-full max-w-465pxr flex-col gap-48pxr"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col gap-40pxr">
@@ -183,13 +176,11 @@ function VoteForm() {
           />
         </Dialog>
       </div>
-      <ButtonRound
-        variant="secondary"
-        size="lg"
-        onClick={() => handleShareToKakao(kakaoShareOption)}
-      >
-        투표 공유하기
-      </ButtonRound>
+      <ButtonShare
+        id={id}
+        title={voteData?.title}
+        contents={voteData?.contents}
+      />
     </form>
   )
 }

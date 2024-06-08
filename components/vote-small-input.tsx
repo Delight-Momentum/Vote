@@ -2,10 +2,11 @@ import React from 'react'
 import { FieldErrors, UseFormRegister, ValidationRule } from 'react-hook-form'
 import { Input, Label } from '.'
 import { ICreateVoteForm } from './create-vote-form'
+import { IEditVoteForm } from './edit-vote-form'
 
 interface IVoteSmallInputProps {
   type: 'voteHost' | 'password'
-  register?: UseFormRegister<ICreateVoteForm>
+  register?: UseFormRegister<ICreateVoteForm> | UseFormRegister<IEditVoteForm>
   errors?: FieldErrors<ICreateVoteForm>
   value?: string
   pattern?: ValidationRule<RegExp>

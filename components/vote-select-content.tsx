@@ -25,17 +25,18 @@ function VoteSelectContent({
             contents.map((content, index) => (
               <li key={`${content}${index + 1}`}>
                 <div
-                  className="flex justify-between rounded-lg bg-white py-12pxr pl-24pxr pr-10pxr"
+                  className="flex w-full items-center justify-between gap-10pxr rounded-lg bg-white py-12pxr pl-24pxr pr-10pxr"
                   data-cy={`voteContent${index + 1}`}
                 >
                   <label
-                    className="w-full text-16pxr"
+                    className="w-full overflow-hidden text-ellipsis break-words text-16pxr"
                     htmlFor={content.id.toString()}
                   >
                     {content.content}
                   </label>
                   {voteMethod === 'one' ? (
                     <RadioButton
+                      id={content.id.toString()}
                       radioType="create"
                       radioSize="lg"
                       name="voteContent"

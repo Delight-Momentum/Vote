@@ -77,7 +77,10 @@ function RevoteDialog({ voteId, onClose }: IProps) {
     }
   }
   return (
-    <div className="flex h-full flex-col justify-center" data-cy="revoteDialog">
+    <div
+      className="flex h-full flex-col justify-center "
+      data-cy="revoteDialog"
+    >
       <div className="flex flex-col gap-15pxr px-25pxr pt-25pxr">
         <h1 className="text-22pxr font-semibold">재투표를 할까요?</h1>
         <h2 className="text-14pxr font-semibold text-[#6E6E6E]">
@@ -104,9 +107,9 @@ function RevoteDialog({ voteId, onClose }: IProps) {
         type="password"
         className={`flex flex-1 items-center rounded-lg bg-[#f2f2f2] px-24pxr py-16pxr ${isError ? 'border border-red-500' : ''}`}
         placeholder="비밀번호를 입력해주세요"
-        data-cy="deleteDialogInput"
         onChange={(e) => handlePasswordChange(e.target.value)}
         autoComplete="off"
+        data-cy="deleteDialogInput"
       />
       <div className="mt-8pxr flex justify-end gap-10pxr">
         <button

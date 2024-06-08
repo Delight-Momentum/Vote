@@ -2,7 +2,7 @@ type LabelTheme = 'small' | 'normal' | 'big'
 
 interface ILabelProps {
   children: string
-  htmlFor: string
+  htmlFor?: string
   theme: LabelTheme
 }
 

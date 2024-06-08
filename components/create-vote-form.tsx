@@ -2,7 +2,7 @@
 
 import {
   ButtonRound,
-  VoteContents,
+  CreateVoteContents,
   VotePeriod,
   VoteSelectRadio,
   VoteSmallInput,
@@ -16,9 +16,10 @@ import { useRouter } from 'next/navigation'
 import convertToKoreanTime from 'utils/convert-to-korean-time'
 import { toast } from 'react-toastify'
 
-export interface ICreateVoteForm extends Record<string, string | string[]> {
+export interface ICreateVoteForm
+  extends Record<string, string | { content: string }[]> {
   voteTitle: string
-  voteContents: string[]
+  voteContents: { content: string }[]
   voteHost: string
   password: string
 }
@@ -27,6 +28,7 @@ function CreateVoteForm() {
   const router = useRouter()
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<ICreateVoteForm>()
@@ -43,10 +45,10 @@ function CreateVoteForm() {
       .toISOString()
       .split('T')[0]
       .concat('T', endTimeKoreanTime.toISOString().split('T')[1])
-
+    const voteContents = data.voteContents.map((content) => content.content)
     const voteData = {
       title: data.voteTitle,
-      contents: data.voteContents,
+      contents: voteContents,
       periodStart: startDateKoreanTime.toISOString(),
       periodEnd: formattedEndDate,
       method: radioValues.voteMethod,
@@ -94,7 +96,11 @@ function CreateVoteForm() {
     >
       <div className="flex w-full flex-col gap-40pxr">
         <VoteTitle register={register} errors={errors} />
-        <VoteContents register={register} errors={errors} />
+        <CreateVoteContents
+          register={register}
+          errors={errors}
+          control={control}
+        />
         <VotePeriod
           date={date}
           selectedDate={selectedDate}
