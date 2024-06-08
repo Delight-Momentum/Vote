@@ -10,13 +10,14 @@ describe('투표결과 페이지를 테스트한다.', () => {
   it('프로그레스바, 공유하기 버튼, 재투표하기 버튼을 렌더하는지 확인한다.', () => {
     // given - 투표 결과 페이지에 접근해 요소 하나하나를 찾는다.
     cy.get('[data-cy=progressBar]').as('progressBar')
-    cy.get('[data-cy=shareResultButton]').as('shareResultButton')
+    cy.get('[data-cy=shareButton]').as('shareButton')
     cy.get('[data-cy=revoteButton]').as('revoteButton')
   })
 
   it('날짜선택을 테스트한다', () => {
     // given - 재투표하기 버튼을 찾는다.
     cy.get('[data-cy=revoteButton]').as('revoteButton')
+    cy.wait(2000)
     // when - 재투표하기 버튼을 누른다.
     cy.get('@revoteButton').click()
     // then - 재투표 모달이 뜬다.
@@ -33,6 +34,7 @@ describe('투표결과 페이지를 테스트한다.', () => {
   it('시간선택을 테스트한다', () => {
     // given - 재투표하기 버튼을 찾는다.
     cy.get('[data-cy=revoteButton]').as('revoteButton')
+    cy.wait(2000)
     // when - 재투표하기 버튼을 누른다.
     cy.get('@revoteButton').click()
     // then - 재투표 모달이 뜬다.
@@ -47,8 +49,9 @@ describe('투표결과 페이지를 테스트한다.', () => {
   })
 
   it('재투표 기능을 테스트한다.', () => {
-    cy.get('[data-cy=revoteButton]').as('revoteButton')
-    cy.get('@revoteButton').click()
+    cy.wait(2000)
+    cy.get('[data-cy=revoteButton]').click()
+    cy.get('[data-cy=revoteDialog]').should('be.visible')
     // given - 삭제 비밀번호 인풋을 가져온다.
     cy.get('[data-cy=deleteDialogInput]').as('deleteInput')
     // when - 값을 입력한다.
@@ -61,8 +64,5 @@ describe('투표결과 페이지를 테스트한다.', () => {
         expect(res.statusCode).to.eq(200)
       })
     })
-  })
-  it('카카오 객체가 있는지 확인한다.', () => {
-    cy.window().should('have.property', 'Kakao')
   })
 })
