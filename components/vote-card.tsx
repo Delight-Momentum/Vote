@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import CirCleButton from './circle-button'
 
 interface Props {
@@ -21,7 +20,6 @@ function VoteCard({
 }: Props) {
   const MAX_VOTE_ITEMS = 3
   const sliceVoteItems = voteItems?.slice(0, MAX_VOTE_ITEMS)
-  const router = useRouter()
 
   return (
     <div
@@ -81,14 +79,11 @@ function VoteCard({
           </p>
         </div>
         {!isClosed && (
-          <div className="z-20 flex items-end">
-            <CirCleButton
-              theme="small"
-              onClick={() => router.push(participateResultUrl)}
-            >
-              결과보기
-            </CirCleButton>
-          </div>
+          <Link href={participateResultUrl}>
+            <div className="z-20 flex items-end">
+              <CirCleButton theme="small">결과보기</CirCleButton>
+            </div>
+          </Link>
         )}
       </div>
     </div>
