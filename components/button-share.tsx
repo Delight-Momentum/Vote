@@ -47,7 +47,7 @@ function ButtonShare({ id, title, contents }: Props) {
           onClick={handleClickShare}
           data-cy="shareButton"
         >
-          결과 공유하기
+          투표 공유하기
         </ButtonRound>
       )}
 
