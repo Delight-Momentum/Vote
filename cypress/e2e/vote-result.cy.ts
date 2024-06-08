@@ -17,6 +17,7 @@ describe('투표결과 페이지를 테스트한다.', () => {
   it('날짜선택을 테스트한다', () => {
     // given - 재투표하기 버튼을 찾는다.
     cy.get('[data-cy=revoteButton]').as('revoteButton')
+    cy.wait(2000)
     // when - 재투표하기 버튼을 누른다.
     cy.get('@revoteButton').click()
     // then - 재투표 모달이 뜬다.
@@ -33,8 +34,8 @@ describe('투표결과 페이지를 테스트한다.', () => {
   it('시간선택을 테스트한다', () => {
     // given - 재투표하기 버튼을 찾는다.
     cy.get('[data-cy=revoteButton]').as('revoteButton')
+    cy.wait(2000)
     // when - 재투표하기 버튼을 누른다.
-    cy.get('@revoteButton').click()
     cy.get('@revoteButton').click()
     // then - 재투표 모달이 뜬다.
     cy.get('[data-cy=revoteDialog]').should('be.visible')
@@ -48,8 +49,9 @@ describe('투표결과 페이지를 테스트한다.', () => {
   })
 
   it('재투표 기능을 테스트한다.', () => {
-    cy.get('[data-cy=revoteButton]').as('revoteButton')
-    cy.get('@revoteButton').click()
+    cy.get('[data-cy=revoteButton]').click()
+    cy.wait(2000)
+    cy.get('[data-cy=revoteDialog]').should('be.visible')
     // given - 삭제 비밀번호 인풋을 가져온다.
     cy.get('[data-cy=deleteDialogInput]').as('deleteInput')
     // when - 값을 입력한다.

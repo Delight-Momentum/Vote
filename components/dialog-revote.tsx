@@ -107,9 +107,9 @@ function RevoteDialog({ voteId, onClose }: IProps) {
         type="password"
         className={`flex flex-1 items-center rounded-lg bg-[#f2f2f2] px-24pxr py-16pxr ${isError ? 'border border-red-500' : ''}`}
         placeholder="비밀번호를 입력해주세요"
-        data-cy="deleteDialogInput"
         onChange={(e) => handlePasswordChange(e.target.value)}
         autoComplete="off"
+        data-cy="deleteDialogInput"
       />
       <div className="mt-8pxr flex justify-end gap-10pxr">
         <button
