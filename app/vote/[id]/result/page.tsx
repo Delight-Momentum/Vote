@@ -9,10 +9,30 @@ import ProgressBar from '@/components/progress-bar'
 import useModal from '@/hooks/use-modal'
 import getVote, { IGetVoteResponse } from 'apis/get-vote'
 import defaultVote from 'constants/vote-default-value'
+import { Metadata } from 'next'
 import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import deConvertToKoreanTime from 'utils/de-convert-to-korean-time'
+
+interface Props {
+  params: { id: string }
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = params
+  try {
+    const vote = await getVote({ id })
+    const res: IGetVoteResponse = await vote.json()
+    return {
+      title: res.title,
+    }
+  } catch (error) {
+    return {
+      title: '투표 결과',
+    }
+  }
+}
 
 function ResultPage() {
   const [vote, setVote] = useState<IGetVoteResponse>(defaultVote)
@@ -25,8 +45,8 @@ function ResultPage() {
   useEffect(() => {
     const fetchVoteData = async () => {
       try {
-        const result = await getVote({ id })
-        result.json().then((value) => setVote(value))
+        const result = await (await getVote({ id })).json()
+        setVote(result)
       } catch (error) {
         toast.error(
           <div>
