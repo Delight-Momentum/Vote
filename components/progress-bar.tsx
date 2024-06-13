@@ -31,23 +31,29 @@ function ProgressBar({
     return getSelectedVoteContents.includes(contentId)
   }
 
+  const selectedContentTextClass = selected()
+    ? 'text-primary300'
+    : 'text-[#999999]'
+
   return (
-    <div className="relative h-56pxr w-full" data-cy="progressBar">
-      <progress
-        className={`custom-progress h-full w-full overflow-hidden rounded-lg ${selected() ? 'custom-progress-selected' : ''}`}
-        value={value}
-        max="100"
+    <div
+      className="relative flex min-h-56pxr w-full overflow-hidden rounded-lg bg-white"
+      data-cy="progressBar"
+    >
+      <hr
+        style={{ width: `${value}%` }}
+        className={`absolute left-0pxr top-0pxr h-full ${selected() ? 'bg-primary300' : 'bg-[#e5e5e58c]'}`}
       />
-      <span
-        className={`absolute left-24pxr top-1/2 -translate-y-1/2 text-16pxr font-semibold ${selected() ? 'text-primary300' : 'text-[#999999]'}`}
-      >
-        {voteItem}
-      </span>
-      <span
-        className={`absolute right-16pxr top-1/2 -translate-y-1/2 text-16pxr font-semibold ${selected() ? 'text-primary300' : 'text-[#999999]'}`}
-      >
-        {value}%
-      </span>
+      <div className="z-10 flex w-full items-center justify-between gap-10pxr py-16pxr pl-24pxr pr-16pxr">
+        <p
+          className={`break-all text-16pxr font-semibold ${selectedContentTextClass}`}
+        >
+          {voteItem}
+        </p>
+        <p className={`text-16pxr font-semibold ${selectedContentTextClass}`}>
+          {value}%
+        </p>
+      </div>
     </div>
   )
 }

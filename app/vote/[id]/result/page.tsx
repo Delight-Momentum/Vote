@@ -63,7 +63,7 @@ function ResultPage() {
       <div className="flex flex-col items-center">
         <div className="mt-62pxr flex w-full max-w-465pxr flex-col justify-center px-12pxr">
           <div className="mb-48pxr flex flex-col gap-20pxr">
-            <h1 className="text-24pxr font-semibold leading-[36px] tracking-[0.12px]">
+            <h1 className="break-all text-24pxr font-semibold leading-[36px] tracking-[0.12px]">
               {title}
             </h1>
             <div className="flex flex-col gap-10pxr">
@@ -114,7 +114,7 @@ function ResultPage() {
               data-cy="revoteDialog"
             >
               <RevoteDialog
-                voteId="74"
+                voteId={id}
                 onClose={() => setIsDialogOpen(false)}
               />
             </Dialog>
