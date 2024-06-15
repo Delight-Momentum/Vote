@@ -1,27 +1,26 @@
 'use client'
 
-import {
-  ChangeEvent,
-  lazy,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import getVotelist from 'apis/get-votelist'
 import useIntersectionObserver from '@/hooks/use-intersection-observer'
 import { IVote, IVoteList } from 'types/voteListType'
-import { FloatingButton, Footer, Header, SearchBar } from '../components'
-
-const VoteCardList = lazy(() => import('@/components/vote-card-list'))
+import {
+  Filter,
+  FloatingButton,
+  Footer,
+  Header,
+  SearchBar,
+  VoteCardList,
+} from '../components'
 
 function Home() {
   const [voteList, setVoteList] = useState<IVote[]>([])
   const [offset, setOffset] = useState(1)
-  const [totalCount, setTotalCount] = useState(0)
+  const [totalCount, setTotalCount] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(false)
   const [query, setQuery] = useState<string | undefined>(undefined)
   const [hasNext, setHasNext] = useState(true)
+  const [order, setOrder] = useState<'popular' | 'open' | undefined>('popular')
   const targetRef = useRef<HTMLDivElement>(null)
   const timeoutQueryRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -30,21 +29,6 @@ function Home() {
 
   const { observe, unobserve, isVisible, setIsVisible } =
     useIntersectionObserver()
-
-  const fetchVoteList = useCallback(async () => {
-    if (isLoading || !hasNext) return
-    setIsLoading(true)
-    const response = await getVotelist(offset, limit, query)
-    const result: IVoteList = await response.json()
-    const { votes, total, hasNext: hasMoreItems } = result
-
-    setHasNext(hasMoreItems)
-    setVoteList((prev) => [...prev, ...votes])
-    setTotalCount(total)
-    setOffset((prev) => prev + limit)
-    setIsVisible(false)
-    setIsLoading(false)
-  }, [hasNext, isLoading, offset, query, setIsVisible])
 
   const initializeVoteList = () => {
     setOffset(1)
@@ -71,10 +55,33 @@ function Home() {
   }, [itemCounts, totalCount, isVisible, observe, unobserve])
 
   useEffect(() => {
-    if (isVisible && hasNext) {
+    const fetchVoteList = async () => {
+      setIsLoading(true)
+      const response = await getVotelist({
+        offset,
+        limit,
+        search: query,
+        order,
+      })
+      const result: IVoteList = await response.json()
+      const { votes, total, hasNext: hasMoreItems } = result
+
+      setHasNext(hasMoreItems)
+      setVoteList((prev) => [...prev, ...votes])
+      setTotalCount(total)
+      setOffset((prev) => prev + limit)
+      setIsVisible(false)
+      setIsLoading(false)
+    }
+
+    if (isVisible && hasNext && !isLoading) {
       fetchVoteList()
     }
-  }, [fetchVoteList, hasNext, isVisible])
+  }, [hasNext, isLoading, isVisible, offset, order, query, setIsVisible])
+
+  useEffect(() => {
+    initializeVoteList()
+  }, [order])
 
   return (
     <div className="relative">
@@ -87,9 +94,12 @@ function Home() {
             value={query}
           />
         </div>
-
+        <div className="flex w-full justify-center py-18pxr">
+          <div className="flex w-320pxr justify-end md:w-667pxr lg:w-1014pxr 2xl:w-1361pxr">
+            <Filter order={order} onFilterClick={setOrder} />
+          </div>
+        </div>
         <VoteCardList voteList={voteList} />
-
         <div className="h-1pxr w-1pxr" ref={targetRef} />
       </div>
       <div className="mt-60pxr">

@@ -23,10 +23,10 @@ function Dialog({
         role="presentation"
         ref={dialogRef}
         onClick={dialogOutSideClick}
-        className="z-5 fixed bottom-0pxr left-0pxr right-0pxr top-0pxr bg-black bg-opacity-50"
+        className="fixed bottom-0pxr left-0pxr right-0pxr top-0pxr z-20 bg-black bg-opacity-50"
       />
       <div
-        className={`z-5 fixed left-1/2 top-1/2 flex w-full max-w-312pxr -translate-x-1/2 -translate-y-1/2 flex-col rounded-[28px] bg-white p-25pxr ${className}`}
+        className={`fixed left-1/2 top-1/2 z-20 flex w-full max-w-312pxr -translate-x-1/2 -translate-y-1/2 flex-col rounded-[28px] bg-white p-25pxr ${className}`}
         data-cy="dialog"
       >
         {children}
