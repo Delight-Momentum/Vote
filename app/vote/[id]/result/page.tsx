@@ -1,148 +1,48 @@
-'use client'
-
-import ButtonRound from '@/components/button-round'
-import ButtonShare from '@/components/button-share'
-import Dialog from '@/components/dialog'
-import RevoteDialog from '@/components/dialog-revote'
-import Header from '@/components/header'
-import ProgressBar from '@/components/progress-bar'
-import useModal from '@/hooks/use-modal'
 import getVote, { IGetVoteResponse } from 'apis/get-vote'
-import defaultVote from 'constants/vote-default-value'
 import { Metadata } from 'next'
-import { useParams, useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import deConvertToKoreanTime from 'utils/de-convert-to-korean-time'
+import ResultPageContent from '@/components/result-page-content'
 
 interface Props {
   params: { id: string }
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+const errorParamsData = {
+  metadata: {
+    title: '투표 결과',
+  },
+  vote: undefined,
+}
+
+async function generateMetadata({
+  params,
+}: Props): Promise<{ metadata: Metadata; vote: IGetVoteResponse | undefined }> {
   const { id } = params
+
   try {
-    const vote = await getVote({ id })
-    const res: IGetVoteResponse = await vote.json()
+    const voteResponse = await getVote({ id })
+
+    if (voteResponse.status !== 200) {
+      return errorParamsData
+    }
+
+    const vote = await voteResponse.json()
+
     return {
-      title: res.title,
+      metadata: {
+        title: vote.title,
+      },
+      vote,
     }
   } catch (error) {
-    return {
-      title: '투표 결과',
-    }
+    return errorParamsData
   }
 }
 
-function ResultPage() {
-  const [vote, setVote] = useState<IGetVoteResponse>(defaultVote)
-  const { isDialogOpen, setIsDialogOpen, dialogOutSideClick, dialogRef } =
-    useModal()
-  const { id } = useParams<{ id: string }>()
-  const router = useRouter()
-  const [isPossibleToVote, setIsPossibleToVote] = useState(false)
+async function ResultPage({ params }: Props) {
+  const { vote: initialVote } = await generateMetadata({ params })
+  const { id } = params
 
-  useEffect(() => {
-    const fetchVoteData = async () => {
-      try {
-        const result = await (await getVote({ id })).json()
-        setVote(result)
-      } catch (error) {
-        toast.error(
-          <div>
-            페이지를 불러오는데 실패했어요.
-            <br />
-            계속해서 문제가 발생하면 관리자에게 문의해주세요.
-            <p>{String(error)}</p>
-          </div>,
-        )
-      }
-    }
-
-    fetchVoteData()
-  }, [id])
-
-  useEffect(() => {
-    router.prefetch(`/vote/${id}`)
-  }, [id, router])
-
-  const { title, participantCounts, contents, periodEnd } = vote
-  const periodEndDate = deConvertToKoreanTime(periodEnd)
-
-  useEffect(() => {
-    const nowDate = new Date()
-    const participantVoteId = localStorage.getItem('participantVoteId')
-    setIsPossibleToVote(
-      nowDate < periodEndDate && !participantVoteId?.includes(id),
-    )
-  }, [periodEndDate, id])
-
-  return (
-    <>
-      <Header>투표결과</Header>
-      <div className="flex flex-col items-center">
-        <div className="mt-62pxr flex w-full max-w-465pxr flex-col justify-center px-12pxr">
-          <div className="mb-48pxr flex flex-col gap-20pxr">
-            <h1 className="text-24pxr font-semibold leading-[36px] tracking-[0.12px]">
-              {title}
-            </h1>
-            <div className="flex flex-col gap-10pxr">
-              {// eslint-disable-next-line @typescript-eslint/no-shadow
-              contents?.map(({ id, content, selectedCounts }) => (
-                <ProgressBar
-                  key={id}
-                  contentId={id}
-                  voteItem={content}
-                  choiceCount={selectedCounts}
-                  participantCounts={participantCounts}
-                />
-              ))}
-            </div>
-            <span className="flex justify-end text-14pxr leading-[21px] tracking-[0.5px] text-[#999999]">
-              총 {participantCounts}명 참여
-            </span>
-          </div>
-          <div className="flex flex-col gap-16pxr">
-            <ButtonShare
-              id={id}
-              title={title}
-              contents={contents}
-              data-cy="shareResultButton"
-            />
-            {isPossibleToVote && (
-              <ButtonRound
-                variant="primary"
-                size="lg"
-                onClick={() => router.push(`/vote/${id}`)}
-              >
-                투표 하러가기
-              </ButtonRound>
-            )}
-            <ButtonRound
-              variant="secondary"
-              size="lg"
-              onClick={() => setIsDialogOpen(true)}
-              data-cy="revoteButton"
-            >
-              투표 기간 재설정
-            </ButtonRound>
-            <Dialog
-              isOpen={isDialogOpen}
-              dialogOutSideClick={dialogOutSideClick}
-              dialogRef={dialogRef}
-              className="h-291pxr max-w-488pxr p-12pxr"
-              data-cy="revoteDialog"
-            >
-              <RevoteDialog
-                voteId="74"
-                onClose={() => setIsDialogOpen(false)}
-              />
-            </Dialog>
-          </div>
-        </div>
-      </div>
-    </>
-  )
+  return <ResultPageContent vote={initialVote} id={id} />
 }
 
 export default ResultPage
