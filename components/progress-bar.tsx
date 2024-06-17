@@ -19,6 +19,9 @@ function ProgressBar({
   const value = Number.isNaN(contentCountPercent) ? 0 : contentCountPercent
 
   const selected = () => {
+    if (typeof window === 'undefined' || typeof localStorage === 'undefined')
+      return false
+
     const getSelectedVoteContentsString = localStorage.getItem(
       'selectedVoteContents',
     )
@@ -32,7 +35,7 @@ function ProgressBar({
   }
 
   const selectedContentTextClass = selected()
-    ? 'text-primary300'
+    ? 'text-gray-100'
     : 'text-[#999999]'
 
   return (
@@ -42,7 +45,7 @@ function ProgressBar({
     >
       <hr
         style={{ width: `${value}%` }}
-        className={`absolute left-0pxr top-0pxr h-full ${selected() ? 'bg-primary300' : 'bg-[#e5e5e58c]'}`}
+        className={`absolute -top-1pxr left-0pxr h-[101%] ${selected() ? 'bg-primary300' : 'bg-[#e5e5e58c]'}`}
       />
       <div className="z-10 flex w-full items-center justify-between gap-10pxr py-16pxr pl-24pxr pr-16pxr">
         <p
