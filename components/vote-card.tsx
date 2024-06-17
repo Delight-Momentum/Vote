@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CirCleButton from './circle-button'
 import Tooltip from './tooltip'
 
@@ -12,6 +12,7 @@ interface Props {
   participantsCount: number
   participateUrl: string
   participateResultUrl: string
+  createdAt: Date
 }
 
 const MAX_VOTE_ITEMS = 3
@@ -23,11 +24,20 @@ function VoteCard({
   participantsCount,
   participateUrl,
   participateResultUrl,
+  createdAt,
 }: Props) {
   const [tooltip, setTooltip] = useState({
     voteTitle: false,
     voteItems: Array(MAX_VOTE_ITEMS).fill(false),
   })
+  const [randomWidths, setRandomWidths] = useState<number[]>([])
+
+  useEffect(() => {
+    const generateRandomWidths = voteItems.map(() => {
+      return Math.floor(Math.random() * 91) + 10
+    })
+    setRandomWidths(generateRandomWidths)
+  }, [voteItems])
 
   const sliceVoteItems = voteItems.slice(0, MAX_VOTE_ITEMS)
 
@@ -45,10 +55,13 @@ function VoteCard({
     }))
   }
 
+  const time = String(createdAt)
+  const createdTime = time.split('T')[0]
+
   return (
     <div
       data-cy="voteCard"
-      className="relative h-376pxr w-320pxr transform rounded-2xl bg-white px-25pxr pb-25pxr pt-17pxr transition duration-300 hover:scale-110"
+      className="relative h-376pxr w-320pxr transform rounded-2xl bg-white px-25pxr pb-25pxr pt-17pxr shadow-xl transition duration-300 hover:scale-110"
     >
       <Link href={isClosed ? participateResultUrl : participateUrl}>
         {isClosed && (
@@ -74,6 +87,9 @@ function VoteCard({
           {tooltip.voteTitle && (
             <Tooltip arrowPosition="top">{voteTitle}</Tooltip>
           )}
+          <p className="text-12pxr font-medium leading-[16px] text-[#989898]">
+            {createdTime}에 시작!
+          </p>
         </div>
         <div className="relative flex h-239pxr flex-col gap-15pxr pb-25pxr pt-10pxr">
           {sliceVoteItems.map((item, index) => (
@@ -86,27 +102,29 @@ function VoteCard({
               onTouchEnd={() => handleMouseLeave(index)}
             >
               <div
-                className={`absolute left-0pxr top-0pxr h-full w-1/2 rounded-md bg-primary200 ${isClosed ? 'bg-[#999999]' : ''}`}
+                className={`absolute left-0pxr top-0pxr h-full rounded-md bg-primary200 ${isClosed ? 'bg-[#999999]' : ''}`}
+                style={{ width: `${randomWidths[index]}%` }}
               />
               <p className="z-10 w-190pxr overflow-hidden text-ellipsis text-nowrap font-[#49454f] text-16pxr font-normal">
                 {item}
               </p>
-              <p className="font-[#49454f] text-16pxr font-normal">??%</p>
+              <p className="z-10 font-[#49454f] text-16pxr font-normal">??%</p>
               {tooltip.voteItems[index] && (
                 <Tooltip arrowPosition="left">{item}</Tooltip>
               )}
             </div>
           ))}
-          {voteItems.length > MAX_VOTE_ITEMS && (
-            <div className="absolute bottom-6pxr left-0pxr z-10 flex w-full items-center justify-center bg-[linear-gradient(180deg,rgba(255,255,255,0.00)_0%,#FFF_100%)]">
-              <p className="text-14pxr font-normal text-[#49454F]">
-                +{voteItems.length - MAX_VOTE_ITEMS}개의 선택지가 더 있어요
+          {voteItems.length > MAX_VOTE_ITEMS && !isClosed && (
+            <>
+              <div className="absolute bottom-6pxr left-0pxr z-50 flex h-100pxr w-full items-center justify-center bg-[linear-gradient(180deg,rgba(255,255,255,0.00)_0%,#FFF_100%)]" />
+              <p className="text-12pxr font-normal text-[#989898]">
+                +{voteItems.length - MAX_VOTE_ITEMS}개의 선택지
               </p>
-            </div>
+            </>
           )}
         </div>
       </Link>
-      <div className="flex h-55pxr items-center justify-between">
+      <div className="flex h-55pxr justify-between">
         <div className="flex h-40pxr items-end pt-5pxr">
           <p
             className={`${isClosed ? 'flex h-full w-full items-center justify-center !text-[#999999]' : 'text-14pxr font-normal text-[#49454F]'}`}

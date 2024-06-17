@@ -16,7 +16,7 @@ function VoteCardList({ voteList, isLoading }: Props) {
         <h1>로딩중입니다!</h1>
       ) : (
         voteList?.map(
-          ({ id, title, isClosed, participantCounts, contents }) => {
+          ({ id, title, isClosed, participantCounts, contents, createdAt }) => {
             return (
               <VoteCard
                 key={id + title}
@@ -26,6 +26,7 @@ function VoteCardList({ voteList, isLoading }: Props) {
                 participantsCount={participantCounts}
                 participateUrl={`/vote/${id}`}
                 participateResultUrl={`/vote/${id}/result`}
+                createdAt={createdAt}
               />
             )
           },
