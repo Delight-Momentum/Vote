@@ -6,43 +6,36 @@ interface Props {
   params: { id: string }
 }
 
-const errorParamsData = {
-  metadata: {
-    title: '투표 결과',
-  },
-  vote: undefined,
-}
-
-async function generateMetadata({
-  params,
-}: Props): Promise<{ metadata: Metadata; vote: IGetVoteResponse | undefined }> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = params
-
   try {
-    const voteResponse = await getVote({ id })
-
-    if (voteResponse.status !== 200) {
-      return errorParamsData
-    }
-
-    const vote = await voteResponse.json()
-
+    const vote: IGetVoteResponse = await (await getVote({ id })).json()
     return {
-      metadata: {
-        title: vote.title,
-      },
-      vote,
+      title: vote.title,
     }
   } catch (error) {
-    return errorParamsData
+    console.error('Error fetching vote data:', error)
+    return {
+      title: '투표 결과',
+    }
   }
 }
 
 async function ResultPage({ params }: Props) {
-  const { vote: initialVote } = await generateMetadata({ params })
   const { id } = params
+  try {
+    const voteResponse = await getVote({ id, cache: 'no-cache' })
+    if (voteResponse.status === 404) {
+      return <ResultPageContent vote={undefined} id={id} />
+    }
 
-  return <ResultPageContent vote={initialVote} id={id} />
+    const vote: IGetVoteResponse = await voteResponse.json()
+
+    return <ResultPageContent vote={vote} id={id} />
+  } catch (error) {
+    console.error('Error fetching vote data:', error)
+    return <ResultPageContent vote={undefined} id={id} />
+  }
 }
 
 export default ResultPage
