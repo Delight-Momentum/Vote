@@ -20,7 +20,7 @@ describe('메인페이지를 테스트 한다.', () => {
 
     cy.intercept(
       'GET',
-      'https://vote-server.xyz/api/votelist?offset=1&limit=8&search=%ED%85%8C%EC%8A%A4%ED%8A%B8%203',
+      'https://vote-server.xyz/api/votelist?offset=1&limit=8&search=%ED%85%8C%EC%8A%A4%ED%8A%B8%203&order=popular',
       {
         statusCode: 200,
         fixture: 'votelist-search.json',
