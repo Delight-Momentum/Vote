@@ -1,5 +1,7 @@
+'use client'
+
 import { IVote } from 'types/voteListType'
-import { RefObject } from 'react'
+import { RefObject, useEffect, useState } from 'react'
 import Link from 'next/link'
 import VoteCard from './vote-card'
 
@@ -10,12 +12,27 @@ interface Props {
 }
 
 function VoteCardList({ observerRef, voteList, isLoading }: Props) {
+  const [showNoVotesMessage, setShowNoVotesMessage] = useState(false)
+
+  useEffect(() => {
+    if (voteList.length === 0 && !isLoading) {
+      const timer = setTimeout(() => {
+        setShowNoVotesMessage(true)
+      }, 500)
+
+      return () => clearTimeout(timer)
+    }
+
+    setShowNoVotesMessage(false)
+    return undefined
+  }, [voteList, isLoading])
+
   return (
     <div
       data-cy="voteCardList"
-      className="grid min-h-[70vh] grid-cols-1 place-items-center gap-27pxr md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
+      className="grid min-h-[50vh] grid-cols-1 place-items-center gap-27pxr md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
     >
-      {voteList.length === 0 && !isLoading && (
+      {showNoVotesMessage && (
         <div className="col-span-4 text-center">
           <h1 className="text-32pxr">투표가 없어요.</h1>
           <Link className="mt-4pxr" href="/create-vote">
