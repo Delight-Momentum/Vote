@@ -3,7 +3,7 @@ import Link from 'next/link'
 import CreateVoteButton from './create-vote-button'
 
 interface HeaderProps {
-  onLogoClick: () => void
+  onLogoClick?: () => void
   children?: string
 }
 
