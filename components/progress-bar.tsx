@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+
 interface ProgressBarProps {
   contentId: number
   voteItem: string
@@ -13,29 +15,27 @@ function ProgressBar({
   choiceCount,
   participantCounts,
 }: ProgressBarProps) {
+  const [isSelected, setIsSelected] = useState(false)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      const getLocalStorageVotedContentIds =
+        localStorage.getItem('VotedContentIds')
+      const parsedParticipantVoteIds = getLocalStorageVotedContentIds
+        ? JSON.parse(getLocalStorageVotedContentIds)
+        : []
+      if (parsedParticipantVoteIds.includes(contentId.toString())) {
+        setIsSelected(true)
+      }
+    }
+  }, [contentId])
+
   const contentCountPercent = Math.trunc(
     (choiceCount / participantCounts) * 100,
   )
   const value = Number.isNaN(contentCountPercent) ? 0 : contentCountPercent
-
-  const selected = () => {
-    if (typeof window === 'undefined' || typeof localStorage === 'undefined')
-      return false
-
-    const getSelectedVoteContentsString = localStorage.getItem(
-      'selectedVoteContents',
-    )
-    const getSelectedVoteContents = getSelectedVoteContentsString
-      ? JSON.parse(getSelectedVoteContentsString)
-      : []
-
-    if (getSelectedVoteContents.length === 0) return false
-
-    return getSelectedVoteContents.includes(contentId)
-  }
-
-  const selectedContentTextClass = selected()
-    ? 'text-gray-100'
+  const selectedContentTextClass = isSelected
+    ? 'text-primary300'
     : 'text-[#999999]'
 
   return (
@@ -45,11 +45,11 @@ function ProgressBar({
     >
       <hr
         style={{ width: `${value}%` }}
-        className={`absolute -top-1pxr left-0pxr h-[101%] ${selected() ? 'bg-primary300' : 'bg-[#e5e5e58c]'}`}
+        className={`absolute -top-1pxr left-0pxr h-[101%] ${isSelected ? 'bg-primary200' : 'bg-[#e8e8e9]'}`}
       />
       <div className="z-10 flex w-full items-center justify-between gap-10pxr py-16pxr pl-24pxr pr-16pxr">
         <p
-          className={`break-all text-16pxr font-semibold ${selectedContentTextClass}`}
+          className={`break-all text-16pxr font-semibold  text-[#999999] ${selectedContentTextClass}`}
         >
           {voteItem}
         </p>

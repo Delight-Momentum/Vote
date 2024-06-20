@@ -46,10 +46,11 @@ function VoteCardList({ observerRef, voteList, isLoading }: Props) {
         <h1>로딩중입니다!</h1>
       ) : (
         voteList?.map(
-          ({ id, title, isClosed, participantCounts, contents }) => {
+          ({ id, title, isClosed, participantCounts, contents }, index) => {
             return (
               <VoteCard
-                key={id + title}
+                // eslint-disable-next-line react/no-array-index-key
+                key={index + title}
                 isClosed={isClosed}
                 voteTitle={title}
                 voteItems={contents}

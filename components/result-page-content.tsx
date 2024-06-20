@@ -22,6 +22,10 @@ function ResultPageContent({ vote, id }: ResultPageContentProps) {
   const [isPossibleToVote, setIsPossibleToVote] = useState(false)
 
   useEffect(() => {
+    router.refresh()
+  }, [router])
+
+  useEffect(() => {
     if (vote) {
       const periodEndDate = deConvertToKoreanTime(vote.periodEnd)
       const nowDate = new Date()
@@ -30,7 +34,7 @@ function ResultPageContent({ vote, id }: ResultPageContentProps) {
         nowDate < periodEndDate && !participantVoteId?.includes(id),
       )
     }
-  }, [id, vote])
+  }, [id, router, vote])
 
   if (!vote) {
     toast.error(
