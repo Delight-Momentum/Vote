@@ -28,5 +28,6 @@ export const Primary: Story = {
     participantsCount: 242,
     participateUrl: '/vote/1',
     participateResultUrl: '/vote/1/result',
+    createdAt: '2024-06-16',
   },
 }

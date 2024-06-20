@@ -46,7 +46,10 @@ function VoteCardList({ observerRef, voteList, isLoading }: Props) {
         <h1>로딩중입니다!</h1>
       ) : (
         voteList?.map(
-          ({ id, title, isClosed, participantCounts, contents }, index) => {
+          (
+            { id, title, isClosed, participantCounts, contents, createdAt },
+            index,
+          ) => {
             return (
               <VoteCard
                 // eslint-disable-next-line react/no-array-index-key
@@ -57,6 +60,7 @@ function VoteCardList({ observerRef, voteList, isLoading }: Props) {
                 participantsCount={participantCounts}
                 participateUrl={`/vote/${id}`}
                 participateResultUrl={`/vote/${id}/result`}
+                createdAt={String(createdAt)}
               />
             )
           },
