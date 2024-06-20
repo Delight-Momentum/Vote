@@ -23,3 +23,15 @@ input:focus {
 .custom-progress-selected::-webkit-progress-value {
   background-color: #d5c1f8;
 }
+
+input[type='search' i]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  height: 26px;
+  width: 26px;
+  border-radius: 10px;
+  background-image: url('../assets/svgs/search-cancel.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
+  cursor: pointer;
+}
