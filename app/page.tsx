@@ -99,8 +99,7 @@ function Home() {
             <Filter order={order} onFilterClick={setOrder} />
           </div>
         </div>
-        <VoteCardList voteList={voteList} />
-        <div className="h-1pxr w-1pxr" ref={targetRef} />
+        <VoteCardList observerRef={targetRef} voteList={voteList} />
       </div>
       <div className="mt-60pxr">
         <Footer />

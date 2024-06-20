@@ -24,9 +24,19 @@ export interface VoteContent {
   participantNames: string[]
 }
 
-async function getVote({ id }: { id: string }) {
+async function getVote({
+  id,
+  revalidate,
+  cache,
+}: {
+  id: string
+  revalidate?: number
+  cache?: RequestCache
+}) {
   const response = await fetch(`${BASE_URL}/api/votelist/${id}`, {
     method: 'GET',
+    next: { revalidate, tags: ['vote'] },
+    cache,
   })
 
   return response

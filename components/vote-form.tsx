@@ -46,6 +46,12 @@ function VoteForm() {
         ? JSON.parse(getLocalStorageCreatedVoteId)
         : []
 
+      const getLocalStorageVotedContentIds =
+        localStorage.getItem('VotedContentIds')
+      const parsedVotedContentIds = getLocalStorageVotedContentIds
+        ? JSON.parse(getLocalStorageVotedContentIds)
+        : []
+
       if (parsedCreatedVoteIds.includes(id)) {
         toast.warn('자신이 생성한 투표는 투표할 수 없어요.')
         return
@@ -86,6 +92,11 @@ function VoteForm() {
       localStorage.setItem(
         'participantVoteId',
         JSON.stringify([...parsedParticipantVoteIds, id]),
+      )
+
+      localStorage.setItem(
+        'VotedContentIds',
+        JSON.stringify([...parsedVotedContentIds, ...selectedContent]),
       )
 
       router.push(`/vote/${id}/result`)
