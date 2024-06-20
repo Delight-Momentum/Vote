@@ -47,7 +47,7 @@ function ProgressBar({
         style={{ width: `${value}%` }}
         className={`absolute -top-1pxr left-0pxr h-[101%] ${isSelected ? 'bg-primary200' : 'bg-[#e8e8e9]'}`}
       />
-      <div className="z-10 flex w-full items-center justify-between gap-10pxr py-16pxr pl-24pxr pr-16pxr">
+      <div className="z-10 flex w-full cursor-pointer items-center justify-between gap-10pxr py-16pxr pl-24pxr pr-16pxr">
         <p
           className={`break-all text-16pxr font-semibold  text-[#999999] ${selectedContentTextClass}`}
         >
