@@ -26,7 +26,7 @@ function VoteCardList({ voteList, isLoading }: Props) {
                 participantsCount={participantCounts}
                 participateUrl={`/vote/${id}`}
                 participateResultUrl={`/vote/${id}/result`}
-                createdAt={createdAt}
+                createdAt={String(createdAt)}
               />
             )
           },

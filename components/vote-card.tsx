@@ -12,7 +12,7 @@ interface Props {
   participantsCount: number
   participateUrl: string
   participateResultUrl: string
-  createdAt: Date
+  createdAt: string
 }
 
 const MAX_VOTE_ITEMS = 3
@@ -55,8 +55,7 @@ function VoteCard({
     }))
   }
 
-  const time = String(createdAt)
-  const createdTime = time.split('T')[0]
+  const createdTime = createdAt.split('T')[0]
 
   return (
     <div
