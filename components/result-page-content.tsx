@@ -1,13 +1,25 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react-hooks/rules-of-hooks */
+
+import { useEffect, useRef, useState } from 'react'
 import deConvertToKoreanTime from 'utils/de-convert-to-korean-time'
 import useModal from '@/hooks/use-modal'
 import { IGetVoteResponse } from 'apis/get-vote'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
-import { ButtonRound, Dialog, Header, ProgressBar, RevoteDialog } from '.'
+import {
+  ButtonRound,
+  Dialog,
+  Header,
+  ProgressBar,
+  RevoteDialog,
+  Tooltip,
+} from '.'
 import ButtonShare from './button-share'
 
 interface ResultPageContentProps {
@@ -20,6 +32,7 @@ function ResultPageContent({ vote, id }: ResultPageContentProps) {
   const { isDialogOpen, setIsDialogOpen, dialogOutSideClick, dialogRef } =
     useModal()
   const [isPossibleToVote, setIsPossibleToVote] = useState(false)
+  const tooltipRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     router.refresh()
@@ -53,26 +66,62 @@ function ResultPageContent({ vote, id }: ResultPageContentProps) {
   }
 
   const { title, contents, participantCounts } = vote
+  const contentLength = contents?.length
+  const [tooltip, setTooltip] = useState(Array(contentLength).fill(false))
+  const handleClickProgress = (index?: number) => {
+    setTooltip((prev) => prev.map((_, i) => i === index))
+  }
+
+  const handleClickOutside = (e: React.MouseEvent) => {
+    if (tooltipRef.current && !tooltipRef.current.contains(e.target as Node)) {
+      setTooltip((prev) => prev.map(() => false))
+    }
+  }
 
   return (
     <>
       <Header>투표결과</Header>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center" onClick={handleClickOutside}>
         <div className="mt-62pxr flex w-full max-w-465pxr flex-col justify-center px-12pxr">
-          <div className="mb-48pxr flex flex-col gap-20pxr">
+          <div className="mb-48pxr flex flex-col gap-20pxr" ref={tooltipRef}>
             <h1 className="text-24pxr font-semibold leading-[36px] tracking-[0.12px]">
               {title}
             </h1>
             <div className="flex flex-col gap-10pxr">
-              {contents?.map(({ id: contentId, content, selectedCounts }) => (
-                <ProgressBar
-                  key={contentId}
-                  contentId={contentId}
-                  voteItem={content}
-                  choiceCount={selectedCounts}
-                  participantCounts={participantCounts}
-                />
-              ))}
+              {contents?.map(
+                (
+                  { id: contentId, content, selectedCounts, participantNames },
+                  index,
+                ) => (
+                  <div
+                    className="relative"
+                    key={contentId}
+                    onClick={() => handleClickProgress(index)}
+                  >
+                    <ProgressBar
+                      contentId={contentId}
+                      voteItem={content}
+                      choiceCount={selectedCounts}
+                      participantCounts={participantCounts}
+                    />
+                    {tooltip[index] && (
+                      <Tooltip
+                        arrowPosition="left"
+                        className="left-450pxr top-0pxr flex h-300pxr w-full flex-col items-center overflow-y-auto p-12pxr"
+                      >
+                        <p className="mb-12pxr w-full border-b border-primary200 text-center text-16pxr font-semibold text-primary300">
+                          투표자
+                        </p>
+                        <div className="flex flex-col items-center justify-center gap-10pxr">
+                          {participantNames.map((item, i) => (
+                            <p key={i}>{item}</p>
+                          ))}
+                        </div>
+                      </Tooltip>
+                    )}
+                  </div>
+                ),
+              )}
             </div>
             <span className="flex justify-end text-14pxr leading-[21px] tracking-[0.5px] text-[#999999]">
               총 {participantCounts}명 참여
