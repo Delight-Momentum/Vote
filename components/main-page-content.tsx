@@ -30,7 +30,7 @@ function MainPageContent() {
   const targetRef = useRef<HTMLDivElement>(null)
   const timeoutQueryRef = useRef<NodeJS.Timeout | null>(null)
 
-  const limit = 8
+  const LIMIT = 12
   const itemCounts = voteList.length
   const { observe, unobserve, isVisible, setIsVisible } =
     useIntersectionObserver()
@@ -84,7 +84,7 @@ function MainPageContent() {
       setIsLoading(true)
       const response = await getVotelist({
         offset,
-        limit,
+        limit: LIMIT,
         search: query,
         order,
       })
@@ -94,7 +94,7 @@ function MainPageContent() {
       setHasNext(hasMoreItems)
       setVoteList((prev) => [...prev, ...votes])
       setTotalCount(total)
-      setOffset((prev) => prev + limit)
+      setOffset((prev) => prev + LIMIT)
       setIsVisible(false)
       setIsLoading(false)
     }
