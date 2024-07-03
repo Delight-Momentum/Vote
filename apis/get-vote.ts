@@ -21,7 +21,7 @@ export interface VoteContent {
   createdAt: Date
   updatedAt: Date
   selectedCounts: number
-  participantNames: string[]
+  participantNames: string[] | 'private'
 }
 
 async function getVote({
