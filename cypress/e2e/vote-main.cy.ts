@@ -2,7 +2,7 @@ describe('메인페이지를 테스트 한다.', () => {
   beforeEach(() => {
     cy.intercept(
       'GET',
-      'https://vote-server.xyz/api/votelist?offset=1&limit=8',
+      'https://vote-server.xyz/api/votelist?offset=1&limit=12',
       {
         statusCode: 200,
         fixture: 'votelist-8.json',
@@ -11,7 +11,7 @@ describe('메인페이지를 테스트 한다.', () => {
 
     cy.intercept(
       'GET',
-      'https://vote-server.xyz/api/votelist?offset=9&limit=8',
+      'https://vote-server.xyz/api/votelist?offset=9&limit=12',
       {
         statusCode: 200,
         fixture: 'votelist-16.json',
@@ -20,7 +20,7 @@ describe('메인페이지를 테스트 한다.', () => {
 
     cy.intercept(
       'GET',
-      'https://vote-server.xyz/api/votelist?offset=1&limit=8&search=%ED%85%8C%EC%8A%A4%ED%8A%B8%203&order=popular',
+      'https://vote-server.xyz/api/votelist?offset=1&limit=12&search=%ED%85%8C%EC%8A%A4%ED%8A%B8%203&order=popular',
       {
         statusCode: 200,
         fixture: 'votelist-search.json',
@@ -76,14 +76,14 @@ describe('메인페이지를 테스트 한다.', () => {
 
   it('무한 스크롤을 테스트한다.', () => {
     cy.wait(1500)
-    cy.get('@voteCard').should('have.length', 8)
+    cy.get('@voteCard').should('have.length', 12)
 
     cy.scrollTo('bottom')
 
-    cy.get('@voteCard').should('have.length.gte', 8)
+    cy.get('@voteCard').should('have.length.gte', 12)
 
     cy.scrollTo('bottom')
 
-    cy.get('@voteCard').should('have.length.gte', 16)
+    cy.get('@voteCard').should('have.length.gte', 24)
   })
 })
