@@ -21,7 +21,7 @@ const Tooltip = forwardRef<HTMLDivElement, ITooltipProps>(function Tooltip(
 
   return (
     <div
-      className={`absolute left-[25%] z-[999] flex max-h-350pxr max-w-215pxr rounded-lg bg-primary100 p-8pxr shadow-lg ${className}`}
+      className={`tooltipScrollbar absolute left-[25%] z-[999] flex max-h-350pxr max-w-215pxr rounded-lg bg-primary100 p-8pxr shadow-lg ${className}`}
       onClick={onClick}
       ref={ref}
     >

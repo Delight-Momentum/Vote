@@ -68,6 +68,7 @@ function ResultPageContent({ vote, id }: ResultPageContentProps) {
   const { title, contents, participantCounts } = vote
   const contentLength = contents?.length
   const [tooltip, setTooltip] = useState(Array(contentLength).fill(false))
+
   const handleClickProgress = (index?: number) => {
     setTooltip((prev) => prev.map((_, i) => i === index))
   }
