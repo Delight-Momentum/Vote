@@ -17,7 +17,8 @@
 <a href='https://universal-bonobo-130.notion.site/API-cd2be7182d2e4ab09327442195045b12?pvs=4'>🔗 노션 api 문서 링크</a>
 <h2>ERD</h2>
 
-![스크린샷 2024-06-04 오후 10 41 48](https://github.com/Delight-Momentum/Vote/assets/90304025/0e2e3aeb-a2e2-4a5a-84ea-156ec9d0a94e)
+![image](https://github.com/Delight-Momentum/Vote/assets/79037820/240f1a47-1b6a-4ca7-a05d-98c4de8cb1e6)
+
 
 <div>
 <h2>배포 주소</h2>
