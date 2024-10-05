@@ -97,7 +97,11 @@ function ResultPageContent({ vote, id }: ResultPageContentProps) {
                   <div
                     className="relative"
                     key={contentId}
-                    onClick={() => handleClickProgress(index)}
+                    onClick={() => {
+                      if (participantNames !== 'private') {
+                        handleClickProgress(index)
+                      }
+                    }}
                   >
                     <ProgressBar
                       contentId={contentId}
@@ -105,7 +109,7 @@ function ResultPageContent({ vote, id }: ResultPageContentProps) {
                       choiceCount={selectedCounts}
                       participantCounts={participantCounts}
                     />
-                    {tooltip[index] && (
+                    {participantNames !== 'private' && tooltip[index] && (
                       <Tooltip
                         arrowPosition="left"
                         className="left-450pxr top-0pxr flex h-300pxr w-full flex-col items-center overflow-y-auto p-12pxr"
